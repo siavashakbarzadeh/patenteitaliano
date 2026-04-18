@@ -21,7 +21,7 @@ export const chapters: Chapter[] = [
   { number: 15, title: "Posizione in Carreggiata",        subtitle: "Corsie, manovre e svolta",            icon: "🛤️",  available: false },
   { number: 16, title: "Arresto, Sosta e Parcheggio",    subtitle: "Dove e quando è consentito fermarsi",  icon: "🅿️",  available: false },
   { number: 17, title: "Dispositivi di Illuminazione",    subtitle: "Luci, fari e fanali",                 icon: "💡",  available: false },
-  { number: 18, title: "Dispositivi Acustici e Targhe",   subtitle: "Clacson, specchi retrovisori",        icon: "🔔",  available: false },
+  { number: 18, title: "Uso delle Luci e Dispositivi Acustici", subtitle: "Luci, clacson, spie e segnali", icon: "💡",  available: true  },
   { number: 19, title: "کمربند و صندلی کودک",           subtitle: "کمربند، ایربگ، صندلی کودک، کلاه ایمنی",   icon: "🔒",  available: true  },
   { number: 20, title: "Patenti di Guida",                subtitle: "Categorie, sanzioni, documenti",      icon: "📄",  available: true  },
   { number: 21, title: "Autostrade e Strade Extraurbane", subtitle: "Norme per strade veloci",             icon: "🏎️",  available: false },
