@@ -288,9 +288,9 @@ function HomePage({ progress, onNavigate }: {
         gap: 12, marginBottom: 32, animationDelay: "0.1s",
       }}>
         {[
-          { icon: <Target size={20} color="#6366f1" />, val: `${accuracy}%`, label: "دقت" },
-          { icon: <Zap size={20} color="#f59e0b" />, val: progress.totalAnswered, label: "پاسخ داده" },
-          { icon: <Flame size={20} color={progress.streak > 0 ? "#ef4444" : "#475569"} />,
+          { icon: <Target size={20} color="#9333ea" />, val: `${accuracy}%`, label: "دقت" },
+          { icon: <Zap size={20} color="#f97316" />, val: progress.totalAnswered, label: "پاسخ داده" },
+          { icon: <Flame size={20} color={progress.streak > 0 ? "#f97316" : "#6b568a"} />,
             val: progress.streak, label: "روز متوالی 🔥" },
         ].map((s, i) => (
           <div key={i} className="stat-badge">
@@ -312,9 +312,9 @@ function HomePage({ progress, onNavigate }: {
             </p>
           </div>
           <span style={{
-            fontSize: 13, fontWeight: 700, color: "var(--accent-primary)",
-            background: "rgba(99,102,241,0.12)", padding: "4px 12px",
-            borderRadius: 20, border: "1px solid rgba(99,102,241,0.2)"
+            fontSize: 13, fontWeight: 700, color: "#d8aaff",
+            background: "rgba(147,51,234,0.15)", padding: "4px 12px",
+            borderRadius: 20, border: "1px solid rgba(147,51,234,0.3)"
           }}>
             {Math.round((availableCount / 25) * 100)}%
           </span>
@@ -329,9 +329,9 @@ function HomePage({ progress, onNavigate }: {
               <div key={ch.number} title={`فصل ${ch.number}: ${ch.title}`} style={{
                 width: 28, height: 28, borderRadius: 8,
                 background: !ch.available ? "rgba(255,255,255,0.04)"
-                  : done ? "linear-gradient(135deg, #6366f1, #8b5cf6)"
-                  : "rgba(99,102,241,0.2)",
-                border: ch.available ? "1px solid rgba(99,102,241,0.4)" : "1px solid rgba(255,255,255,0.06)",
+                  : done ? "linear-gradient(135deg, #9333ea, #f97316)"
+                  : "rgba(147,51,234,0.2)",
+                border: ch.available ? "1px solid rgba(147,51,234,0.4)" : "1px solid rgba(255,255,255,0.06)",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: 10, fontWeight: 700,
                 color: ch.available ? "white" : "var(--text-muted)",
@@ -366,7 +366,7 @@ function HomePage({ progress, onNavigate }: {
                 {ch.icon}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 11, color: "var(--accent-primary)", fontWeight: 700, marginBottom: 2 }}>
+                <div style={{ fontSize: 11, color: "#c084fc", fontWeight: 700, marginBottom: 2 }}>
                   فصل {ch.number}
                 </div>
                 <div style={{ fontSize: 16, fontWeight: 700 }}>{ch.title}</div>
@@ -432,14 +432,14 @@ function ChaptersPage({ progress, onSelectChapter, onStudyChapter }: {
                 padding: "14px 18px", border: "1px solid var(--border-subtle)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: ch.available ? 12 : 0 }}>
                 <div style={{ width: 40, height: 40, borderRadius: 12, flexShrink: 0,
-                  background: ch.available ? "linear-gradient(135deg, #6366f1, #8b5cf6)" : "rgba(255,255,255,0.06)",
+                  background: ch.available ? "linear-gradient(135deg, #9333ea, #f97316)" : "rgba(255,255,255,0.06)",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontSize: 14, fontWeight: 700, color: "white" }}>
                   {ch.available ? ch.icon : <Lock size={14} color="var(--text-muted)" />}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: 11, fontWeight: 600,
-                    color: ch.available ? "var(--accent-primary)" : "var(--text-muted)", marginBottom: 2 }}>
+                    color: ch.available ? "#c084fc" : "var(--text-muted)", marginBottom: 2 }}>
                     فصل {String(ch.number).padStart(2, "0")}
                   </div>
                   <div style={{ fontSize: 14, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
@@ -722,10 +722,10 @@ function StatsPage({ progress, onReset }: { progress: UserProgress; onReset: () 
 
       <div className="animate-fade-in-up" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 28 }}>
         {[
-          { icon: <Trophy size={22} color="#f59e0b" />, val: progress.completedQuizzes, label: "آزمون تموم‌شده" },
-          { icon: <Target size={22} color="#6366f1" />, val: `${accuracy}%`, label: "دقت کلی" },
-          { icon: <Zap size={22} color="#10b981" />, val: progress.totalCorrect, label: "پاسخ صحیح" },
-          { icon: <Flame size={22} color="#ef4444" />, val: progress.streak, label: "روز متوالی" },
+          { icon: <Trophy size={22} color="#f97316" />, val: progress.completedQuizzes, label: "آزمون تموم‌شده" },
+          { icon: <Target size={22} color="#9333ea" />, val: `${accuracy}%`, label: "دقت کلی" },
+          { icon: <Zap size={22} color="#22d3a5" />, val: progress.totalCorrect, label: "پاسخ صحیح" },
+          { icon: <Flame size={22} color="#f97316" />, val: progress.streak, label: "روز متوالی" },
         ].map((s, i) => (
           <div key={i} className="stat-badge">
             {s.icon}
