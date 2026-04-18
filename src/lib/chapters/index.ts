@@ -1,0 +1,32 @@
+// ── Chapter metadata for all 25 chapters ─────────────────────────────────────
+// To add a new chapter: set available: true and add its questions file under ./XX/index.ts
+
+import type { Chapter } from "@/lib/types";
+
+export const chapters: Chapter[] = [
+  { number: 1,  title: "Segnali di Pericolo",            subtitle: "Triangoli con bordo rosso",           icon: "⚠️",  available: false },
+  { number: 2,  title: "Segnali di Divieto",              subtitle: "Cerchi con bordo rosso",              icon: "🚫",  available: false },
+  { number: 3,  title: "Segnali di Obbligo",              subtitle: "Cerchi blu con frecce bianche",       icon: "🔵",  available: false },
+  { number: 4,  title: "Segnali di Precedenza",           subtitle: "Stop, Dare Precedenza, Rotatoria",    icon: "🛑",  available: false },
+  { number: 5,  title: "Segnaletica Orizzontale",         subtitle: "Strisce, righe e frecce sull'asfalto",icon: "🛣️",  available: false },
+  { number: 6,  title: "Segnali Luminosi",                subtitle: "Semafori e luci stradali",            icon: "🚦",  available: false },
+  { number: 7,  title: "Segnali dei Vigili",              subtitle: "Gestione manuale del traffico",       icon: "👮",  available: false },
+  { number: 8,  title: "Segnali Complementari",           subtitle: "Pannelli integrativi e distanza",     icon: "📋",  available: false },
+  { number: 9,  title: "Segnali di Indicazione",          subtitle: "Cartelli informativi e servizi",      icon: "🗺️",  available: false },
+  { number: 10, title: "Comportamento alla Guida",        subtitle: "Norme generali di condotta",          icon: "🚗",  available: false },
+  { number: 11, title: "Precedenza agli Incroci",         subtitle: "Regole di precedenza e rotatorie",    icon: "🔄",  available: false },
+  { number: 12, title: "Sorpasso",                        subtitle: "Quando e come sorpassare",            icon: "↪️",  available: false },
+  { number: 13, title: "Velocità",                        subtitle: "Limiti e adeguamento alla situazione",icon: "⚡",  available: false },
+  { number: 14, title: "Distanza di Sicurezza",           subtitle: "Spazio di frenata e arresto",         icon: "📏",  available: false },
+  { number: 15, title: "Posizione in Carreggiata",        subtitle: "Corsie, manovre e svolta",            icon: "🛤️",  available: false },
+  { number: 16, title: "Arresto, Sosta e Parcheggio",    subtitle: "Dove e quando è consentito fermarsi",  icon: "🅿️",  available: false },
+  { number: 17, title: "Dispositivi di Illuminazione",    subtitle: "Luci, fari e fanali",                 icon: "💡",  available: false },
+  { number: 18, title: "Dispositivi Acustici e Targhe",   subtitle: "Clacson, specchi retrovisori",        icon: "🔔",  available: false },
+  { number: 19, title: "Cinture e Sistemi di Ritenuta",   subtitle: "Cinture, airbag, seggiolini bimbi",   icon: "🔒",  available: false },
+  { number: 20, title: "Patenti di Guida",                subtitle: "Categorie, sanzioni, documenti",      icon: "📄",  available: true  },
+  { number: 21, title: "Autostrade e Strade Extraurbane", subtitle: "Norme per strade veloci",             icon: "🏎️",  available: false },
+  { number: 22, title: "Incidenti e Pronto Soccorso",     subtitle: "Comportamento dopo un incidente",     icon: "🚑",  available: false },
+  { number: 23, title: "Meccanica e Manutenzione",        subtitle: "Il veicolo e il suo funzionamento",   icon: "🔧",  available: false },
+  { number: 24, title: "Rispetto dell'Ambiente",          subtitle: "Ecologia, emissioni, risparmio",      icon: "🌿",  available: false },
+  { number: 25, title: "Veicoli e Norme Speciali",        subtitle: "Categorie particolari di veicoli",    icon: "🚛",  available: false },
+];
