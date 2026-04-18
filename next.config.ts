@@ -1,8 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  // reactCompiler: true, // disabled — requires babel-plugin-react-compiler at build time
 };
 
 export default nextConfig;
