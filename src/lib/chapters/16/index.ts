@@ -437,4 +437,293 @@ export const chapter16Questions: Question[] = [
     explanation: "I documenti obbligatori da avere con sé alla guida sono: patente di guida valida, carta di circolazione e certificato di assicurazione R.C.A. Il certificato di proprietà non è obbligatorio portarlo con sé durante la guida (anche se utile)."
   },
 
+
+  // ── Immobilità del Veicolo in Sosta (p.187) ──────────────────────────────
+
+  {
+    id: 1631,
+    chapter: 16,
+    question: "Per garantire l'immobilità del veicolo in sosta, il conducente deve:",
+    options: [
+      "Spegnere il motore, inserire il freno di stazionamento (freno a mano) e mettere la marcia inserita (o la posizione P)",
+      "Solo spegnere il motore",
+      "Solo mettere le 4 frecce",
+      "Solo chiudere le portiere"
+    ],
+    correct: 0,
+    explanation: "Per garantire l'immobilità del veicolo in sosta, il conducente deve: spegnere il motore, azionare il freno di stazionamento (freno a mano) e inserire una marcia (o la posizione P per i veicoli con cambio automatico), indipendentemente dal grado di pendenza della strada."
+  },
+
+  {
+    id: 1632,
+    chapter: 16,
+    question: "Nelle zone a tempo limitato regolate dal disco orario, i conducenti devono:",
+    options: [
+      "Segnalare l'orario di arrivo sul disco orario in modo visibile (J), aggiornarlo se la sosta ha avuto inizio prima che scada",
+      "Solo esporre il parchimetro",
+      "Non sono obbligati ad esporre nulla",
+      "Solo rispettare il limite di velocità della zona"
+    ],
+    correct: 0,
+    explanation: "Nelle zone a tempo limitato regolamentate dal disco orario (J), i conducenti devono esporre il disco orario segnalando l'orario di arrivo in modo visibile, aggiornandolo senza che il veicolo venga spostato. Le persone di servizio di tempo stabilite per la sosta possono essere non obbligate a rispettarla."
+  },
+
+  {
+    id: 1633,
+    chapter: 16,
+    question: "Il parchimetro (K) deve essere utilizzato in modo che:",
+    options: [
+      "Il dispositivo di controllo sia ben visibile (anche se la sosta è di breve durata, cioè semplice fermata), esponendolo nell'apposito tagliando",
+      "Solo quando si supera l'orario a pagamento",
+      "Solo nelle ore serali",
+      "Non è necessario se si rimane meno di 10 minuti"
+    ],
+    correct: 0,
+    explanation: "Quando richiesto, bisogna utilizzare il parchimetro (dispositivo di controllo della sosta). Il tagliando deve essere esposto in modo ben visibile (K) nel veicolo, anche in caso di semplice fermata, e deve indicare il tempo di sosta già pagato."
+  },
+
+  // ── Divieti aggiuntivi — p.190 ────────────────────────────────────────────
+
+  {
+    id: 1634,
+    chapter: 16,
+    question: "In prossimità delle intersezioni su strade extraurbane, a quanti metri minimo è vietata la sosta?",
+    options: [
+      "A meno di 5 metri dall'intersezione (nei centri abitati il limite può essere diverso)",
+      "A meno di 10 metri",
+      "A meno di 2 metri",
+      "Non esiste un limite specifico sulle strade extraurbane"
+    ],
+    correct: 0,
+    explanation: "In corrispondenza e in prossimità delle intersezioni su strade extraurbane è vietata la sosta a meno di 5 metri dall'intersezione stessa."
+  },
+
+  {
+    id: 1635,
+    chapter: 16,
+    question: "Sulle isole di traffico (quelle aree di sicurezza al centro della carreggiata) la fermata e la sosta sono:",
+    options: [
+      "Vietate",
+      "Consentite per breve tempo",
+      "Consentite solo per i motocicli",
+      "Consentite se non ostacola il traffico"
+    ],
+    correct: 0,
+    explanation: "Sono vietate la fermata e la sosta sulle isole di traffico (isolotti o spartitraffico al centro della carreggiata)."
+  },
+
+  {
+    id: 1636,
+    chapter: 16,
+    question: "In corrispondenza dei segnali orizzontali di preselezione e lungo le corsie di canalizzazione, è vietata:",
+    options: [
+      "La sosta (ma non la fermata)",
+      "Solo la fermata",
+      "Sia la fermata che la sosta",
+      "Nessun divieto in queste zone"
+    ],
+    correct: 0,
+    explanation: "In corrispondenza dei segnali orizzontali di preselezione e lungo le corsie di canalizzazione è vietata la sosta (ma non la fermata). I conducenti possono fermarsi brevemente ma non parcheggiare in tali zone."
+  },
+
+  {
+    id: 1637,
+    chapter: 16,
+    question: "Allo sbocco dei passi carrabili (uscite private), la sosta è:",
+    options: [
+      "Vietata, per non bloccare l'accesso ai veicoli che devono entrare o uscire",
+      "Consentita se si lascia 1 metro",
+      "Consentita solo di notte",
+      "Consentita purché si rimanga vicino al veicolo"
+    ],
+    correct: 0,
+    explanation: "Sono vietate la fermata e la sosta allo sbocco dei passi carrabili (uscite e ingressi delle proprietà private), per non ostacolare i veicoli che devono accedere o uscire."
+  },
+
+  {
+    id: 1638,
+    chapter: 16,
+    question: "Negli spazi riservati alla fermata o allo stazionamento di autobus, filobus e tram, la sosta è:",
+    options: [
+      "Vietata; la sosta è vietata anche a meno di 15 metri (prima e dopo) dal segnale di fermata degli autobus",
+      "Consentita se non ci sono autobus",
+      "Consentita solo brevemente",
+      "Vietata solo nelle ore di punta"
+    ],
+    correct: 0,
+    explanation: "Sono vietate la fermata e la sosta negli spazi riservati alla fermata e allo stazionamento di autobus, filobus e veicoli circolanti su rotaia (tram), nonché sulle carreggiate o corsie riservate ai mezzi pubblici. La sosta è vietata anche a meno di 15 metri (prima e dopo) dal segnale di fermata degli autobus."
+  },
+
+  // ── Divieti aggiuntivi — p.191 ────────────────────────────────────────────
+
+  {
+    id: 1639,
+    chapter: 16,
+    question: "Negli spazi riservati alla sosta delle persone invalide (disabili), la sosta è:",
+    options: [
+      "Vietata ai veicoli non autorizzati; è consentita solo ai veicoli al servizio di persone invalide",
+      "Consentita a tutti se lo spazio per invalidi è libero da più di 30 minuti",
+      "Consentita solo di notte",
+      "Consentita per meno di 5 minuti"
+    ],
+    correct: 0,
+    explanation: "Negli spazi riservati alla sosta dei veicoli per persone invalide (contrassegnati dall'apposita segnaletica) è vietata la sosta ai veicoli non autorizzati. La sosta in questi spazi da parte di veicoli non autorizzati comporta anche la perdita di punti dalla patente."
+  },
+
+  {
+    id: 1640,
+    chapter: 16,
+    question: "In corrispondenza e in prossimità dei distributori di carburante (benzina), la sosta è:",
+    options: [
+      "Vietata (fino a 5 posti e in loro prossimità, prima e dopo)",
+      "Consentita per fare benzina",
+      "Consentita per meno di 3 minuti",
+      "Non esiste un divieto specifico"
+    ],
+    correct: 0,
+    explanation: "Sono vietate la fermata e la sosta in corrispondenza e in prossimità dei distributori di carburante (fino a 5 metri e in loro prossimità, prima e dopo), per consentire l'accesso ai distributori stessi."
+  },
+
+  {
+    id: 1641,
+    chapter: 16,
+    question: "Nelle aree destinate al mercato e allo scarico/carico di merci, la sosta è:",
+    options: [
+      "Vietata, limitatamente alle ore stabilite dalla segnaletica",
+      "Sempre vietata in ogni ora",
+      "Consentita per meno di 15 minuti",
+      "Solo i commercianti possono sostare"
+    ],
+    correct: 0,
+    explanation: "Sono vietate la fermata e la sosta nelle aree destinate al mercato e al veicolo carico e scarico di cose, limitatamente alle ore stabilite dalla segnaletica apposita."
+  },
+
+  {
+    id: 1642,
+    chapter: 16,
+    question: "Negli spazi destinati ai servizi di emergenza o igiene pubblica (es. ambulanze, nettezza urbana), la sosta è:",
+    options: [
+      "Vietata, indicati dall'apposita segnaletica",
+      "Consentita fuori orario di servizio",
+      "Consentita per breve tempo",
+      "Solo vietata per i veicoli pesanti"
+    ],
+    correct: 0,
+    explanation: "Sono vietate la fermata e la sosta negli spazi destinati ai servizi di emergenza o di igiene pubblica, indicati dall'apposita segnaletica stradale."
+  },
+
+  // ── Divieti aggiuntivi — p.192 ────────────────────────────────────────────
+
+  {
+    id: 1643,
+    chapter: 16,
+    question: "Sulle banchine (il tratto di strada oltre la corsia ma prima del fosso), la fermata e la sosta sono:",
+    options: [
+      "Vietate, salvo diversa segnalazione",
+      "Sempre consentite",
+      "Consentite solo di notte",
+      "Vietate solo sulle autostrade"
+    ],
+    correct: 0,
+    explanation: "Sono vietate la fermata e la sosta sulle banchine (salvo diversa segnalazione). Le banchine sono riservate principalmente ai pedoni e non al parcheggio dei veicoli."
+  },
+
+  {
+    id: 1644,
+    chapter: 16,
+    question: "Nelle zone a traffico limitato (ZTL), la sosta è:",
+    options: [
+      "Vietata ai veicoli non autorizzati",
+      "Consentita a tutti per un massimo di 1 ora",
+      "Consentita a tutti fuori dall'orario di attivazione della ZTL",
+      "Vietata solo ai camion"
+    ],
+    correct: 0,
+    explanation: "Nelle zone a traffico limitato (ZTL) la sosta è vietata ai veicoli non autorizzati. Solo i veicoli con apposita autorizzazione possono accedere e sostare in tali zone."
+  },
+
+  {
+    id: 1645,
+    chapter: 16,
+    question: "I rimorchi staccati dalla motrice nei centri abitati:",
+    options: [
+      "Non devono essere lasciati in sosta, salvo diversa segnalazione",
+      "Possono essere parcheggiati ovunque",
+      "Possono sostare nelle aree di sosta normale",
+      "Possono restare senza limite di tempo nei centri abitati"
+    ],
+    correct: 0,
+    explanation: "Nei centri abitati, ai rimorchi staccati dalla motrice è vietata la sosta, salvo diversa segnalazione. I rimorchi devono essere segnalati e non possono essere lasciati incustoditi per tempo indeterminato nei centri urbani."
+  },
+
+  {
+    id: 1646,
+    chapter: 16,
+    question: "Davanti ai cassonetti dei rifiuti urbani o contenitori analoghi, la sosta è:",
+    options: [
+      "Vietata, per non ostacolare la raccolta dei rifiuti",
+      "Consentita se non ci sono camion della nettezza",
+      "Consentita per meno di 30 minuti",
+      "Solo vietata nelle ore di raccolta"
+    ],
+    correct: 0,
+    explanation: "Sono vietate la fermata e la sosta davanti ai cassonetti dei rifiuti urbani o contenitori analoghi, per non ostacolare le operazioni di raccolta dei rifiuti da parte dei veicoli preposti."
+  },
+
+  {
+    id: 1647,
+    chapter: 16,
+    question: "La sosta in doppia fila (seconda fila) nei centri abitati è:",
+    options: [
+      "Vietata dalle ore 8 alle ore 20 (o negli orari e giorni indicati dai segnali specifici B e C)",
+      "Sempre consentita se si rimane vicino al veicolo",
+      "Consentita di notte in tutti i centri abitati",
+      "Permessa solo per meno di 5 minuti"
+    ],
+    correct: 0,
+    explanation: "La sosta in doppia (seconda) fila è vietata nei centri abitati dalle ore 8 alle ore 20 (o nelle ore e nei giorni di validità indicati dai segnali specifici – B e C). Lungo le strade extraurbane è vietata per tutte le 24 ore."
+  },
+
+  {
+    id: 1648,
+    chapter: 16,
+    question: "La rimozione forzata del veicolo avviene quando:",
+    options: [
+      "La sosta sia lasciata in violazione di tale divieto, per consentire la pulizia delle strade o la sicurezza della circolazione",
+      "Solo in caso di veicolo abbandonato da più di 7 giorni",
+      "Solo se il conducente non è reperibile",
+      "Solo su richiesta esplicita di altri automobilisti"
+    ],
+    correct: 0,
+    explanation: "La rimozione forzata del veicolo avviene per ordine degli organi di polizia quando: il veicolo sia lasciato in sosta in violazione di un segnale di divieto; per consentire la pulizia delle strade; per la rimozione del veicolo in doppia fila; o su corsie riservate ai disabili."
+  },
+
+  {
+    id: 1649,
+    chapter: 16,
+    question: "Sulle carreggiate delle strade a precedenza, la sosta è:",
+    options: [
+      "Vietata",
+      "Consentita con disco orario",
+      "Consentita solo di domenica",
+      "Consentita purché si mettano le 4 frecce"
+    ],
+    correct: 0,
+    explanation: "Sulle carreggiate delle strade a precedenza (indicate dall'apposito segnale stradale) è vietata la sosta. Questa regola si applica per garantire la fluidità del traffico sulla via avente la precedenza."
+  },
+
+  {
+    id: 1650,
+    chapter: 16,
+    question: "Nelle aree pedonali urbane o nelle isole pedonali, la sosta è:",
+    options: [
+      "Vietata ai veicoli a motore (salvo autorizzazioni speciali)",
+      "Consentita solo di notte",
+      "Consentita solo per i residenti",
+      "Consentita purché si rimanga meno di 30 minuti"
+    ],
+    correct: 0,
+    explanation: "Nelle aree pedonali urbane e nelle isole pedonali la sosta dei veicoli a motore è vietata, salvo specifiche autorizzazioni. Queste zone sono riservate ai pedoni per garantirne la sicurezza e la libertà di movimento."
+  },
+
 ];
