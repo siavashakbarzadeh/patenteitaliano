@@ -16,6 +16,7 @@ import { chapter18Content } from "@/lib/chapters/18/content";
 import { chapter17Content } from "@/lib/chapters/17/content";
 import { chapter16Content } from "@/lib/chapters/16/content";
 import { chapter15Content } from "@/lib/chapters/15/content";
+import { chapter14Content } from "@/lib/chapters/14/content";
 import type { ChapterContent } from "@/lib/chapters/20/content";
 import {
   CheckCircle2,
@@ -49,6 +50,7 @@ interface QuizState {
 }
 
 const contentRegistry: Record<number, ChapterContent> = {
+  14: chapter14Content,
   15: chapter15Content,
   16: chapter16Content,
   17: chapter17Content,

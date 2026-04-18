@@ -17,7 +17,7 @@ export const chapters: Chapter[] = [
   { number: 11, title: "Precedenza agli Incroci",         subtitle: "Regole di precedenza e rotatorie",    icon: "🔄",  available: false },
   { number: 12, title: "Sorpasso",                        subtitle: "Quando e come sorpassare",            icon: "↪️",  available: false },
   { number: 13, title: "Velocità",                        subtitle: "Limiti e adeguamento alla situazione",icon: "⚡",  available: false },
-  { number: 14, title: "Distanza di Sicurezza",           subtitle: "Spazio di frenata e arresto",         icon: "📏",  available: false },
+  { number: 14, title: "Ordine di Precedenza negli Incroci", subtitle: "Destra libera, STOP, tram e svolta a sinistra", icon: "🔄",  available: true  },
   { number: 15, title: "Norme Relative al Sorpasso",        subtitle: "Fasi, divieti e sorpasso a destra",      icon: "↪️",  available: true  },
   { number: 16, title: "Fermata, Sosta e Partenza",    subtitle: "Arresto, fermata, sosta, divieti e portiere",  icon: "🅿️",  available: true  },
   { number: 17, title: "Ingombro, Autostrada e Trasporto", subtitle: "Triangolo, giubbotto, autostrada, traino", icon: "🚧",  available: true  },
