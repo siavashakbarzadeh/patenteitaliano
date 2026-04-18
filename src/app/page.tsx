@@ -10,6 +10,8 @@ import {
   resetProgress,
   type UserProgress,
 } from "@/lib/store";
+import { chapter20Content } from "@/lib/chapters/20/content";
+import type { ChapterContent } from "@/lib/chapters/20/content";
 import {
   CheckCircle2,
   XCircle,
@@ -24,10 +26,14 @@ import {
   Zap,
   AlertCircle,
   Lock,
+  GraduationCap,
+  Languages,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 
-// ─── Types ────────────────────────────────────────────────────────
-type Page = "home" | "chapters" | "quiz" | "results" | "stats";
+// ─── Types ────────────────────────────────────────────────────────────────────
+type Page = "home" | "chapters" | "quiz" | "results" | "stats" | "study";
 
 interface QuizState {
   questions: Question[];
@@ -38,7 +44,12 @@ interface QuizState {
   wrongIds: number[];
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────
+// ─── Content registry (add new chapters here as they are added) ───────────────
+const contentRegistry: Record<number, ChapterContent> = {
+  20: chapter20Content,
+};
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
 }
@@ -48,7 +59,7 @@ function buildQuiz(chapterNum: number): Question[] {
   return shuffle(pool);
 }
 
-// ─── Components ───────────────────────────────────────────────────
+// ─── Components ───────────────────────────────────────────────────────────────
 
 function ItalianFlag() {
   return (
@@ -61,7 +72,7 @@ function ItalianFlag() {
 }
 
 function NavBar({ page, onNav }: { page: Page; onNav: (p: Page) => void }) {
-  if (page === "quiz" || page === "results") return null;
+  if (page === "quiz" || page === "results" || page === "study") return null;
   const items: { id: Page; label: string; icon: React.ReactNode }[] = [
     { id: "home",     label: "Home",       icon: <Home size={20} /> },
     { id: "chapters", label: "Capitoli",   icon: <BookOpen size={20} /> },
@@ -90,7 +101,212 @@ function NavBar({ page, onNav }: { page: Page; onNav: (p: Page) => void }) {
   );
 }
 
-// ─── Home Page ────────────────────────────────────────────────────
+// ─── Study Page ───────────────────────────────────────────────────────────────
+function StudyPage({
+  chapterNum,
+  onBack,
+  onGoToQuiz,
+}: {
+  chapterNum: number;
+  onBack: () => void;
+  onGoToQuiz: () => void;
+}) {
+  const content = contentRegistry[chapterNum];
+  const [openSection, setOpenSection] = useState<string | null>(
+    content?.sections[0]?.id ?? null
+  );
+
+  if (!content) {
+    return (
+      <div style={{ padding: "40px 20px", textAlign: "center" }}>
+        <p style={{ color: "var(--text-muted)" }}>محتوای آموزشی برای این فصل هنوز اضافه نشده است.</p>
+        <button className="btn-secondary" style={{ marginTop: 20 }} onClick={onBack}>← بازگشت</button>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ padding: "20px 20px 40px", maxWidth: 640, margin: "0 auto" }}>
+      {/* Top bar */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+        <button id="btn-study-back" className="btn-secondary"
+          style={{ padding: "8px 16px", fontSize: 13 }} onClick={onBack}>
+          ← Esci
+        </button>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: 11, color: "var(--accent-primary)", fontWeight: 700, letterSpacing: "0.08em" }}>
+            CAPITOLO {chapterNum}
+          </div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text-secondary)" }}>
+            مطالعه
+          </div>
+        </div>
+        <button id="btn-study-go-quiz" className="btn-primary"
+          style={{ padding: "8px 14px", fontSize: 12 }} onClick={onGoToQuiz}>
+          آزمون →
+        </button>
+      </div>
+
+      {/* Chapter header */}
+      <div className="glass-card animate-fade-in-up" style={{
+        padding: "20px 22px", marginBottom: 20,
+        background: "linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.08))",
+        border: "1px solid rgba(99,102,241,0.3)",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+          <GraduationCap size={20} color="var(--accent-primary)" />
+          <span style={{ fontSize: 12, fontWeight: 700, color: "var(--accent-primary)", letterSpacing: "0.06em" }}>
+            {content.pageRange}
+          </span>
+        </div>
+        <h1 style={{ fontSize: 16, fontWeight: 800, lineHeight: 1.5, marginBottom: 6, direction: "rtl", textAlign: "right" }}>
+          {content.titleFa}
+        </h1>
+        <p style={{ fontSize: 12, color: "var(--text-muted)", lineHeight: 1.5, fontStyle: "italic" }}>
+          {content.titleIt}
+        </p>
+      </div>
+
+      {/* Sections */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {content.sections.map((section, idx) => {
+          const isOpen = openSection === section.id;
+          return (
+            <div
+              key={section.id}
+              className="glass-card animate-fade-in-up"
+              style={{ overflow: "hidden", animationDelay: `${idx * 0.04}s`, padding: 0 }}
+            >
+              {/* Section header */}
+              <button
+                onClick={() => setOpenSection(isOpen ? null : section.id)}
+                style={{
+                  width: "100%", display: "flex", alignItems: "center",
+                  justifyContent: "space-between", padding: "16px 20px",
+                  background: "none", border: "none", cursor: "pointer",
+                  textAlign: "left", gap: 12,
+                }}
+              >
+                <div style={{ flex: 1 }}>
+                  <div style={{
+                    fontSize: 10, fontWeight: 700, color: "var(--accent-primary)",
+                    letterSpacing: "0.06em", marginBottom: 4,
+                  }}>
+                    {section.titleIt}
+                  </div>
+                  <div style={{
+                    fontSize: 15, fontWeight: 700, direction: "rtl", color: "var(--text-primary)",
+                    lineHeight: 1.4,
+                  }}>
+                    {section.titleFa}
+                  </div>
+                </div>
+                <div style={{ flexShrink: 0, color: "var(--text-muted)" }}>
+                  {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                </div>
+              </button>
+
+              {/* Section body */}
+              {isOpen && (
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "4px 0 16px" }}>
+                  {/* Paragraphs */}
+                  <div style={{ padding: "0 20px", display: "flex", flexDirection: "column", gap: 12, marginBottom: 16 }}>
+                    {section.body.map((para, pIdx) => (
+                      <p
+                        key={pIdx}
+                        style={{
+                          fontSize: 14, lineHeight: 1.8, direction: "rtl", textAlign: "right",
+                          color: para.startsWith("🚫") || para.startsWith("⚠️")
+                            ? "var(--text-primary)"
+                            : "var(--text-secondary)",
+                          background: para.startsWith("⚠️") ? "rgba(239,68,68,0.06)"
+                            : para.startsWith("🚫") ? "rgba(239,68,68,0.06)"
+                            : para.startsWith("✅") ? "rgba(16,185,129,0.06)"
+                            : "transparent",
+                          borderRadius: para.startsWith("⚠️") || para.startsWith("🚫") || para.startsWith("✅") ? 10 : 0,
+                          padding: para.startsWith("⚠️") || para.startsWith("🚫") || para.startsWith("✅") ? "10px 14px" : 0,
+                          borderRight: para.startsWith("📌") ? "3px solid var(--accent-primary)" : "none",
+                          paddingRight: para.startsWith("📌") ? 12 : undefined,
+                          whiteSpace: "pre-line",
+                        }}
+                      >
+                        {para}
+                      </p>
+                    ))}
+                  </div>
+
+                  {/* Key verbs */}
+                  {section.keyVerbs && section.keyVerbs.length > 0 && (
+                    <div style={{ padding: "0 16px" }}>
+                      <div style={{
+                        display: "flex", alignItems: "center", gap: 8, marginBottom: 10,
+                        padding: "0 4px",
+                      }}>
+                        <Languages size={15} color="var(--accent-secondary)" />
+                        <span style={{
+                          fontSize: 11, fontWeight: 700, color: "var(--accent-secondary)",
+                          letterSpacing: "0.08em",
+                        }}>
+                          افعال و اصطلاحات کلیدی
+                        </span>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                        {section.keyVerbs.map((verb, vIdx) => (
+                          <div key={vIdx} style={{
+                            background: "rgba(99,102,241,0.06)",
+                            border: "1px solid rgba(99,102,241,0.15)",
+                            borderRadius: 10, padding: "12px 14px",
+                          }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
+                              <code style={{
+                                fontSize: 13, fontWeight: 700, color: "#a78bfa",
+                                background: "rgba(167,139,250,0.12)",
+                                padding: "2px 8px", borderRadius: 6,
+                                fontFamily: "'JetBrains Mono', monospace",
+                              }}>
+                                {verb.italian}
+                              </code>
+                              <span style={{ fontSize: 12, color: "var(--text-muted)" }}>→</span>
+                              <span style={{
+                                fontSize: 13, fontWeight: 600, color: "var(--text-primary)",
+                                direction: "rtl",
+                              }}>
+                                {verb.persian}
+                              </span>
+                            </div>
+                            <p style={{
+                              fontSize: 12, color: "var(--text-muted)", lineHeight: 1.6,
+                              fontStyle: "italic", direction: "rtl", textAlign: "right",
+                              margin: 0, whiteSpace: "pre-line",
+                            }}>
+                              {verb.example}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Bottom CTA */}
+      <div style={{ marginTop: 28, display: "flex", flexDirection: "column", gap: 12 }}>
+        <button id="btn-study-start-quiz" className="btn-primary" style={{ width: "100%" }} onClick={onGoToQuiz}>
+          🎯 شروع آزمون فصل {chapterNum}
+        </button>
+        <button className="btn-secondary" style={{ width: "100%" }} onClick={onBack}>
+          ← بازگشت به فصل‌ها
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── Home Page ────────────────────────────────────────────────────────────────
 function HomePage({ progress, onNavigate }: {
   progress: UserProgress;
   onNavigate: (p: Page) => void;
@@ -205,12 +421,13 @@ function HomePage({ progress, onNavigate }: {
         </button>
       </div>
 
-      {/* Available chapter quick card */}
+      {/* Available chapter quick cards */}
       {chapters.filter(c => c.available).map((ch) => {
         const stats = progress.chapterStats[String(ch.number)];
         const acc = stats && stats.answered > 0
           ? Math.round((stats.correct / stats.answered) * 100) : null;
         const total = questions.filter(q => q.chapter === ch.number).length;
+        const hasContent = !!contentRegistry[ch.number];
         return (
           <div
             key={ch.number}
@@ -231,7 +448,7 @@ function HomePage({ progress, onNavigate }: {
                   CAPITOLO {ch.number}
                 </div>
                 <div style={{ fontSize: 16, fontWeight: 700 }}>{ch.title}</div>
-                <div style={{ fontSize: 12, color: "var(--text-muted)" }}>{ch.subtitle}</div>
+                <div style={{ fontSize: 12, color: "var(--text-muted)" }}>{total} domande</div>
               </div>
               {acc !== null && (
                 <span style={{
@@ -242,17 +459,26 @@ function HomePage({ progress, onNavigate }: {
                 </span>
               )}
             </div>
-            <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 12 }}>
-              {total} domande disponibili
+            <div style={{ display: "flex", gap: 10 }}>
+              {hasContent && (
+                <button
+                  id={`btn-study-ch${ch.number}`}
+                  className="btn-secondary"
+                  style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
+                  onClick={() => onNavigate("study")}
+                >
+                  <BookOpen size={15} /> مطالعه
+                </button>
+              )}
+              <button
+                id={`btn-start-ch${ch.number}`}
+                className="btn-primary"
+                style={{ flex: 1 }}
+                onClick={() => onNavigate("quiz")}
+              >
+                آزمون →
+              </button>
             </div>
-            <button
-              id={`btn-start-ch${ch.number}`}
-              className="btn-primary"
-              style={{ width: "100%" }}
-              onClick={() => onNavigate("quiz" as Page)}
-            >
-              Inizia Quiz Capitolo {ch.number} →
-            </button>
           </div>
         );
       })}
@@ -260,21 +486,22 @@ function HomePage({ progress, onNavigate }: {
   );
 }
 
-// ─── Chapters List Page ───────────────────────────────────────────
+// ─── Chapters List Page ───────────────────────────────────────────────────────
 function ChaptersPage({
   progress,
   onSelectChapter,
+  onStudyChapter,
 }: {
   progress: UserProgress;
   onSelectChapter: (ch: number) => void;
+  onStudyChapter: (ch: number) => void;
 }) {
   return (
     <div style={{ padding: "24px 20px 100px", maxWidth: 600, margin: "0 auto" }}>
       <div className="animate-fade-in-up" style={{ marginBottom: 24 }}>
         <h1 style={{ fontSize: 26, fontWeight: 800, marginBottom: 6 }}>25 Capitoli</h1>
         <p style={{ color: "var(--text-secondary)", fontSize: 14 }}>
-          Seleziona un capitolo per fare il quiz. I capitoli bloccati si sbloccano
-          man mano che carichi le pagine del libro.
+          هر فصل دو بخش دارد: <strong style={{ color: "var(--text-primary)" }}>مطالعه 📖</strong> (ترجمه فارسی) و <strong style={{ color: "var(--text-primary)" }}>آزمون 🎯</strong> (سوالات).
         </p>
       </div>
 
@@ -284,67 +511,87 @@ function ChaptersPage({
           const acc = stats && stats.answered > 0
             ? Math.round((stats.correct / stats.answered) * 100) : null;
           const total = questions.filter(q => q.chapter === ch.number).length;
+          const hasContent = !!contentRegistry[ch.number];
 
           return (
-            <button
+            <div
               key={ch.number}
-              id={`ch-item-${ch.number}`}
-              className="glass-card"
-              disabled={!ch.available}
+              className="glass-card animate-fade-in-up"
               style={{
-                display: "flex", alignItems: "center", gap: 14, padding: "16px 18px",
-                cursor: ch.available ? "pointer" : "not-allowed",
-                opacity: ch.available ? 1 : 0.5,
-                width: "100%", textAlign: "left",
-                border: "1px solid var(--border-subtle)",
+                opacity: ch.available ? 1 : 0.45,
                 animationDelay: `${i * 0.03}s`,
+                padding: "14px 18px",
+                border: "1px solid var(--border-subtle)",
               }}
-              onClick={() => ch.available && onSelectChapter(ch.number)}
             >
-              {/* Number badge */}
-              <div style={{
-                width: 40, height: 40, borderRadius: 12, flexShrink: 0,
-                background: ch.available
-                  ? "linear-gradient(135deg, #6366f1, #8b5cf6)"
-                  : "rgba(255,255,255,0.06)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 14, fontWeight: 700, color: "white",
-              }}>
-                {ch.available ? ch.icon : <Lock size={14} color="var(--text-muted)" />}
-              </div>
-
-              {/* Info */}
-              <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: ch.available ? 12 : 0 }}>
+                {/* badge */}
                 <div style={{
-                  fontSize: 11, fontWeight: 600,
-                  color: ch.available ? "var(--accent-primary)" : "var(--text-muted)",
-                  marginBottom: 2,
+                  width: 40, height: 40, borderRadius: 12, flexShrink: 0,
+                  background: ch.available
+                    ? "linear-gradient(135deg, #6366f1, #8b5cf6)"
+                    : "rgba(255,255,255,0.06)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 14, fontWeight: 700, color: "white",
                 }}>
-                  CAP. {String(ch.number).padStart(2, "0")}
+                  {ch.available ? ch.icon : <Lock size={14} color="var(--text-muted)" />}
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 600, white: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                  {ch.title}
+
+                {/* info */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{
+                    fontSize: 11, fontWeight: 600,
+                    color: ch.available ? "var(--accent-primary)" : "var(--text-muted)",
+                    marginBottom: 2,
+                  }}>
+                    CAP. {String(ch.number).padStart(2, "0")}
+                  </div>
+                  <div style={{ fontSize: 14, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {ch.title}
+                  </div>
+                  <div style={{ fontSize: 11, color: "var(--text-muted)" }}>
+                    {ch.available ? `${total} domande` : "Carica le immagini per sbloccare"}
+                  </div>
                 </div>
-                <div style={{ fontSize: 11, color: "var(--text-muted)" }}>
-                  {ch.available ? `${total} domande` : "Carica le immagini per sbloccare"}
-                </div>
+
+                {/* accuracy */}
+                {acc !== null && (
+                  <span style={{
+                    fontSize: 14, fontWeight: 800, flexShrink: 0,
+                    color: acc >= 70 ? "var(--success)" : acc >= 40 ? "var(--warning)" : "var(--error)",
+                  }}>
+                    {acc}%
+                  </span>
+                )}
               </div>
 
-              {/* Right side */}
+              {/* Action buttons — only for available chapters */}
               {ch.available && (
-                <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
-                  {acc !== null && (
-                    <span style={{
-                      fontSize: 14, fontWeight: 800,
-                      color: acc >= 70 ? "var(--success)" : acc >= 40 ? "var(--warning)" : "var(--error)",
-                    }}>
-                      {acc}%
-                    </span>
+                <div style={{ display: "flex", gap: 8 }}>
+                  {hasContent && (
+                    <button
+                      id={`ch-study-${ch.number}`}
+                      className="btn-secondary"
+                      style={{
+                        flex: 1, padding: "9px 12px", fontSize: 13,
+                        display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                      }}
+                      onClick={() => onStudyChapter(ch.number)}
+                    >
+                      <BookOpen size={14} /> مطالعه
+                    </button>
                   )}
-                  <ChevronRight size={16} color="var(--text-muted)" />
+                  <button
+                    id={`ch-item-${ch.number}`}
+                    className="btn-primary"
+                    style={{ flex: 1, padding: "9px 12px", fontSize: 13 }}
+                    onClick={() => onSelectChapter(ch.number)}
+                  >
+                    🎯 آزمون
+                  </button>
                 </div>
               )}
-            </button>
+            </div>
           );
         })}
       </div>
@@ -352,7 +599,7 @@ function ChaptersPage({
   );
 }
 
-// ─── Quiz Page ────────────────────────────────────────────────────
+// ─── Quiz Page ────────────────────────────────────────────────────────────────
 function QuizPage({ chapterNum, onFinish, onBack }: {
   chapterNum: number;
   onFinish: (score: number, total: number) => void;
@@ -481,7 +728,7 @@ function QuizPage({ chapterNum, onFinish, onBack }: {
               fontWeight: 700,
               color: quiz.selected === q.correct ? "var(--success)" : "var(--error)",
             }}>
-              {quiz.selected === q.correct ? "Risposta Corretta!" : "Risposta Sbagliata"}
+              {quiz.selected === q.correct ? "Risposta Corretta! ✅" : "Risposta Sbagliata ❌"}
             </span>
           </div>
           <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65 }}>
@@ -501,15 +748,16 @@ function QuizPage({ chapterNum, onFinish, onBack }: {
   );
 }
 
-// ─── Results Page ────────────────────────────────────────────────
-function ResultsPage({ score, total, chapterNum, onRestart, onHome }: {
+// ─── Results Page ─────────────────────────────────────────────────────────────
+function ResultsPage({ score, total, chapterNum, onRestart, onHome, onStudy }: {
   score: number; total: number; chapterNum: number;
-  onRestart: () => void; onHome: () => void;
+  onRestart: () => void; onHome: () => void; onStudy: () => void;
 }) {
   const pct = Math.round((score / total) * 100);
   const passed = pct >= 70;
   const deg = (pct / 100) * 360;
   const ch = chapters.find((c) => c.number === chapterNum);
+  const hasContent = !!contentRegistry[chapterNum];
 
   return (
     <div style={{
@@ -572,7 +820,7 @@ function ResultsPage({ score, total, chapterNum, onRestart, onHome }: {
         }}>
           {passed
             ? "✓ Soglia del 70% superata!"
-            : `✗ Mancano ${Math.ceil(total * 0.7) - score} risposte corrette`}
+            : `✗ Ripassa il materiale e riprova`}
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -580,6 +828,12 @@ function ResultsPage({ score, total, chapterNum, onRestart, onHome }: {
             <RotateCcw size={16} style={{ display: "inline", marginRight: 8 }} />
             Riprova il Capitolo
           </button>
+          {!passed && hasContent && (
+            <button id="btn-results-study" className="btn-secondary" onClick={onStudy}
+              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+              <BookOpen size={16} /> مطالعه دوباره مطالب
+            </button>
+          )}
           <button id="btn-results-home" className="btn-secondary" onClick={onHome}>
             ← Torna alla Home
           </button>
@@ -589,7 +843,7 @@ function ResultsPage({ score, total, chapterNum, onRestart, onHome }: {
   );
 }
 
-// ─── Stats Page ───────────────────────────────────────────────────
+// ─── Stats Page ───────────────────────────────────────────────────────────────
 function StatsPage({ progress, onReset }: { progress: UserProgress; onReset: () => void }) {
   const accuracy = getAccuracy(progress);
   const availableChapters = chapters.filter(c => c.available);
@@ -680,7 +934,7 @@ function StatsPage({ progress, onReset }: { progress: UserProgress; onReset: () 
   );
 }
 
-// ─── Main App ────────────────────────────────────────────────────
+// ─── Main App ─────────────────────────────────────────────────────────────────
 export default function App() {
   const [page, setPage] = useState<Page>("home");
   const [activeChapter, setActiveChapter] = useState<number>(20);
@@ -698,8 +952,10 @@ export default function App() {
     setPage("quiz");
   };
 
-  // Home page "Inizia" button shortcut → chapter 20
-  const handleHomeStart = () => handleSelectChapter(20);
+  const handleStudyChapter = (ch: number) => {
+    setActiveChapter(ch);
+    setPage("study");
+  };
 
   const handleQuizFinish = (score: number, total: number) => {
     setLastResult({ score, total });
@@ -722,12 +978,25 @@ export default function App() {
         <HomePage
           progress={progress}
           onNavigate={(p) => {
-            if (p === "quiz") { handleHomeStart(); } else { setPage(p); }
+            if (p === "quiz") { handleSelectChapter(20); }
+            else if (p === "study") { handleStudyChapter(20); }
+            else { setPage(p); }
           }}
         />
       )}
       {page === "chapters" && (
-        <ChaptersPage progress={progress} onSelectChapter={handleSelectChapter} />
+        <ChaptersPage
+          progress={progress}
+          onSelectChapter={handleSelectChapter}
+          onStudyChapter={handleStudyChapter}
+        />
+      )}
+      {page === "study" && (
+        <StudyPage
+          chapterNum={activeChapter}
+          onBack={() => setPage("chapters")}
+          onGoToQuiz={() => handleSelectChapter(activeChapter)}
+        />
       )}
       {page === "quiz" && (
         <QuizPage
@@ -744,6 +1013,7 @@ export default function App() {
           chapterNum={activeChapter}
           onRestart={() => { setQuizKey((k) => k + 1); setPage("quiz"); }}
           onHome={() => setPage("home")}
+          onStudy={() => handleStudyChapter(activeChapter)}
         />
       )}
       {page === "stats" && (
