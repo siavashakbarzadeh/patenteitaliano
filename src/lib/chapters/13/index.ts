@@ -439,4 +439,445 @@ export const chapter13Questions: Question[] = [
     explanation: "Quando si percorre una curva su una strada a due corsie a doppio senso, il conducente deve mantenersi il più vicino possibile al margine destro della carreggiata, riducendo appropriatamente la velocità. Spostarsi verso il centro sarebbe pericoloso per i veicoli in senso contrario."
   },
 
+
+  // ── 13.3 Cambiamento di Direzione di Marcia ──────────────────────────────
+
+  {
+    id: 1331,
+    chapter: 13,
+    question: "Prima di effettuare una manovra di cambiamento di direzione (svolta, cambio corsia, retromarcia), il conducente deve PRIMA:",
+    options: [
+      "Assicurarsi di poter effettuare la manovra senza creare pericolo o intralcio, e presegnalare per tempo azionando gli indicatori di direzione",
+      "Suonare il clacson e procedere",
+      "Guardare solo nello specchio retrovisore interno",
+      "Fermarsi completamente prima di ogni manovra"
+    ],
+    correct: 0,
+    explanation: "Prima di effettuare qualsiasi manovra di cambiamento di direzione, il conducente deve: assicurarsi di poter effettuare la manovra senza creare pericolo o intralcio; presegnalare in anticipo azionando gli indicatori di direzione, che devono restare in funzione per tutta la durata della manovra."
+  },
+
+  {
+    id: 1332,
+    chapter: 13,
+    question: "Per cambiare corsia, la striscia che divide le corsie deve essere:",
+    options: [
+      "Tratteggiata (discontinua) — e la corsia che si vuole occupare deve essere libera davanti e dietro per un tratto sufficiente",
+      "Continua (striscia piena) — in qualsiasi caso",
+      "Di qualsiasi tipo, basta segnalare con la freccia",
+      "Non conta il tipo di striscia, solo la visibilità"
+    ],
+    correct: 0,
+    explanation: "Per cambiare corsia, la striscia che divide le corsie deve essere tratteggiata (discontinua). Oltre a ciò, la corsia che si vuole occupare deve essere libera davanti e dietro per un tratto sufficiente."
+  },
+
+  {
+    id: 1333,
+    chapter: 13,
+    question: "Quando si immette nel flusso della circolazione, il conducente deve dare la precedenza:",
+    options: [
+      "A tutti gli altri utenti della strada e ai veicoli in transito (anche alle biciclette), accertarsi che la strada sia libera e guardare negli specchi retrovisori",
+      "Solo ai veicoli che vengono da destra",
+      "Solo ai veicoli più grandi",
+      "Non è necessario dare la precedenza se la strada sembra libera"
+    ],
+    correct: 0,
+    explanation: "Quando ci si immette nel flusso della circolazione, si deve dare la precedenza a tutti gli altri utenti della strada e ai veicoli in transito (incluse le biciclette), accertarsi che la strada sia libera, guardare negli specchi retrovisori. Il mancato rispetto comporta anche la perdita di 2 punti dalla patente."
+  },
+
+  {
+    id: 1334,
+    chapter: 13,
+    question: "Nei bracci di entrata degli incroci (corsie di preselezione), il conducente deve:",
+    options: [
+      "Disporsi tempestivamente sulla corsia destinata alle manovre che intende effettuare, mantenendo la direzione scelta — vietate modifiche improvvise di direzione (zig-zag) all'interno dell'intersezione",
+      "Posizionarsi sempre al centro delle corsie",
+      "Scegliere la corsia all'ultimo momento per maggiore flessibilità",
+      "Può cambiare la direzione di marcia liberamente anche dentro l'incrocio"
+    ],
+    correct: 0,
+    explanation: "Nei bracci di entrata degli incroci, il conducente deve disporsi tempestivamente sulle corsie destinate alle manovre che intende effettuare. Una volta effettuata la scelta, è vietato fare modifiche improvvise di direzione all'interno dell'intersezione (zig-zag)."
+  },
+
+  // ── Svolta (Turning) ────────────────────────────────────────────────────
+
+  {
+    id: 1335,
+    chapter: 13,
+    question: "Per effettuare la svolta a destra, il conducente deve:",
+    options: [
+      "Tenersi il più vicino possibile al margine destro, segnalare in anticipo, moderare la velocità, lasciare il centro dell'incrocio alla propria sinistra e dare la precedenza ai pedoni sulle strisce",
+      "Spostarsi al centro della carreggiata prima di svoltare a destra",
+      "Svoltare rapidamente senza ridurre la velocità",
+      "Dare la precedenza solo ai veicoli da sinistra"
+    ],
+    correct: 0,
+    explanation: "Per la svolta a destra occorre: tenersi il più vicino possibile al margine destro; segnalare in anticipo con l'indicatore di direzione; moderare la velocità man mano che ci si avvicina al punto di svolta; lasciare alla propria sinistra il centro dell'incrocio; dare la precedenza ai pedoni che attraversano."
+  },
+
+  {
+    id: 1336,
+    chapter: 13,
+    question: "Per effettuare la svolta a sinistra su una strada a doppio senso di circolazione, il conducente deve avvicinarsi:",
+    options: [
+      "All'asse (centro) della carreggiata, senza però spostarsi a sinistra della linea continua di mezzeria, poi effettuare la svolta in prossimità del centro dell'incrocio alla propria sinistra, evitando di imboccare contromano",
+      "Al margine destro della carreggiata prima di svoltare a sinistra",
+      "Al centro della carreggiata solo dopo aver già svoltato",
+      "Può svoltare a sinistra senza avvicinarsi all'asse"
+    ],
+    correct: 0,
+    explanation: "Per la svolta a sinistra su strada a doppio senso, ci si deve avvicinare all'asse della carreggiata (senza però attraversare la striscia continua di mezzeria), effettuare la svolta in prossimità del centro dell'incrocio, evitare di imboccare contromano e rispettare la precedenza ai veicoli da destra."
+  },
+
+  // ── Inversione di Marcia ──────────────────────────────────────────────────
+
+  {
+    id: 1337,
+    chapter: 13,
+    question: "L'inversione di marcia (U-turn) su una strada a doppio senso è vietata: in vicinanza di curve, dossi e incroci, nelle gallerie, in caso di scarsa visibilità e:",
+    options: [
+      "Dove la linea di mezzeria è una striscia continua (non tratteggiata)",
+      "Solo in autostrada",
+      "Solo nelle strade urbane con semafori",
+      "Dove c'è traffico intenso ma la strada è dritta"
+    ],
+    correct: 0,
+    explanation: "L'inversione di marcia è vietata: in vicinanza di curve, dossi e incroci; nelle gallerie; in tutti i casi di scarsa visibilità; dove la linea di mezzeria sia una striscia continua. Ove possibile, l'inversione va effettuata con una sola manovra."
+  },
+
+  {
+    id: 1338,
+    chapter: 13,
+    question: "Chi intende effettuare un'inversione di marcia su una strada a doppio senso deve:",
+    options: [
+      "Non creare pericolo o intralcio, usare gli indicatori di direzione per tutta la durata della manovra, e rinunciare se il traffico è intenso o vi sia scarsa visibilità",
+      "Procedere senza segnalare se la strada sembra libera",
+      "Fermarsi al centro della carreggiata e aspettare che la strada sia libera",
+      "Effettuarla solo di notte quando c'è meno traffico"
+    ],
+    correct: 0,
+    explanation: "Chi intende effettuare un'inversione di marcia su strada a doppio senso non deve creare pericolo o intralcio; deve azionare l'indicatore di direzione per tutta la durata della manovra; deve rinunciare alla manovra qualora il traffico sia intenso e continuo o vi sia scarsa visibilità."
+  },
+
+  // ── 13.4 Convogli Militari ───────────────────────────────────────────────
+
+  {
+    id: 1339,
+    chapter: 13,
+    question: "È vietato interrompere convogli militari, cortei, processioni, colonne di scolari. Se ci si trova davanti a uno di essi, occorre:",
+    options: [
+      "Fermarsi sulla destra e attendere che la carreggiata sia libera, evitando di suonare o lampeggiare con i fari",
+      "Procedere lentamente attraverso il corteo",
+      "Suonare il clacson per farsi largo",
+      "Fare inversione di marcia per evitare il corteo"
+    ],
+    correct: 0,
+    explanation: "È vietato interrompere convogli militari, cortei, processioni e colonne di scolari. Se ci si trova davanti a tale situazione, occorre fermarsi sulla destra e attendere che la carreggiata si liberi. È vietato suonare o lampeggiare con i fari. Prima di passare, occorre accertarsi che il corteo sia transitato completamente."
+  },
+
+  // ── 13.5 Comportamento agli Incroci ─────────────────────────────────────
+
+  {
+    id: 1340,
+    chapter: 13,
+    question: "In prossimità degli incroci, quali comportamenti sono vietati?",
+    options: [
+      "Procedere a zig-zag, cambiare improvvisamente la direzione di marcia, effettuare l'inversione di marcia, sostare o fermarsi, sorpassare (se si deve occupare la corsia opposta)",
+      "Solo il sorpasso è vietato",
+      "Solo la sosta è vietata",
+      "Solo l'inversione di marcia è vietata"
+    ],
+    correct: 0,
+    explanation: "In corrispondenza degli incroci non è consentito: procedere a zig-zag; cambiare improvvisamente la direzione di marcia; effettuare l'inversione di marcia; sostare o fermarsi; sorpassare (anche una bicicletta) se si deve occupare la corsia opposta di marcia."
+  },
+
+  {
+    id: 1341,
+    chapter: 13,
+    question: "All'avvicinarsi di un incrocio, il conducente deve impegnarlo solo se:",
+    options: [
+      "Ha la possibilità di proseguire e liberare completamente l'incrocio — non deve bloccare il centro dell'incrocio ostacolando gli sbocchi delle strade laterali",
+      "La strada è libera almeno per 50 metri",
+      "Il semaforo è verde da almeno 3 secondi",
+      "Non ci sono pedoni nelle vicinanze"
+    ],
+    correct: 0,
+    explanation: "Il conducente deve impegnare l'incrocio solo se ha la possibilità di proseguire e di liberarlo completamente. Non deve bloccare il centro dell'incrocio ostacolando gli sbocchi delle strade laterali in caso di arresto di lunghe file di veicoli."
+  },
+
+  // ── Rotatorie ────────────────────────────────────────────────────────────
+
+  {
+    id: 1342,
+    chapter: 13,
+    question: "In un incrocio con circolazione rotatoria (rotonda) segnalato con 'DARE PRECEDENZA', chi ha la precedenza?",
+    options: [
+      "I veicoli già circolanti nell'anello (i veicoli in entrata devono cedere la precedenza a quelli già presenti nella rotonda)",
+      "I veicoli in entrata, perché vengono da destra",
+      "Chi entra per primo nella rotonda ha la precedenza",
+      "Non ci sono regole di precedenza specifiche nelle rotonde"
+    ],
+    correct: 0,
+    explanation: "Nelle rotonde segnalate con 'DARE PRECEDENZA', i veicoli in entrata devono cedere la precedenza a quelli già circolanti nell'anello. È cambiamento rispetto alla vecchia regola della destra — oggi la maggioranza delle rotonde italiane ha questo segnale."
+  },
+
+  {
+    id: 1343,
+    chapter: 13,
+    question: "Prima di immettersi in una rotonda, il conducente deve:",
+    options: [
+      "Moderare la velocità e usare la massima prudenza, controllando nel contempo il comportamento degli altri utenti",
+      "Accelerare per aggiungersi rapidamente al flusso rotatorio",
+      "Fermarsi sempre prima di entrare anche se non c'è il segnale di STOP",
+      "Suonare il clacson per avvertire i veicoli già nella rotonda"
+    ],
+    correct: 0,
+    explanation: "Prima di immettersi in una rotonda, è opportuno moderare la velocità e usare la massima prudenza, controllando nel contempo il comportamento degli altri utenti. All'interno dell'anello si applicano le stesse regole delle strade a due corsie."
+  },
+
+  {
+    id: 1344,
+    chapter: 13,
+    question: "In una rotonda a due corsie, i veicoli circolanti all'interno dell'anello che non intendono occupare la corsia interna:",
+    options: [
+      "Non devono entrare nella corsia interna; devono sorpassare a sinistra; non devono fare retromarcia nella rotonda",
+      "Possono usare liberamente qualsiasi corsia",
+      "Devono sempre usare la corsia interna",
+      "Devono fermarsi alla corsia interna e aspettare"
+    ],
+    correct: 0,
+    explanation: "In una rotonda a due corsie: i veicoli circolanti all'interno dell'anello devono sorpassare a sinistra; quelli che non intendono occupare la corsia interna non devono entrarvi; i veicoli circolanti nell'anello non devono effettuare manovre di retromarcia."
+  },
+
+  // ── 13.6 Norme sulla Precedenza (Art. 145, 154, 177 C.d.S.) ─────────────
+
+  {
+    id: 1345,
+    chapter: 13,
+    question: "Quando due veicoli stanno per impegnare lo stesso incrocio (anche se le traiettorie non si incrociano), si ha l'obbligo di dare la precedenza a destra. Questa regola vale ANCHE nei seguenti casi:",
+    options: [
+      "Negli incroci privi di segnaletica e in presenza del segnale 'INTERSEZIONE CON PRECEDENZA A DESTRA'",
+      "Solo quando c'è il segnale specifico",
+      "Solo sulle autostrade",
+      "Solo di notte"
+    ],
+    correct: 0,
+    explanation: "L'obbligo di dare la precedenza a destra (e a sinistra) vale: negli incroci privi di segnaletica stradale; in presenza del segnale 'INTERSEZIONE CON PRECEDENZA A DESTRA'; in presenza del segnale 'DARE PRECEDENZA'; quando ci si immette nel flusso della circolazione; quando si effettua l'inversione di marcia; quando si effettua la retromarcia."
+  },
+
+  {
+    id: 1346,
+    chapter: 13,
+    question: "Si ha l'obbligo di dare la PRECEDENZA SIA A DESTRA CHE A SINISTRA in presenza del segnale 'DARE PRECEDENZA' e inoltre:",
+    options: [
+      "Quando ci si immette nel flusso della circolazione, quando si effettua l'inversione di marcia, e quando si effettua la retromarcia",
+      "Solo quando la strada è bagnata",
+      "Solo in autostrada",
+      "Solo di notte o in caso di nebbia"
+    ],
+    correct: 0,
+    explanation: "Si ha l'obbligo di dare la precedenza sia a destra che a sinistra: in presenza del segnale 'DARE PRECEDENZA'; quando ci si immette nel flusso della circolazione; quando si effettua l'inversione di marcia; quando si effettua la retromarcia."
+  },
+
+  {
+    id: 1347,
+    chapter: 13,
+    question: "Uscendo da un'autorimessa, un passo carraio o luoghi non soggetti a pubblico passaggio, il conducente deve:",
+    options: [
+      "Fermarsi e dare la precedenza a tutti; fare attenzione ai pedoni sul marciapiede; procedere lentamente, specialmente in retromarcia",
+      "Procedere normalmente se non ci sono ostacoli visibili",
+      "Suonare il clacson e uscire rapidamente",
+      "Ha la precedenza su chi è sulla strada"
+    ],
+    correct: 0,
+    explanation: "Uscendo da un'autorimessa, passo carraio o luoghi non soggetti a pubblico passaggio, bisogna usare prudenza (suonando il clacson se necessario), dare la precedenza agli eventuali pedoni che circolano sul marciapiede, procedere lentamente, specialmente se l'uscita è effettuata in retromarcia."
+  },
+
+  // ── 13.7 Comportamento verso i Pedoni ────────────────────────────────────
+
+  {
+    id: 1348,
+    chapter: 13,
+    question: "Quando il traffico non è regolato da semafori o agenti, ai pedoni sugli attraversamenti pedonali il conducente deve:",
+    options: [
+      "Dare sempre la precedenza, fermandosi se necessario — è un obbligo assoluto",
+      "Dare la precedenza solo se i pedoni sono già a metà strada",
+      "Suonare il clacson per avvertire il pedone e proseguire",
+      "Rallentare ma non è necessario fermarsi"
+    ],
+    correct: 0,
+    explanation: "Quando il traffico non è regolato da agenti o semafori, i conducenti devono dare la precedenza, fermandosi, ai pedoni che transitano sugli attraversamenti pedonali (strisce). È un obbligo assoluto (Art. 191 C.d.S.)."
+  },
+
+  {
+    id: 1349,
+    chapter: 13,
+    question: "Un pedone attraversa la strada fuori dalle strisce pedonali. Il conducente deve:",
+    options: [
+      "Ridurre la velocità e, se necessario, fermarsi per non investirlo — può usare brevemente il clacson in caso di pericolo imminente",
+      "Proseguire normalmente, il pedone fuori dalle strisce non ha la precedenza",
+      "Accelerare per passare prima del pedone",
+      "Solo suonare il clacson senza rallentare"
+    ],
+    correct: 0,
+    explanation: "Fuori dalle strisce di attraversamento, il conducente non è acceduto a dare la precedenza, ma deve comunque ridurre la velocità e, occorrendo, fermarsi per non investire il pedone. Può usare brevemente il clacson in caso di pericolo immediato."
+  },
+
+  {
+    id: 1350,
+    chapter: 13,
+    question: "Il conducente deve fermarsi obbligatoriamente quando una persona con ridotte capacità motorie (sedia a rotelle, bastone bianco, ecc.) attraversa la carreggiata o si accinge ad attraversarla?",
+    options: [
+      "Sì, i conducenti devono fermarsi quando una persona con ridotte capacità motorie o con bastone bianco (o bianco-rosso) attraversa o si accinge ad attraversare",
+      "No, vale la stessa regola degli altri pedoni",
+      "Solo se la persona è già a metà strada",
+      "Solo se è presente un agente del traffico"
+    ],
+    correct: 0,
+    explanation: "I conducenti devono fermarsi quando una persona con ridotte capacità motorie su carrozzella, munita di bastone bianco o bastone bianco-rosso (sordocieca), o comunque riconoscibile, attraversa la carreggiata o si accinge ad attraversarla (Art. 191 C.d.S.)."
+  },
+
+  // ── 13.9 Polizia, Ambulanze ───────────────────────────────────────────────
+
+  {
+    id: 1351,
+    chapter: 13,
+    question: "Quando un veicolo di polizia/ambulanza/pompieri usa CONTEMPORANEAMENTE sirena (dispositivo acustico) e lampeggiante blu, gli altri conducenti devono:",
+    options: [
+      "Lasciare libero il passo appena udita la sirena e, se necessario, fermarsi — è vietato seguire da vicino tali veicoli per trarne vantaggio nel traffico",
+      "Procedere normalmente rispettando solo i semafori",
+      "Fermarsi solo se il veicolo di emergenza chiede esplicitamente di fermarsi",
+      "Non hanno obblighi specifici"
+    ],
+    correct: 0,
+    explanation: "Chiunque si trovi sulla strada percorsa da veicoli di polizia/ambulanza/pompieri che usano CONTEMPORANEAMENTE sirena e lampeggiante blu ha l'obbligo di lasciare libero il passo e, se necessario, fermarsi. È vietato seguirli da vicino per trarne vantaggio nel traffico."
+  },
+
+  {
+    id: 1352,
+    chapter: 13,
+    question: "Un veicolo della polizia con sirena in funzione vi sorpassa e sul tetto ha il display con la scritta luminosa 'ACCOSTARE'. Il conducente deve:",
+    options: [
+      "Fermarsi sul margine destro della carreggiata (accostarsi)",
+      "Accelerare per non essere sorpassato",
+      "Ignorare la scritta se non si ritiene di aver commesso infrazioni",
+      "Fermarsi solo se si è in autostrada"
+    ],
+    correct: 0,
+    explanation: "Se un veicolo della polizia con sirena in funzione vi sorpassa e sul tetto ha la scritta luminosa 'ACCOSTARE', si ha l'obbligo di accostarsi e fermarsi sul margine destro della carreggiata."
+  },
+
+  {
+    id: 1353,
+    chapter: 13,
+    question: "Un veicolo della polizia con sirena in funzione vi sorpassa e sul tetto ha il display 'ALT POLIZIA'. Il conducente deve:",
+    options: [
+      "Fermarsi obbligatoriamente — questo segnale è indirizzato specificamente al veicolo che viene sorpassato",
+      "Accostarsi ma non fermarsi",
+      "Accelerare per mantenere la distanza",
+      "Proseguire normalmente"
+    ],
+    correct: 0,
+    explanation: "La scritta luminosa 'ALT POLIZIA' su un veicolo della polizia che vi sorpassa con sirena in funzione indica che l'ingiunzione di fermata è rivolta specificamente al conducente sorpassato — obbligo assoluto di fermarsi."
+  },
+
+  {
+    id: 1354,
+    chapter: 13,
+    question: "Un veicolo della polizia sul tetto ha il display con la scritta luminosa 'INCIDENTE'. Il conducente deve:",
+    options: [
+      "Diminuire la velocità",
+      "Fermarsi immediatamente",
+      "Procedere normalmente",
+      "Seguire il veicolo della polizia"
+    ],
+    correct: 0,
+    explanation: "Quando un veicolo della polizia ha sul tetto il display con la scritta luminosa 'INCIDENTE', i conducenti che lo incontrano devono diminuire la velocità (per prepararsi a incontare la scena di un incidente e raggiungere i soccorsi)."
+  },
+
+  // ── 13.10 Specchi Retrovisori ─────────────────────────────────────────────
+
+  {
+    id: 1355,
+    chapter: 13,
+    question: "Su un'autovettura moderna, quanti specchi retrovisori sono presenti e di che tipo?",
+    options: [
+      "Tre: uno centrale interno e due laterali esterni (uno a destra e uno a sinistra)",
+      "Due: uno centrale e uno laterale sinistro",
+      "Quattro: due anteriori e due posteriori",
+      "Solo uno centrale — gli altri sono facoltativi"
+    ],
+    correct: 0,
+    explanation: "Le autovetture moderne hanno di norma tre specchi retrovisori: uno centrale interno (all'interno dell'abitacolo) e due laterali esterni (uno a destra e uno a sinistra). Tutti devono essere sempre puliti ed efficienti."
+  },
+
+  {
+    id: 1356,
+    chapter: 13,
+    question: "La regolazione degli specchi retrovisori deve essere effettuata:",
+    options: [
+      "Dopo aver regolato il sedile, quando il veicolo non è ancora in marcia",
+      "Mentre si guida, al momento del bisogno",
+      "Solo prima di un lungo viaggio",
+      "Una volta al mese durante il controllo del veicolo"
+    ],
+    correct: 0,
+    explanation: "La regolazione degli specchi retrovisori deve essere svolta dopo che è stata regolata la posizione del sedile e quando il veicolo non è ancora in marcia. Non si deve mai regolare gli specchi mentre si guida."
+  },
+
+  {
+    id: 1357,
+    chapter: 13,
+    question: "Lo specchio retrovisore centrale ha una posizione 'antiriflesso'. A cosa serve?",
+    options: [
+      "Per ridurre nelle ore notturne il fastidio agli occhi causato dai proiettori dei veicoli che seguono",
+      "Per migliorare la visione frontale di giorno",
+      "Per eliminare gli angoli ciechi laterali",
+      "Per vedere meglio di lato nelle curve"
+    ],
+    correct: 0,
+    explanation: "Lo specchio retrovisore centrale ha anche una posizione antiriflesso da utilizzare nelle ore notturne. Serve a ridurre il fastidio agli occhi causato dall'abbagliamento dei proiettori dei veicoli che seguono. Si aziona tramite apposito comando."
+  },
+
+  {
+    id: 1358,
+    chapter: 13,
+    question: "Gli specchi retrovisori devono essere utilizzati per un controllo posteriore della strada prima di:",
+    options: [
+      "Iniziare una manovra di parcheggio in retromarcia, durante tutte le manovre di retromarcia, prima di sorpassare e durante tutta la manovra, prima di cambiare corsia e prima di immettersi nel flusso della circolazione",
+      "Solo prima di sorpassare",
+      "Solo quando si fa retromarcia",
+      "Solo prima di cambiare corsia in autostrada"
+    ],
+    correct: 0,
+    explanation: "Gli specchi retrovisori devono essere usati per il controllo posteriore: prima di manovre di parcheggio in retromarcia; durante tutte le manovre di retromarcia; prima di sorpassare e continuando durante tutta la manovra; prima di cambiare corsia; prima di immettersi nel flusso della circolazione."
+  },
+
+  {
+    id: 1359,
+    chapter: 13,
+    question: "Gli angoli ciechi (zone non visibili dagli specchi) dipendono da:",
+    options: [
+      "La struttura del veicolo (dimensione e posizione dei montanti del tetto) e dalla dimensione e posizionamento degli specchi stessi",
+      "Solo dalla velocità del veicolo",
+      "Solo dalla luminosità dell'ambiente",
+      "Solo dal tipo di strada"
+    ],
+    correct: 0,
+    explanation: "Gli angoli ciechi dipendono dalla struttura del veicolo (dimensione e posizione dei montanti del tetto, altezza del veicolo) e dalla dimensione e posizionamento degli specchi. Per questo motivo il controllo visivo laterale diretto deve integrare il controllo tramite specchi."
+  },
+
+  {
+    id: 1360,
+    chapter: 13,
+    question: "Sulle motociclette e sui ciclomotori, gli specchi retrovisori posti sui lati del manubrio devono essere regolati:",
+    options: [
+      "Con maggiore frequenza rispetto alle autovetture (a causa delle vibrazioni), mantenendoli sempre puliti ed efficienti",
+      "Solo una volta all'anno durante la revisione",
+      "Non hanno bisogno di regolazione specifica",
+      "Solo se si supera i 100 km/h"
+    ],
+    correct: 0,
+    explanation: "Anche sui motocicli e ciclomotori, il conducente deve provvedere all'esatta regolazione della posizione degli specchi, che per effetto delle vibrazioni può rendersi necessaria con maggiore frequenza rispetto alle autovetture. Vanno sempre mantenuti puliti ed efficienti."
+  },
+
 ];
