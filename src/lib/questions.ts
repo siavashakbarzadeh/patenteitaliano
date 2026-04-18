@@ -5,6 +5,7 @@
 export type { Question, Chapter } from "@/lib/types";
 export { chapters } from "@/lib/chapters/index";
 
+import { chapter17Questions } from "@/lib/chapters/17/index";
 import { chapter18Questions } from "@/lib/chapters/18/index";
 import { chapter19Questions } from "@/lib/chapters/19/index";
 import { chapter20Questions } from "@/lib/chapters/20/index";
@@ -13,6 +14,7 @@ import { chapter20Questions } from "@/lib/chapters/20/index";
 // import { chapter1Questions }  from "@/lib/chapters/01/index";
 
 export const questions = [
+  ...chapter17Questions,
   ...chapter18Questions,
   ...chapter19Questions,
   ...chapter20Questions,
