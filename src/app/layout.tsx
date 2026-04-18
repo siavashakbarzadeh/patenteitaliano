@@ -8,10 +8,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Patente Italiana – Quiz di Preparazione",
+  title: "آموزش گواهینامه ایتالیایی – آزمون تمرینی",
   description:
-    "Preparati all'esame per la patente di guida italiana con quiz interattivi, segnali stradali e norme del Codice della Strada.",
-  keywords: "patente italiana, quiz patente, esame patente, codice della strada",
+    "آماده‌شو برای آزمون گواهینامه رانندگی ایتالیا (Patente B) با سوالات تمرینی، ترجمه فارسی مطالب و آموزش قوانین راهنمایی رانندگی.",
+  keywords: "گواهینامه ایتالیایی, patente italiana, آزمون patente, codice della strada, آموزش رانندگی ایتالیا",
 };
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="it">
+    <html lang="fa" dir="rtl">
       <body className={`${inter.variable} font-sans antialiased`}>
         {children}
       </body>
