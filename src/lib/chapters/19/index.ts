@@ -1,763 +1,762 @@
 // ─────────────────────────────────────────────────────────────────────────────
-//  CAPITOLO 19 – Cinture di Sicurezza, Seggiolini per Bambini, Airbag
-//  سوالات آزمون فصل ۱۹
+//  CAPITOLO 19 – Cinture di Sicurezza, Seggiolini per Bambini,
+//               Airbag, Casco Protettivo, Abbigliamento di Sicurezza
 // ─────────────────────────────────────────────────────────────────────────────
 
 import type { Question } from "@/lib/types";
 
 export const chapter19Questions: Question[] = [
 
-  // ── 19.1 کمربند ایمنی ──────────────────────────────────────────────────────
+  // ── 19.1 Cinture di Sicurezza ──────────────────────────────────────────────
 
   {
     id: 1901,
     chapter: 19,
-    question: "کمربند ایمنی در خودرو چه کاری انجام می‌دهد؟",
+    question: "A cosa serve la cintura di sicurezza in un veicolo?",
     options: [
-      "بدن را به صندلی متصل نگه می‌دارد تا از برخورد با اجزای داخلی یا پرتاب شدن از خودرو جلوگیری کند",
-      "فقط در تصادفات شدید فعال می‌شود",
-      "جایگزین ایربگ در تصادفات است",
-      "فقط برای سرنشینان جلو اجباری است"
+      "Mantenere il corpo ancorato al sedile, evitare l'urto con le parti interne e lo sbalzamento fuori dal veicolo",
+      "Si attiva solo in caso di incidenti gravi",
+      "Sostituisce l'airbag in caso di incidente",
+      "È obbligatoria solo per i passeggeri anteriori"
     ],
     correct: 0,
-    explanation: "کمربند ایمنی بدن را به صندلی متصل نگه می‌دارد و مانع برخورد با اجزای داخلی یا پرتاب شدن از خودرو می‌شود."
+    explanation: "Le cinture di sicurezza servono a mantenere il corpo attaccato al sedile, evitando che il conducente e i passeggeri vadano a urtare le parti interne del veicolo o siano sbalzati fuori."
   },
 
   {
     id: 1902,
     chapter: 19,
-    question: "در صورتی که کمربند ایمنی بسته نشده باشد، هنگام ترمز ناگهانی چه اتفاقی می‌افتد؟",
+    question: "Cosa succede se la cintura di sicurezza non è allacciata in caso di frenata improvvisa?",
     options: [
-      "سرنشین ممکن است به شیشه جلو پرتاب شود",
-      "ترمز خودکار محکم‌تر می‌شود",
-      "ایربگ جبران می‌کند",
-      "صندلی عقب می‌رود"
+      "Il passeggero può essere proiettato contro il parabrezza",
+      "I freni si attivano più fortemente in modo automatico",
+      "L'airbag compensa la mancanza della cintura",
+      "Il sedile arretra automaticamente"
     ],
     correct: 0,
-    explanation: "اگر کمربند ایمنی بسته نشده باشد، در ترمز ناگهانی سرنشین ممکن است به شیشه جلو (parabrezza) پرتاب شود."
+    explanation: "Se la cintura non è agganciata, in caso di frenata improvvisa il passeggero può essere proiettato contro il parabrezza."
   },
 
   {
     id: 1903,
     chapter: 19,
-    question: "کمربندهای ایمنی امروزی (inerziali) از چه اجزایی تشکیل شده‌اند؟",
+    question: "Da quali componenti sono formate le cinture di sicurezza inerziali moderne?",
     options: [
-      "از اجزای ثابت و متحرک که امکان جمع شدن خودکار را فراهم می‌کنند",
-      "فقط از یک تسمه محکم ثابت",
-      "از یک سیستم پنوماتیک",
-      "از فنر و میله فلزی"
+      "Da parti fisse e mobili che permettono il riavvolgimento automatico",
+      "Solo da una cinghia rigida fissa",
+      "Da un sistema pneumatico",
+      "Da molla e barra metallica"
     ],
     correct: 0,
-    explanation: "کمربندهای ایمنی مدرن (inerziali) از اجزای ثابت و متحرک تشکیل شده‌اند که امکان جمع شدن خودکار بعد از استفاده و قفل شدن در تصادف را دارند."
+    explanation: "Le moderne cinture inerziali sono composte da parti fisse e mobili che permettono il riavvolgimento automatico dopo l'uso e il bloccaggio in caso d'urto."
   },
 
   {
     id: 1904,
     chapter: 19,
-    question: "«cinghia» در کمربند ایمنی چیست؟",
+    question: "Cos'è la 'cinghia' nella cintura di sicurezza?",
     options: [
-      "نوار انعطاف‌پذیری با عرض حدود ۵ تا ۶ سانتی‌متر",
-      "قفل کمربند",
-      "ریل تنظیم ارتفاع",
-      "سیستم سفت‌کننده کمربند"
+      "Un nastro flessibile largo circa 5-6 cm, a resistenza calibrata",
+      "La fibbia di chiusura",
+      "La guida di regolazione in altezza",
+      "Il sistema di pretensionamento"
     ],
     correct: 0,
-    explanation: "cinghia (تسمه) یک نوار انعطاف‌پذیر با عرض حدود ۵ تا ۶ سانتی‌متر است که طوری طراحی شده که در فشار کالیبره‌شده پاره شود تا آسیب جدی به بدن وارد نشود."
+    explanation: "La cinghia è il nastro flessibile largo circa 5-6 cm che, in caso d'urto, si rompe a una resistenza calibrata per evitare lesioni gravi all'utilizzatore."
   },
 
   {
     id: 1905,
     chapter: 19,
-    question: "«pretensionatore» در کمربند ایمنی چه نقشی دارد؟",
+    question: "Qual è la funzione del 'pretensionatore' nella cintura di sicurezza?",
     options: [
-      "در لحظه تصادف کمربند را به سمت بدن می‌کشد و سرنشین را محکم نگه می‌دارد",
-      "کمربند را باز می‌کند",
-      "ارتفاع کمربند را تنظیم می‌کند",
-      "سیگنال صوتی را غیرفعال می‌کند"
+      "Al momento dell'urto, riavvolge la cinghia tenendo l'occupante ben aderente al sedile",
+      "Apre la cintura in caso di emergenza",
+      "Regola l'altezza della cintura",
+      "Disattiva il segnale acustico"
     ],
     correct: 0,
-    explanation: "pretensionatore در لحظه تصادف کمربند را به سمت بدن سرنشین می‌کشد و او را محکم به صندلی متصل نگه می‌دارد."
+    explanation: "Il pretensionatore, al momento dell'urto, 'riavvolge' la parte di cinghia corrispondente all'indesiderato allungamento, mantenendo l'occupante ben aderente al sedile."
   },
 
   {
     id: 1906,
     chapter: 19,
-    question: "چراغ قرمز نشانگر کمربند در داشبورد نشانه چیست؟",
+    question: "Cosa indica la spia rossa relativa alle cinture di sicurezza sul cruscotto?",
     options: [
-      "کمربند ایمنی بسته نشده است",
-      "کمربند خراب شده است",
-      "توسط راننده غیرفعال شده است",
-      "ایربگ فعال شده است"
+      "La cintura di sicurezza non è agganciata",
+      "La cintura è danneggiata",
+      "È stata disabilitata dal conducente",
+      "L'airbag si è attivato"
     ],
     correct: 0,
-    explanation: "چراغ قرمز نشانگر کمربند (spia di colore rosso) نشان‌دهنده بسته نشدن کمربند ایمنی است. این سیستم نمی‌تواند توسط راننده غیرفعال شود."
+    explanation: "La spia di colore rosso segnala il mancato agganciamento della cintura di sicurezza. Questo sistema non può essere in nessun modo disabilitato dal conducente."
   },
 
   {
     id: 1907,
     chapter: 19,
-    question: "آیا راننده می‌تواند سیگنال صوتی یا چراغ نشانگر کمربند را غیرفعال کند؟",
+    question: "Il conducente può disabilitare il segnalatore acustico o luminoso della cintura di sicurezza?",
     options: [
-      "خیر، به هیچ وجه نمی‌تواند آن را غیرفعال کند",
-      "بله، با یک دکمه در داشبورد",
-      "بله، فقط در شهر",
-      "بله، اگر کمربند قدیمی باشد"
+      "No, non può in nessun modo disabilitarlo",
+      "Sì, tramite un tasto sul cruscotto",
+      "Sì, solo in ambito urbano",
+      "Sì, se la cintura è di vecchio tipo"
     ],
     correct: 0,
-    explanation: "سیگنال صوتی و چراغ نشانگر کمربند به هیچ وجه نمی‌تواند توسط راننده غیرفعال شود (non può essere in nessun modo disabilitata dal conducente)."
+    explanation: "Il segnalatore acustico e la spia della cintura non possono essere in nessun modo disabilitati dal conducente (non può essere in nessun modo disabilitata dal conducente)."
   },
 
   {
     id: 1908,
     chapter: 19,
-    question: "کمربند ایمنی در چه شرایط سرعتی باید بسته باشد؟",
+    question: "A quale velocità è obbligatorio tenere allacciata la cintura di sicurezza?",
     options: [
-      "در هر سرعتی، حتی سرعت پایین",
-      "فقط در سرعت بالای ۵۰ کیلومتر",
-      "فقط در بزرگراه",
-      "فقط خارج از شهر"
+      "A qualsiasi velocità, anche bassa",
+      "Solo sopra i 50 km/h",
+      "Solo in autostrada",
+      "Solo fuori dai centri abitati"
     ],
     correct: 0,
-    explanation: "کمربند ایمنی باید در هر وضعیت رانندگی و در هر سرعتی (anche a bassa velocità) بسته باشد."
+    explanation: "Le cinture devono essere allacciate in qualsiasi situazione di marcia e a qualsiasi velocità (anche bassa)."
   },
 
   {
     id: 1909,
     chapter: 19,
-    question: "چه کسانی ملزم به بستن کمربند ایمنی هستند؟",
+    question: "Chi è obbligato ad allacciare la cintura di sicurezza?",
     options: [
-      "راننده و همه سرنشینان از جمله سرنشینان صندلی عقب",
-      "فقط راننده و سرنشین جلو",
-      "فقط راننده",
-      "فقط کودکان"
+      "Il conducente e tutti i passeggeri, compresi quelli sui sedili posteriori",
+      "Solo il conducente e il passeggero anteriore",
+      "Solo il conducente",
+      "Solo i bambini"
     ],
     correct: 0,
-    explanation: "راننده و همه سرنشینان، از جمله کسانی که روی صندلی‌های عقب نشسته‌اند، ملزم به بستن کمربند هستند."
+    explanation: "Il conducente e i passeggeri (anche quelli occupanti i sedili posteriori) di autovetture, autocaravan, autocarri ecc. sono obbligati ad allacciare le cinture di sicurezza."
   },
 
   {
     id: 1910,
     chapter: 19,
-    question: "آیا وجود ایربگ در خودرو، راننده را از اجبار بستن کمربند ایمنی معاف می‌کند؟",
+    question: "La presenza dell'airbag esonera dall'obbligo di indossare la cintura di sicurezza?",
     options: [
-      "خیر، وجود ایربگ هیچ معافیتی از کمربند نمی‌دهد",
-      "بله، اگر ایربگ جلو فعال باشد",
-      "بله، فقط در خودروهای جدید",
-      "بله، در صورتی ایربگ تأیید شده باشد"
+      "No, la presenza dell'airbag non esenta dall'obbligo di indossare le cinture",
+      "Sì, se l'airbag anteriore è attivo",
+      "Sì, solo sulle auto nuove",
+      "Sì, se l'airbag è omologato"
     ],
     correct: 0,
-    explanation: "وجود ایربگ هیچ معافیتی از اجبار بستن کمربند ایمنی نمی‌دهد (la presenza di airbag non esenta dall'obbligo di indossare le cinture). در واقع نبستن کمربند در برابر باز شدن ایربگ می‌تواند آسیب جدی وارد کند."
+    explanation: "La presenza di airbag sul veicolo non esenta dall'obbligo di indossare le cinture. Al contrario, il loro mancato uso può arrecare seri danni al conducente in caso di apertura del dispositivo."
   },
 
   {
     id: 1911,
     chapter: 19,
-    question: "چه کسانی از اجبار بستن کمربند ایمنی معاف هستند؟",
+    question: "Chi è esentato dall'obbligo di allacciare la cintura di sicurezza?",
     options: [
-      "مأموران پلیس و نیروهای مسلح در انجام فعالیت‌های اداری و اضطراری",
-      "همه رانندگان در شهر",
-      "رانندگان بالای ۶۰ سال",
-      "رانندگان با گواهینامه قدیمی"
+      "Gli organi di Polizia e le Forze Armate nell'espletamento di attività istituzionali e nelle situazioni di emergenza",
+      "Tutti i conducenti in città",
+      "I conducenti over 60",
+      "I conducenti con patente vecchia"
     ],
     correct: 0,
-    explanation: "معافیت‌ها شامل: مأموران پلیس و نیروهای مسلح در انجام فعالیت‌های رسمی، رانندگان وسایل جمع‌آوری زباله، مربیان رانندگی در حین کار، زنان باردار با شرایط پزشکی تأیید شده، افراد با بیماری‌های خاص تأیید شده توسط ASL، اعضای نیروهای امنیت خصوصی در اسکورت می‌شوند."
+    explanation: "Sono esentati: gli organi di Polizia e Forze Armate in attività istituzionali d'emergenza, i conducenti per la raccolta rifiuti, gli istruttori di guida nello svolgimento della professione, le donne in stato di gravidanza con condizioni certificate, persone con particolari malattie certificate dall'A.S.L., appartenenti a servizi di vigilanza privata che effettuano scorte."
   },
 
   {
     id: 1912,
     chapter: 19,
-    question: "آیا نصب وسیله‌ای روی کمربند که مانع چسبیدن آن به بدن شود مجاز است؟",
+    question: "È consentito installare sulle cinture qualsiasi dispositivo che serva a non tenerle aderenti al corpo?",
     options: [
-      "خیر، ممنوع است و جریمه دارد",
-      "بله، اگر از نوع تأیید شده باشد",
-      "بله، برای افراد چاق مجاز است",
-      "بله، فقط در ماشین‌های کهنه"
+      "No, è vietato ed è prevista una sanzione",
+      "Sì, se di tipo omologato",
+      "Sì, per le persone obese",
+      "Sì, solo su veicoli datati"
     ],
     correct: 0,
-    explanation: "نصب هر وسیله‌ای روی کمربند که مانع چسبیدن آن به بدن شود ممنوع است. جریمه‌ای برای کسانی که کمربند را دستکاری کرده یا عملکردش را مختل کنند پیش‌بینی شده است."
+    explanation: "È vietato installare sulle cinture qualunque dispositivo che serva a non tenerle aderenti al corpo. Sono previste sanzioni per chi altera o ostacola il normale funzionamento della cintura di sicurezza."
   },
 
   {
     id: 1913,
     chapter: 19,
-    question: "«poggiatesta» (سردستی صندلی ماشین) چه نقشی در ایمنی دارد؟",
+    question: "Qual è la funzione del poggiatesta del sedile in termini di sicurezza?",
     options: [
-      "از ستون فقرات گردنی در تصادف عقبی (کولار) محافظت می‌کند",
-      "صرفاً برای راحتی سرنشین است",
-      "در صورت تصادف جلویی مهم است",
-      "ایربگ جانبی را فعال می‌کند"
+      "Protegge la colonna vertebrale in caso di tamponamento (colpo di frusta)",
+      "Serve solo per il comfort del passeggero",
+      "È importante in caso di urto frontale",
+      "Attiva l'airbag laterale"
     ],
     correct: 0,
-    explanation: "سردستی صندلی (poggiatesta) از ستون فقرات گردنی در تصادفات عقبی (tamponamento) محافظت و از «کولار» (colpo di frusta) جلوگیری می‌کند. باید از نظر ارتفاع و زاویه به درستی تنظیم شود."
+    explanation: "Il poggiatesta protegge la colonna vertebrale in caso di tamponamento, prevenendo il 'colpo di frusta'. Deve essere regolato correttamente sia in altezza che in inclinazione."
   },
 
   {
     id: 1914,
     chapter: 19,
-    question: "راننده چه وظیفه‌ای نسبت به بستن کمربند سرنشینان دارد؟",
+    question: "Quale obbligo ha il conducente riguardo all'uso delle cinture da parte dei passeggeri?",
     options: [
-      "باید سرنشینان را از اجبار و ضرورت بستن کمربند آگاه کند",
-      "هیچ مسئولیتی ندارد",
-      "فقط مسئول کودکان زیر ۱۲ سال است",
-      "فقط در اتوبان مسئول است"
+      "Deve rammentare ai passeggeri l'obbligo e la necessità di farne uso",
+      "Non ha nessuna responsabilità",
+      "È responsabile solo dei bambini sotto i 12 anni",
+      "È responsabile solo in autostrada"
     ],
     correct: 0,
-    explanation: "راننده باید سرنشینان را از اجبار و ضرورت بستن کمربند (l'obbligo e la necessità di farne uso) آگاه کند."
+    explanation: "È opportuno che il conducente rammenti alle persone trasportate l'obbligo e la necessità di farne uso."
   },
 
-  // ── صندلی کودک ─────────────────────────────────────────────────────────────
+  // ── 19 Seggiolini per Bambini ──────────────────────────────────────────────
 
   {
     id: 1915,
     chapter: 19,
-    question: "کودکان با قد کمتر از چه مقدار باید از صندلی کودک استفاده کنند؟",
+    question: "I bambini di statura inferiore a quanto devono essere trattenuti da un seggiolino omologato?",
     options: [
-      "کمتر از ۱.۵۰ متر",
-      "کمتر از ۱.۴۰ متر",
-      "کمتر از ۱.۶۰ متر",
-      "کمتر از ۱.۲۰ متر"
+      "Inferiore a 1,50 m",
+      "Inferiore a 1,40 m",
+      "Inferiore a 1,60 m",
+      "Inferiore a 1,20 m"
     ],
     correct: 0,
-    explanation: "کودکان با قد کمتر از ۱.۵۰ متر که در خودرو حمل می‌شوند باید با صندلی کودک مناسب (seggiolino) محافظت شوند."
+    explanation: "I bambini di statura inferiore a 1,50 metri, quando sono trasportati su un'autovettura, devono essere trattenuti da idoneo sistema di ritenuta (seggiolino)."
   },
 
   {
     id: 1916,
     chapter: 19,
-    question: "در خودرویی که صندلی کودک ندارد، کودکان تا ۳ سال چه وضعیتی دارند؟",
+    question: "Su autovetture sprovviste di seggiolini, i bambini di età fino a 3 anni cosa possono fare?",
     options: [
-      "نمی‌توانند سفر کنند",
-      "می‌توانند روی زانوی بزرگسال بنشینند",
-      "می‌توانند در صندلی عقب بدون کمربند بنشینند",
-      "می‌توانند در صندلی جلو بنشینند"
+      "Non possono viaggiare",
+      "Possono stare sulle ginocchia di un adulto",
+      "Possono stare sul sedile posteriore senza cintura",
+      "Possono stare sul sedile anteriore"
     ],
     correct: 0,
-    explanation: "در خودرویی بدون صندلی کودک، کودکان تا ۳ سال تحت هیچ شرایطی نمی‌توانند سفر کنند (non possono viaggiare)."
+    explanation: "Su autovetture sprovviste di seggiolini, i bambini di età fino a 3 anni non possono viaggiare."
   },
 
   {
     id: 1917,
     chapter: 19,
-    question: "کودک بالای ۳ سال در خودرویی بدون صندلی مناسب، چه زمانی می‌تواند روی صندلی جلو بنشیند؟",
+    question: "Un bambino di età superiore a 3 anni, su un'auto senza seggiolino adatto, quando può occupare un sedile anteriore?",
     options: [
-      "فقط اگر قدش بیشتر از ۱.۵۰ متر باشد و کمربند ایمنی ببندد",
-      "هر زمان که بخواهد",
-      "فقط اگر بزرگتر از ۱۰ سال باشد",
-      "هرگز نمی‌تواند جلو بنشیند"
+      "Solo se la statura supera 1,50 m e indossa la cintura di sicurezza",
+      "Quando vuole",
+      "Solo se ha più di 10 anni",
+      "Mai"
     ],
     correct: 0,
-    explanation: "کودک بالای ۳ سال در خودرویی بدون صندلی کودک فقط در صورتی می‌تواند روی صندلی جلو بنشیند که قدش بیش از ۱.۵۰ متر باشد و کمربند ایمنی ببندد."
+    explanation: "I bambini di età superiore a 3 anni possono occupare un sedile anteriore solo se la loro statura supera 1,50 m e indossano le cinture di sicurezza."
   },
 
   {
     id: 1918,
     chapter: 19,
-    question: "صندلی‌های کودک باید دارای چه ویژگی‌هایی باشند؟",
+    question: "I seggiolini per bambini devono obbligatoriamente:",
     options: [
-      "متناسب با وزن و قد کودک، دارای تأییدیه، و برچسب تأییدیه نارنجی‌رنگ",
-      "فقط باید از نوع اروپایی باشند",
-      "باید حتماً ایربگ داشته باشند",
-      "باید رو به جلو نصب شوند"
+      "Essere adeguati al peso e all'altezza, omologati e con etichetta di omologazione arancione",
+      "Essere solo di tipo europeo",
+      "Avere obbligatoriamente un airbag",
+      "Essere montati rivolti in avanti"
     ],
     correct: 0,
-    explanation: "صندلی کودک باید متناسب با وزن و قد کودک (adeguati al peso e all'altezza), دارای تأییدیه (omologati), و دارای برچسب تأییدیه نارنجی‌رنگ (etichetta di omologazione arancione) باشد."
+    explanation: "I seggiolini devono essere adeguati al peso e all'altezza del bambino (adeguati al peso e all'altezza), omologati (omologati) e riportare l'apposita etichetta di omologazione di colore arancione."
   },
 
   {
     id: 1919,
     chapter: 19,
-    question: "تفاوت استاندارد R129 و R44 در صندلی کودک چیست؟",
+    question: "Qual è la differenza tra lo standard R129 e il vecchio R44 per i seggiolini?",
     options: [
-      "R129 بر اساس قد کودک است و R44 بر اساس وزن کودک",
-      "R44 جدیدتر است و R129 قدیمی",
-      "R129 فقط برای خودروهای لوکس است",
-      "هر دو یکسان هستند"
+      "R129 si basa sull'altezza del bambino, R44 sul peso del bambino",
+      "R44 è più recente di R129",
+      "R129 è solo per auto di lusso",
+      "Sono equivalenti"
     ],
     correct: 0,
-    explanation: "R129 (جدید) بر اساس قد کودک (ALTEZZA) است و از ضربات جانبی محافظت می‌کند. R44 (قدیمی) بر اساس وزن (PESO) بود."
+    explanation: "R129 (nuovo) si basa sull'ALTEZZA del bambino e offre protezione dagli urti laterali. R44 (vecchio) si basava sul PESO (fino a 9 kg su sedile anteriore)."
   },
 
   {
     id: 1920,
     chapter: 19,
-    question: "از چه تاریخی صندلی‌های کودک با استاندارد R44 دیگر قابل فروش نیستند؟",
+    question: "Dal 1° settembre 2024, i seggiolini con omologazione R44 possono ancora essere venduti?",
     options: [
-      "از ۱ سپتامبر ۲۰۲۴",
-      "از ۱ ژانویه ۲۰۲۳",
-      "از ۱ مارس ۲۰۲۵",
-      "از ۱ ژانویه ۲۰۲۵"
+      "No, non possono più essere venduti dal 1/9/2024",
+      "Sì, fino al 1° gennaio 2026",
+      "Sì, senza limitazioni",
+      "No, dal 1° marzo 2025"
     ],
     correct: 0,
-    explanation: "از ۱/۹/۲۰۲۴ صندلی‌های با استاندارد قدیمی R44 دیگر قابل فروش نیستند. کسانی که قبل از ۳۱ اوت ۲۰۲۴ خریداری کرده‌اند، می‌توانند بدون محدودیت زمانی از آن استفاده کنند."
+    explanation: "Dal 1/9/2024, i nuovi seggiolini hanno un unico riferimento di omologazione, il Reg. 129/UNECE. I seggiolini omologati con la vecchia normativa R44 NON possono più essere venduti. Chi ne abbia acquistato uno entro il 31 Agosto 2024 può continuare a utilizzarlo."
   },
 
   {
     id: 1921,
     chapter: 19,
-    question: "آیا استفاده از صندلی کودک رو به عقب (rivolto all'indietro) در صندلی جلوی خودرو با ایربگ مجاز است؟",
+    question: "È consentito utilizzare un seggiolino per bambini rivolto all'indietro sul sedile anteriore protetto da airbag frontale?",
     options: [
-      "فقط اگر ایربگ جلو غیرفعال شده باشد",
-      "بله، همیشه",
-      "خیر، هرگز",
-      "فقط اگر ایربگ نوع قدیمی باشد"
+      "Solo se l'airbag frontale è stato disattivato con l'apposito comando",
+      "Sì, sempre",
+      "No, mai",
+      "Solo se l'airbag è di vecchio tipo"
     ],
     correct: 0,
-    explanation: "استفاده از صندلی کودک رو به عقب در صندلی جلویی که ایربگ دارد، فقط زمانی مجاز است که ایربگ جلو با دستور مخصوص غیرفعال شده باشد (disattivato con l'apposito comando)."
+    explanation: "È consentito utilizzare un seggiolino rivolto all'indietro sul sedile davanti protetto da airbag frontale, solo se l'airbag stesso è stato disattivato con l'apposito comando."
   },
 
   {
     id: 1922,
     chapter: 19,
-    question: "در چه شرایطی کودکان با قد ≤ ۱.۵۰ متر از اجبار استفاده از صندلی کودک معاف هستند؟",
+    question: "In quali condizioni i bambini di statura ≤ 1,50 m sono esentati dall'obbligo del seggiolino?",
     options: [
-      "در تاکسی یا NCC اگر در صندلی جلو ننشینند و همراه فردی بالای ۱۶ سال باشند",
-      "هرگز معاف نیستند",
-      "در تمام اتوبوس‌های شهری",
-      "در خودروهای با قدمت بیشتر از ۲۰ سال"
+      "A bordo di taxi o NCC, purché non occupino il sedile anteriore e siano accompagnati da almeno un passeggero di 16 anni o più",
+      "Mai sono esentati",
+      "Su tutti gli autobus in città",
+      "Su veicoli immatricolati prima del 2000"
     ],
     correct: 0,
-    explanation: "کودکان با قد ≤ ۱.۵۰ متر در تاکسی یا NCC از اجبار صندلی کودک معاف هستند، مشروط بر اینکه در صندلی جلو ننشینند و همراه یک سرنشین بالای ۱۶ سال باشند."
+    explanation: "I bambini di statura non superiore a 1,50 m sono esentati dall'utilizzo dei sistemi di ritenuta quando sono a bordo di taxi o di autoveicoli adibiti al noleggio con conducente (NCC), purché non occupino il sedile anteriore ed abbiano un passeggero di almeno 16 anni."
   },
 
   {
     id: 1923,
     chapter: 19,
-    question: "«dispositivo antiabbandono bambini» برای چه نوع خودروهایی الزامی است؟",
+    question: "Per quali veicoli è obbligatorio il dispositivo antiabbandono bambini?",
     options: [
-      "خودروها و کامیون‌های M1، N1، N2، N3 که کودک زیر ۴ سال حمل می‌کنند",
-      "فقط تاکسی‌ها",
-      "فقط خودروهای شخصی سواری",
-      "فقط مینی‌بوس‌ها"
+      "Veicoli M1, N1, N2, N3 (auto e camion) che trasportano un bambino di età inferiore a 4 anni assicurato al sedile con seggiolino",
+      "Solo per i taxi",
+      "Solo per le autovetture private",
+      "Solo per i minibus"
     ],
     correct: 0,
-    explanation: "وسایل نقلیه M1، N1، N2، N3 (سواری و کامیون) ثبت‌شده یا مورد استفاده در ایتالیا که کودکی زیر ۴ سال با صندلی کودک حمل می‌کنند، باید سیستم اخطار ضد-رها کردن کودک داشته باشند."
+    explanation: "I conducenti dei veicoli delle categorie M1, N1, N2 e N3 (autovetture e autocarri) immatricolati in Italia, se trasportano un bambino di età inferiore a 4 anni assicurato al sedile con l'idoneo sistema di ritenuta, hanno l'obbligo di attivare apposito dispositivo di allarme per prevenire l'abbandono del bambino."
   },
 
-  // ── ایربگ ──────────────────────────────────────────────────────────────────
+  // ── 19.2 Airbag ────────────────────────────────────────────────────────────
 
   {
     id: 1924,
     chapter: 19,
-    question: "ایربگ (airbag) چه نوع وسیله ایمنی است؟",
+    question: "L'airbag è un dispositivo di:",
     options: [
-      "وسیله ایمنی منفعل (sicurezza passiva) که یک بالشتک بادشونده است",
-      "وسیله ایمنی فعال که همیشه روشن است",
-      "جایگزین کمربند ایمنی است",
-      "فقط برای راننده کار می‌کند"
+      "Sicurezza passiva, costituito da un cuscino gonfiabile",
+      "Sicurezza attiva sempre in funzione",
+      "Sostituzione della cintura di sicurezza",
+      "Protezione solo per il conducente"
     ],
     correct: 0,
-    explanation: "ایربگ یک وسیله ایمنی منفعل (dispositivo di sicurezza passiva) است که از یک بالشتک بادشونده تشکیل شده و در صورت تصادف شدید باز می‌شود."
+    explanation: "L'airbag è un dispositivo di sicurezza passiva per il conducente e i passeggeri di un autoveicolo, ed è costituito da un cuscino gonfiabile di nylon ripiegato in un apposito vano."
   },
 
   {
     id: 1925,
     chapter: 19,
-    question: "اگر خودرو ایربگ داشته باشد، آیا از بستن کمربند معاف می‌شویم؟",
+    question: "Se il veicolo è dotato di airbag, si è esentati dall'obbligo di allacciare la cintura?",
     options: [
-      "خیر، باید کمربند هم بسته باشد — نبستن کمربند با ایربگ می‌تواند خطرناک‌تر باشد",
-      "بله، ایربگ کافی است",
-      "بله، فقط در شهر",
-      "بله، اگر ایربگ طرفین هم داشته باشد"
+      "No, la cintura rimane obbligatoria — usare l'airbag senza cintura può essere molto pericoloso",
+      "Sì, l'airbag è sufficiente",
+      "Sì, solo in città",
+      "Sì, se è dotato anche di airbag laterali"
     ],
     correct: 0,
-    explanation: "وجود ایربگ معافیتی از کمربند نمی‌دهد. در واقع، اگر کمربند بسته نباشد، باز شدن ایربگ می‌تواند آسیب جدی به راننده وارد کند."
+    explanation: "La presenza dell'airbag non esenta dall'uso della cintura. Come già accennato, l'airbag può essere molto pericoloso se, quando entra in funzione, l'occupante non è agganciato al sedile con la cintura di sicurezza."
   },
 
   {
     id: 1926,
     chapter: 19,
-    question: "راننده باید به طور دوره‌ای کمربند ایمنی را از چه نظر بررسی کند؟",
+    question: "Il conducente è tenuto a controllare periodicamente le cinture di sicurezza per:",
     options: [
-      "از نظر فرسودگی و تعویض در صورت لزوم با نوع تأیید شده مشابه",
-      "فقط در زمان معاینه فنی خودرو",
-      "فقط بعد از تصادف",
-      "هر ۵ سال یک بار"
+      "Accertarsi della costante efficienza e sostituirle in caso di usura con tipo omologato",
+      "Solo al momento della revisione periodica",
+      "Solo dopo un incidente",
+      "Ogni 5 anni"
     ],
     correct: 0,
-    explanation: "راننده مکلف است کمربند ایمنی را به طور دوره‌ای بررسی کند و در صورت فرسودگی یا آثار ضربه یا کشش شدید، آن را با نوع تأیید شده مشابه تعویض کند."
+    explanation: "Il conducente è tenuto ad assicurarsi della costante efficienza delle cinture e, con la sostituzione con altre di tipo omologato per quel veicolo, se sono state sottoposte a violenta sollecitazione in caso d'urto o se presentano tracce di sensibile logorio."
   },
 
   {
     id: 1927,
     chapter: 19,
-    question: "کمربند ایمنی باید از چه نوعی باشد؟",
+    question: "Le cinture di sicurezza devono essere di:",
     options: [
-      "از نوع تأیید شده (tipo approvato) با برچسب تأییدیه روی تسمه",
-      "از هر نوعی که راننده ترجیح دهد",
-      "فقط از نوع ایتالیایی",
-      "از سه نقطه اتصال بدون تأییدیه"
+      "Tipo approvato con i relativi estremi di approvazione sull'apposita etichetta cucita sulla cinghia",
+      "Qualsiasi tipo scelto dal conducente",
+      "Solo tipo italiano",
+      "Tre punti di ancoraggio senza omologazione"
     ],
     correct: 0,
-    explanation: "کمربند ایمنی باید از نوع تأیید شده (tipo approvato) باشد و برچسب تأییدیه روی تسمه داشته باشد."
+    explanation: "Le cinture devono essere di tipo approvato e recare gli estremi dell'approvazione sull'apposita etichetta cucita sulla cinghia."
   },
 
   {
     id: 1928,
     chapter: 19,
-    question: "«fibbia di chiusura» (قفل کمربند) کجاست و چگونه کار می‌کند؟",
+    question: "Come funziona la fibbia di chiusura della cintura di sicurezza?",
     options: [
-      "با یک زبانه فلزی بسته و با فشار دکمه قرمز باز می‌شود",
-      "با پیچ بسته می‌شود",
-      "به طور خودکار بدون هیچ اقدامی بسته می‌شود",
-      "با یک کلید بسته می‌شود"
+      "Si chiude con linguetta metallica e si apre premendo il pulsante di sgancio (di colore rosso)",
+      "Si chiude con una vite",
+      "Si chiude automaticamente senza alcuna azione",
+      "Si chiude con una chiave"
     ],
     correct: 0,
-    explanation: "قفل کمربند (fibbia di chiusura) با یک زبانه فلزی (linguetta metallica) به طور دائم بسته و با فشار دادن دکمه قرمز (pulsante di sgancio) باز می‌شود. دکمه باید به راحتی قابل دیدن و دسترسی باشد."
+    explanation: "La fibbia di chiusura permette il rapido agganciamento e sganciamento della cintura. L'elemento di collegamento tra fibbia e cintura è una linguetta metallica che si inserisce facilmente nella fibbia. Lo sganciamento avviene premendo il pulsante di sgancio della fibbia (di colore rosso), che deve essere facilmente visibile e accessibile anche per un soccorritore esterno."
   },
 
   {
     id: 1929,
     chapter: 19,
-    question: "هنگامی که صندلی کودک رو به عقب (rivolto all'indietro) استفاده می‌شود، ایربگ جلو باید در چه وضعیتی باشد؟",
+    question: "Quando si usa un seggiolino rivolto all'indietro sul sedile anteriore, in quale stato deve essere l'airbag frontale?",
     options: [
-      "باید غیرفعال شده باشد",
-      "می‌تواند فعال باشد",
-      "باید در حالت «کم‌قدرت» باشد",
-      "وضعیت ایربگ تأثیری ندارد"
+      "Deve essere disattivato",
+      "Può restare attivo",
+      "Deve essere in modalità 'bassa potenza'",
+      "Lo stato dell'airbag non è rilevante"
     ],
     correct: 0,
-    explanation: "هنگام استفاده از صندلی کودک رو به عقب در صندلی جلو، ایربگ جلو باید با دستور مخصوص غیرفعال شده باشد (disattivato con l'apposito comando)."
+    explanation: "È consentito utilizzare un seggiolino rivolto all'indietro sul sedile davanti protetto da airbag frontale, solo se l'airbag stesso è stato disattivato con l'apposito comando."
   },
 
   {
     id: 1930,
     chapter: 19,
-    question: "اگر کودک با قد ≤ ۱.۵۰ متر در تاکسی سوار شود، کجا نمی‌تواند بنشیند؟",
+    question: "Un bambino di statura ≤ 1,50 m che sale su un taxi, dove NON deve sedersi?",
     options: [
-      "در صندلی جلو",
-      "در صندلی عقب",
-      "در هیچ جایی نمی‌تواند سوار شود",
-      "فقط اگر زیر ۳ سال باشد نمی‌تواند سوار شود"
+      "Sul sedile anteriore",
+      "Sul sedile posteriore",
+      "Non può salire su nessun posto",
+      "Solo se ha meno di 3 anni non può salire"
     ],
     correct: 0,
-    explanation: "کودکان با قد ≤ ۱.۵۰ متر وقتی در تاکسی یا NCC هستند نباید در صندلی جلو بنشینند تا از اجبار صندلی کودک معاف باشند."
+    explanation: "I bambini di statura non superiore a 1,50 m sono esentati dall'utilizzo dei sistemi di ritenuta quando sono a bordo di taxi o NCC a condizione che non occupino il sedile anteriore."
   },
 
   {
     id: 1931,
     chapter: 19,
-    question: "«arrotolatore» در کمربند ایمنی چه کاری انجام می‌دهد؟",
+    question: "Cosa fa l'arrotolatore nella cintura di sicurezza?",
     options: [
-      "امکان باز و بسته شدن خودکار کمربند را فراهم می‌کند",
-      "کمربند را در صورت سرعت بیش از ۱۲۰ قفل می‌کند",
-      "ضخامت کمربند را تنظیم می‌کند",
-      "ایربگ را فعال می‌کند"
+      "Permette di srotolare e riarrotolare automaticamente la cintura adattandola senza fibbie alla taglia del conducente",
+      "Blocca la cintura se la velocità supera i 120 km/h",
+      "Regola lo spessore della cinghia",
+      "Attiva l'airbag"
     ],
     correct: 0,
-    explanation: "arrotolatore امکان باز و بسته شدن خودکار کمربند را فراهم می‌کند و طول کمربند را بدون نیاز به سگک به قد سرنشین تطبیق می‌دهد."
+    explanation: "L'arrotolatore permette di srotolare e riarrotolare automaticamente la cintura, consentendo di adattare, senza necessità di fibbie, la lunghezza della cintura alla taglia del conducente."
   },
 
   {
     id: 1932,
     chapter: 19,
-    question: "«ancoraggi e anelli di fissaggio» در کمربند ایمنی چه نقشی دارند؟",
+    question: "Qual è la funzione degli ancoraggi e anelli di fissaggio nella cintura di sicurezza?",
     options: [
-      "امکان ثابت کردن کمربند و حرکت آزاد تسمه را بدون پیچ خوردن فراهم می‌کنند",
-      "اتصال کمربند به ایربگ هستند",
-      "طول کمربند را تنظیم می‌کنند",
-      "قفل کمربند هستند"
+      "Permettono il fissaggio della cintura e lo scorrimento della cinghia senza che essa si attorcigli",
+      "Collegano la cintura all'airbag",
+      "Regolano la lunghezza della cintura",
+      "Sono la fibbia di chiusura"
     ],
     correct: 0,
-    explanation: "ancoraggi e anelli di fissaggio اجزایی هستند که ثابت کردن کمربند و حرکت آزاد تسمه بدون پیچ خوردن را ممکن می‌کنند. در برخی خودروها ارتفاع آن‌ها قابل تنظیم است."
+    explanation: "Gli ancoraggi e anelli di fissaggio sono le parti che permettono il fissaggio delle cinture e lo scorrimento della cinghia senza che essa si attorcigli. L'attacco al montante di alcuni veicoli è regolabile in altezza."
   },
 
   {
     id: 1933,
     chapter: 19,
-    question: "صندلی کودک جدید R129 از کودکان تا چند ماه می‌تواند روی صندلی جلو (در شرایط مناسب) استفاده شود؟",
+    question: "Secondo il nuovo standard R129, fino a quanti mesi un bambino può usare il seggiolino sul sedile anteriore (nelle condizioni appropriate)?",
     options: [
-      "تا ۱۵ ماه (روی صندلی جلو با ایربگ غیرفعال‌شده)",
-      "تا ۶ ماه",
-      "تا ۲ سال",
-      "هرگز روی صندلی جلو نمی‌توان استفاده کرد"
+      "Fino a 15 mesi (su sedile anteriore con airbag disattivato)",
+      "Fino a 6 mesi",
+      "Fino a 2 anni",
+      "Non è mai consentito sul sedile anteriore"
     ],
     correct: 0,
-    explanation: "استاندارد R129 اجازه می‌دهد کودک تا ۱۵ ماه روی صندلی جلو (و البته با ایربگ غیرفعال) قرار گیرد."
+    explanation: "Secondo R129 (nuove norme), il seggiolino può essere usato sul sedile anteriore fino a 15 mesi, a condizione che l'airbag frontale sia stato disattivato."
   },
 
   {
     id: 1934,
     chapter: 19,
-    question: "در مورد تعمیر یا تعویض کمربند ایمنی بعد از تصادف، قانون چه می‌گوید؟",
+    question: "Le cinture sottoposte a violenta sollecitazione in caso d'urto devono essere:",
     options: [
-      "باید با نوع تأیید شده برای آن خودرو تعویض شود",
-      "هر نوع کمربندی از بازار مجاز است",
-      "تعمیر کافی است",
-      "فقط وقتی بشکند باید تعویض شود"
+      "Sostituite con altre di tipo omologato per quel veicolo",
+      "Qualsiasi cintura acquistabile in commercio è idonea",
+      "Riparate è sufficiente",
+      "Sostituite solo se visibilmente rotte"
     ],
     correct: 0,
-    explanation: "کمربند‌هایی که تحت فشار شدید قرار گرفته‌اند یا آثار تصادف دارند باید با نوع تأیید شده برای آن خودرو (altre di tipo omologato per quel veicolo) تعویض شوند."
+    explanation: "Le cinture che sono state sottoposte a violenta sollecitazione in caso d'urto o che presentano tracce di sensibile logorio devono essere sostituite con altre di tipo omologato per quel veicolo."
   },
 
   {
     id: 1935,
     chapter: 19,
-    question: "چه کسی مسئول اطمینان از بستن کمربند توسط مسافران کودک است؟",
+    question: "Chi è responsabile di assicurarsi che i bambini passeggeri siano correttamente trattenuti?",
     options: [
-      "راننده",
-      "فقط والدین کودک",
-      "مسافر بزرگسال کنار کودک",
-      "کودک خودش"
+      "Il conducente",
+      "Solo i genitori del bambino",
+      "Il passeggero adulto accanto al bambino",
+      "Il bambino stesso"
     ],
     correct: 0,
-    explanation: "راننده مسئول این است که مطمئن شود سرنشینان، از جمله کودکان، کمربند بسته‌اند یا در صندلی کودک مناسب قرار دارند."
+    explanation: "Il conducente è responsabile di assicurarsi che tutti i passeggeri, compresi i bambini, siano correttamente allacciati o fissati nell'idoneo sistema di ritenuta."
   },
 
-
-  // ── 19.3 کلاه ایمنی موتورسیکلت ────────────────────────────────────────────
+  // ── 19.3 Casco Protettivo ──────────────────────────────────────────────────
 
   {
     id: 1936,
     chapter: 19,
-    question: "کلاه ایمنی (casco) برای موتورسوار چه کاری انجام می‌دهد؟",
+    question: "A cosa serve il casco nei veicoli a due ruote?",
     options: [
-      "از برخورد مستقیم سر با اجسام سخت جلوگیری و میزان آسیب را کاهش می‌دهد",
-      "در صورت تصادف جلوی پرتاب شدن از موتور را می‌گیرد",
-      "آسیب‌های ناحیه گردن را کاملاً از بین می‌برد",
-      "همه ضربات شدید را جذب می‌کند"
+      "Evitare l'urto diretto della testa contro corpi contundenti e limitare le lesioni al capo in caso di incidente",
+      "Impedire di cadere dal veicolo in caso di incidente",
+      "Eliminare completamente le lesioni alla colonna cervicale",
+      "Assorbire totalmente tutti gli urti violenti"
     ],
     correct: 0,
-    explanation: "کلاه ایمنی از برخورد مستقیم سر با اجسام سخت جلوگیری و آسیب را کاهش می‌دهد، اما قادر به جذب کامل ضربات بسیار شدید نیست."
+    explanation: "Il casco ha lo scopo di evitare l'urto diretto della testa contro corpi contundenti, limitando le lesioni al capo in caso di incidente. Esso non è però in grado di assorbire totalmente urti violenti."
   },
 
   {
     id: 1937,
     chapter: 19,
-    question: "اجزای اصلی کلاه ایمنی کدامند؟",
+    question: "Quali sono le parti principali di un casco protettivo?",
     options: [
-      "پوسته خارجی، پوشش داخلی جذب‌کننده ضربه، آستر داخلی، دریچه هوا، بند زیر چانه، و شیلد",
-      "فقط پوسته خارجی و بند زیر چانه",
-      "پوسته خارجی، بند زیر چانه و کمربند",
-      "تنها شیلد (visiera) و آستر داخلی"
+      "Calotta esterna, calotta interna (polistirolo espanso), rivestimento interno, prese d'aria, cinturino sottogola e visiera",
+      "Solo calotta esterna e cinturino sottogola",
+      "Calotta esterna, cinturino e cerniera",
+      "Solo visiera e rivestimento interno"
     ],
     correct: 0,
-    explanation: "اجزای اصلی: calotta esterna (پوسته خارجی ترموپلاستیک)، calotta interna(پلی‌استیرن منبسط برای جذب انرژی ضربه)، rivestimento interno (آستر داخلی)، prese d'aria (دریچه هوا)، cinturino sottogola (بند زیر چانه)، visiera (شیلد شفاف)."
+    explanation: "Le parti principali sono: una calotta esterna (materiale termoplastico), una calotta interna (polistirolo espanso per assorbire l'energia dell'urto), un rivestimento interno (poliuretano espanso + tessuto traspirante), delle prese d'aria, un cinturino sottogola e una visiera in materiale plastico trasparente."
   },
 
   {
     id: 1938,
     chapter: 19,
-    question: "چه کسانی ملزم به استفاده از کلاه ایمنی هستند؟ (ماده ۱۷۱ قانون راهنمایی)",
+    question: "Chi è obbligato a indossare e tenere regolarmente allacciato il casco (art. 171 C.d.S.)?",
     options: [
-      "راننده و سرنشینان موتورسیکلت و موپد (و قوچ/Quad) و رانندگان اسکوتر برقی",
-      "فقط راننده موتور",
-      "فقط در بزرگراه",
-      "فقط کودکان زیر ۱۸ سال"
+      "Il conducente e gli eventuali passeggeri di ciclomotori e moto (anche se maggiorenni), Quad, e i conducenti di monopattini elettrici",
+      "Solo il conducente della moto",
+      "Solo in autostrada",
+      "Solo i minorenni"
     ],
     correct: 0,
-    explanation: "راننده و سرنشینان موتورسیکلت، موپد و Quad حتی اگر سرنشین بزرگسال باشند، مکلف به استفاده از کلاه ایمنی هستند. رانندگان اسکوتر برقی نیز باید از آن استفاده کنند."
+    explanation: "La guida dei veicoli a 2 ruote richiede maggiori doti di equilibrio. Per tali ragioni, ai conducenti e agli eventuali passeggeri di ciclomotori e di motocicli (anche se maggiorenni) e di Quad è fatto obbligo di indossare e di tenere regolarmente allacciato un casco di tipo omologato. Devono utilizzarlo anche i conducenti di monopattini elettrici."
   },
 
   {
     id: 1939,
     chapter: 19,
-    question: "چه کسانی از اجبار استفاده از کلاه ایمنی معاف هستند؟",
+    question: "Chi è esentato dall'obbligo di indossare il casco?",
     options: [
-      "راننده و سرنشین موپد/موتورسیکلت با بدنه بسته یا با قفسه ایمنی crash-proof",
-      "همه رانندگان بالای ۶۵ سال",
-      "رانندگان در جاده‌های روستایی",
-      "هیچ‌کس معاف نیست"
+      "Il conducente e passeggero di ciclomotori/moto a 3-4 ruote con carrozzeria chiusa o con cellula di sicurezza a prova di crash",
+      "I conducenti over 65",
+      "I conducenti su strade rurali",
+      "Nessuno è esentato"
     ],
     correct: 0,
-    explanation: "راننده و سرنشین موپد/موتور سه یا چهار چرخ با بدنه کاملاً بسته (carrozzeria chiusa) یا با قفسه ایمنی (cellula di sicurezza a prova di crash) همراه سیستم نگهدارنده مناسب، از اجبار کلاه معاف هستند."
+    explanation: "Sono esenti dall'obbligo i conducenti e passeggeri di ciclomotori e motoveicoli a 3 o 4 ruote dotati di carrozzeria chiusa, e di ciclomotori e motocicli a 2 o 3 ruote dotati di cellula di sicurezza a prova di crash e di idonei sistemi di ritenuta."
   },
 
   {
     id: 1940,
     chapter: 19,
-    question: "کلاه ایمنی باید چه شرایطی داشته باشد؟",
+    question: "Quali requisiti deve avere il casco per essere utilizzato legalmente?",
     options: [
-      "از نوع تأییدشده، اندازه مناسب، سالم (نه شکسته) و همیشه محکم بسته",
-      "فقط از نوع اروپایی",
-      "هر نوع کلاهی که سر را بپوشاند",
-      "فقط از نوع انتگرال (integral)"
+      "Tipo omologato, taglia adatta alla persona, integro (non rotto o lesionato) e sempre ben allacciato durante la marcia",
+      "Solo di tipo europeo",
+      "Qualsiasi casco che copra la testa",
+      "Solo casco integrale"
     ],
     correct: 0,
-    explanation: "کلاه باید از نوع تأییدشده (tipo omologato)، اندازه مناسب (taglia adatta)، سالم (non rotto o lesionato) و همیشه در حین حرکت محکم بسته باشد. پوشیدن نادرست یا نبستن آن می‌تواند خطرناک باشد."
+    explanation: "Il casco deve essere di tipo omologato e di taglia adatta alla persona; deve essere sempre utilizzato solo se integro (non rotto o lesionato); deve sempre essere ben allacciato durante la marcia per evitarne lo scalzamento in caso di caduta. Indossarlo in modo errato o senza averlo correttamente allacciato può comportare gravi rischi alla salute."
   },
 
   {
     id: 1941,
     chapter: 19,
-    question: "کلاه ایمنی باید بعد از چه رویدادی حتماً تعویض شود؟",
+    question: "Dopo quale evento il casco deve essere sostituito immediatamente?",
     options: [
-      "بعد از ضربه شدید، حتی اگر ظاهراً آسیبی نداشته باشد",
-      "فقط وقتی بصری شکسته باشد",
-      "هر ۱۰ سال یک بار",
-      "فقط بعد از تصادف جدی"
+      "Dopo aver subito un forte urto, anche se non mostra deformazioni sulla calotta esterna",
+      "Solo quando è visivamente rotto",
+      "Ogni 10 anni",
+      "Solo dopo un incidente grave"
     ],
     correct: 0,
-    explanation: "کلاه باید فوراً بعد از ضربه شدید تعویض شود، حتی اگر آسیب ظاهری روی پوسته خارجی دیده نشود. همچنین به دلیل فرسودگی در برابر نور و حرارت باید به طور دوره‌ای تعویض شود."
+    explanation: "Il casco deve essere sostituito immediatamente dopo che abbia subito un forte urto, anche se non mostra deformazioni sulla calotta esterna. Subisce anche un processo di invecchiamento dovuto a luce e calore e deve quindi essere periodicamente sostituito."
   },
 
   {
     id: 1942,
     chapter: 19,
-    question: "چرا نباید روی پوسته خارجی کلاه از حلال، بنزین یا چسب استفاده کرد؟",
+    question: "Perché non si deve usare solventi, benzina o altri agenti chimici aggressivi sulla calotta esterna del casco?",
     options: [
-      "این مواد مقاومت پوسته را تخریب می‌کنند",
-      "فقط برای حفظ رنگ کلاه",
-      "به خاطر بوی نامطبوع",
-      "اثری ندارند، فقط سلیقه‌ای است"
+      "Questi prodotti compromettono la robustezza della calotta esterna",
+      "Solo per preservare il colore del casco",
+      "Per il cattivo odore",
+      "Non hanno alcun effetto, è solo una questione di gusto"
     ],
     correct: 0,
-    explanation: "حلال‌ها، بنزین و مواد شیمیایی تهاجمی مقاومت پوسته خارجی را تخریب می‌کنند. کلاه باید با شوینده‌های غیر خورنده (detersivi non corrosivi) تمیز شود."
+    explanation: "La robustezza della calotta esterna del casco può essere compromessa da solventi presenti in vernici o colle, pertanto la pulizia deve essere effettuata con detersivi non corrosivi, senza l'utilizzo di benzina o altri agenti chimici aggressivi."
   },
 
   {
     id: 1943,
     chapter: 19,
-    question: "چسب‌های تزئینی روی پوسته کلاه ایمنی چه حکمی دارند؟",
+    question: "Si possono applicare adesivi sulla calotta esterna del casco?",
     options: [
-      "نباید روی کلاه چسب زد",
-      "فقط برچسب‌های کوچک مجازند",
-      "اگر برچسب‌های استاندارد باشند اشکالی ندارد",
-      "مجاز است اگر شیلد را نپوشانند"
+      "No, sul casco non possono essere applicati adesivi",
+      "Sì, solo sticker piccoli",
+      "Sì, se sono sticker omologati",
+      "Sì, purché non coprano la visiera"
     ],
     correct: 0,
-    explanation: "نصب هیچ چسب یا برچسبی روی کلاه مجاز نیست چون می‌تواند مقاومت پوسته را تضعیف کند."
+    explanation: "Sul casco non possono essere applicati adesivi in quanto possono compromettere la resistenza della calotta."
   },
 
   {
     id: 1944,
     chapter: 19,
-    question: "شیلد (visiera) کلاه ایمنی چه نقشی دارد و چه زمانی باید تعویض شود؟",
+    question: "Quando la visiera del casco deve essere sostituita?",
     options: [
-      "دید کامل در هر شرایط نوری را تضمین می‌کند؛ اگر خط افتاده یا آسیب دیده باشد باید تعویض شود",
-      "فقط از باد محافظت می‌کند",
-      "تعویض آن اختیاری است",
-      "فقط در شب لازم است"
+      "Se rigata o comunque danneggiata, poiché non può essere riparata",
+      "La sostituzione è facoltativa",
+      "Solo di notte è necessaria",
+      "Solo se completamente opacizzata"
     ],
     correct: 0,
-    explanation: "شیلد باید دید کامل را در هر شرایط نوری تضمین کند. اگر خط دار، مات یا آسیب دیده باشد باید تعویض شود چون قابل تعمیر نیست."
+    explanation: "La visiera del casco deve garantire la perfetta visibilità con qualunque condizione di luce o illuminazione; deve quindi essere sostituita se rigata o comunque danneggiata (non può essere riparata per non compromettere la trasparenza)."
   },
 
   {
     id: 1945,
     chapter: 19,
-    question: "سیستم تهویه کلاه ایمنی چه کاری می‌کند و چرا مهم است؟",
+    question: "Qual è la funzione del sistema di aerazione del casco e perché è importante?",
     options: [
-      "از بخار شدن شیلد جلوگیری می‌کند؛ باید دریچه‌ها باز باشند",
-      "دمای داخل کلاه را ثابت نگه می‌دارد",
-      "فقط در تابستان لازم است",
-      "صرفاً برای راحتی است و ایمنی ندارد"
+      "Limita il pericolo di appannamento della visiera; occorre fare molta attenzione nel chiudere gli appositi fori, soprattutto d'inverno",
+      "Mantiene costante la temperatura interna del casco",
+      "È necessario solo in estate",
+      "È solo per il comfort, senza rilevanza per la sicurezza"
     ],
     correct: 0,
-    explanation: "سیستم تهویه از مه‌آلود شدن شیلد (appannamento della visiera) جلوگیری می‌کند. باید دریچه‌ها (fori) باز باشند، مخصوصاً در زمستان و روزهای مرطوب."
+    explanation: "Il sistema di aerazione del casco consente di limitare il pericolo di appannamento della visiera. Per tale motivo, occorre fare molta attenzione nel chiudere gli appositi fori, soprattutto d'inverno con giornate umide."
   },
 
-  // ── 19.4 لباس ایمنی موتورسیکلت ────────────────────────────────────────────
+  // ── 19.4 Abbigliamento di Sicurezza per Conducenti di Veicoli a 2 Ruote ───
 
   {
     id: 1946,
     chapter: 19,
-    question: "لباس موتورسوار باید چه خصوصیاتی داشته باشد؟",
+    question: "Quali caratteristiche deve avere l'abbigliamento del conducente di un veicolo a 2 ruote?",
     options: [
-      "حرکت را محدود نکند، از برودت و هوا محافظت کند، راننده را قابل دیدن کند و از عواقب سقوط محافظت کند",
-      "فقط باید ضد آب باشد",
-      "هر لباسی مناسب است",
-      "فقط باید رنگ روشن داشته باشد"
+      "Non limitare i movimenti, proteggere dall'aria/freddo/intemperie, rendere visibile il conducente e proteggere dalle conseguenze delle cadute",
+      "Solo essere impermeabile",
+      "Qualsiasi abbigliamento va bene",
+      "Solo essere di colore chiaro"
     ],
     correct: 0,
-    explanation: "لباس موتور باید: حرکت را محدود نکند، از هوا/سرما/باران محافظت کند، راننده را در روز و شب قابل رؤیت کند (با رنگ‌های روشن و تکه‌های بازتاب‌دهنده)، و از عواقب سقوط محافظت کند."
+    explanation: "L'abbigliamento deve: non limitare i movimenti, proteggere dall'aria, dalle intemperie e dal freddo, rendere ben visibile il conducente sia di giorno che di notte (colori vivaci e inserti retroriflettenti), proteggere il più possibile dalle conseguenze delle cadute."
   },
 
   {
     id: 1947,
     chapter: 19,
-    question: "کت و شلوار موتورسواری باید از چه نوع جنسی باشد؟",
+    question: "Di quale materiale devono essere il giaccone e i pantaloni da moto?",
     options: [
-      "مقاوم در برابر پارگی، محافظ در برابر سایش روی آسفالت، با درج‌های سخت در مفاصل",
-      "فقط چرمی",
-      "هر جنسی که راحت باشد",
-      "فقط از نوع ضد آب"
+      "Tessuto resistente, protettivo contro lo strisciamento sull'asfalto, con inserti protettivi rigidi in corrispondenza delle articolazioni",
+      "Solo in pelle",
+      "Qualsiasi tessuto comodo",
+      "Solo impermeabile"
     ],
     correct: 0,
-    explanation: "کت و شلوار باید از جنس ضد پارگی (tessuto resistente) باشند، در برابر سایش روی آسفالت محافظت کنند، و درج‌های سخت محافظ (inserti protettivi) در ناحیه آرنج، زانو، شانه و قوزک پا داشته باشند."
+    explanation: "Il giaccone e i pantaloni devono essere di tessuto resistente che protegga almeno parzialmente dalle conseguenze dello strisciamento sull'asfalto (abrasioni). Devono essere dotati di inserti protettivi in corrispondenza delle articolazioni (gomiti, ginocchia, spalle e caviglie)."
   },
 
   {
     id: 1948,
     chapter: 19,
-    question: "دستکش‌های موتور چه ویژگی ایمنی مهمی دارند؟",
+    question: "Quale importante caratteristica di sicurezza hanno i guanti da motociclista?",
     options: [
-      "از پشت دست در برابر برخورد با اجسام سخت و از کف دست هنگام سر خوردن روی آسفالت محافظت می‌کنند",
-      "فقط برای گرمای دست هستند",
-      "ضروری نیستند",
-      "فقط در زمستان لازم هستند"
+      "Proteggono il dorso della mano dagli impatti con corpi duri e palmo e dorso dagli strisciamenti sull'asfalto",
+      "Servono solo per tenere le mani calde",
+      "Non sono necessari",
+      "Servono solo d'inverno"
     ],
     correct: 0,
-    explanation: "دستکش‌های موتور از پشت دست در برابر برخورد با اجسام سخت و از کف و پشت دست در برابر سر خوردن روی آسفالت محافظت می‌کنند. همچنین سیستم ضد لغزش دارند و با وجود استحکام، حساسیت لازم برای کنترل فرمان را حفظ می‌کنند."
+    explanation: "I guanti da motociclista sono dotati di speciali sistemi di sfilamento per impedire lo sfilamento in caso di caduta. Proteggono il dorso della mano dagli impatti contro corpi duri e palmo e dorso dagli strisciamenti sull'asfalto. Garantiscono buona sensibilità durante la guida e una presa più sicura sui comandi."
   },
 
   {
     id: 1949,
     chapter: 19,
-    question: "چکمه‌های موتورسواری تأییدشده چه ویژگی مهمی دارند که از کفش معمولی متمایزشان می‌کند؟",
+    question: "Quali caratteristiche importanti distinguono i stivali da moto omologati dal normale calzature?",
     options: [
-      "طوری طراحی شده‌اند که در صورت سقوط در نیایند، بدون بند آزاد یا دکمه‌ای که به پدال‌های موتور گیر کند",
-      "فقط ضد آب هستند",
-      "فقط از سر خوردن محافظت می‌کنند",
-      "تنها تفاوتشان رنگ است"
+      "Progettati per non scalzarsi in caso di caduta, privi di nastri liberi o stringhe che possano impigliarsi nelle pedivelle del motociclo",
+      "Solo impermeabili",
+      "Solo proteggono dallo scivolamento",
+      "La differenza è solo estetica"
     ],
     correct: 0,
-    explanation: "چکمه‌های تأییدشده (stivali ad uso motociclistico omologati) طوری طراحی شده‌اند که در صورت سقوط درنیایند، بدون بند آزاد یا دکمه‌ای که به پدال گیر کند، از پا و قوزک، از سایش روی آسفالت، از سرمای اگزوز و از پیچ خوردن مفصل محافظت می‌کنند."
+    explanation: "Le calzature dovrebbero essere appositi stivali ad uso motociclistico (omologati secondo norme internazionali), progettati per non scalzarsi in caso di caduta, privi di nastri liberi o stringhe per evitare l'aggancio alle pedivelle. Proteggono piedi e caviglie, dall'asfalto in caso di caduta, dal freddo degli urti e dalle scottature contro la marmitta."
   },
 
   {
     id: 1950,
     chapter: 19,
-    question: "پشت بدن موتورسوار چه خطر ویژه‌ای دارد و چگونه محافظت می‌شود؟",
+    question: "Quale rischio specifico riguarda la schiena del motociclista e come si protegge?",
     options: [
-      "ستون فقرات در سقوط آسیب‌پذیر است؛ با کمربند کمری، کت با تقویت‌کننده و محافظ پشت",
-      "پشت نیازی به محافظت ندارد",
-      "فقط در بزرگراه خطرناک است",
-      "ایربگ موتور آن را محافظت می‌کند"
+      "La colonna vertebrale è vulnerabile nelle cadute; si usa fasce lombari, giacche con rinforzi e inserti paraschiena",
+      "La schiena non necessita protezione specifica",
+      "È pericolosa solo in autostrada",
+      "L'airbag della moto la protegge"
     ],
     correct: 0,
-    explanation: "ستون فقرات در سقوط بسیار آسیب‌پذیر است. می‌توان از کمربند کمری (fasce lombari), کت با تقویت‌کننده (giacche con rinforzi) و درج‌های محافظ پشت (paraschiena) استفاده کرد."
+    explanation: "Oltre alla testa, la schiena è l'altra parte del corpo particolarmente delicata. Si possono utilizzare fasce lombari di sostegno, giacche con rinforzi e inserti protettivi paraschiena."
   },
 
   {
     id: 1951,
     chapter: 19,
-    question: "دستکش‌های موتورسواری در چه فصلی باید استفاده شوند؟",
+    question: "In quale stagione è obbligatorio l'uso dei guanti da motociclista?",
     options: [
-      "در تمام فصول، هم تابستان هم زمستان",
-      "فقط در زمستان",
-      "فقط در باران",
-      "اجباری نیست"
+      "In tutte le stagioni, sia d'estate che d'inverno",
+      "Solo in inverno",
+      "Solo con la pioggia",
+      "Non è obbligatorio"
     ],
     correct: 0,
-    explanation: "استفاده از دستکش‌های موتورسیکلت تأییدشده در تمام فصول (sia d'estate che d'inverno) ضروری است."
+    explanation: "Si devono sempre usare i guanti motociclistici di tipo omologato, sia d'estate che d'inverno."
   },
 
   {
     id: 1952,
     chapter: 19,
-    question: "چرا پوشیدن لباس‌های فراخ (vaporosi) هنگام موتورسواری خطرناک است؟",
+    question: "Perché è pericoloso indossare abiti vaporosi (ampi e svolazzanti) alla guida di un motociclo?",
     options: [
-      "ممکن است در اثر باد پُر شوند و حرکات راننده را محدود کنند یا در موتور گیر کنند",
-      "فقط از نظر زیبایی نامناسب است",
-      "فقط در سرعت بالا خطر دارد",
-      "خطرناک نیست"
+      "Possono gonfiarsi con l'aria e impigliarsi in parti del veicolo, limitando i movimenti del conducente",
+      "Solo esteticamente inadeguato",
+      "Solo pericoloso ad alta velocità",
+      "Non è pericoloso"
     ],
     correct: 0,
-    explanation: "لباس‌های فراخ ممکن است در اثر باد پُر شوند (gonfiarsi con l'aria) و خطر گیر کردن (impigliarsi) در موتور را ایجاد کنند. همچنین لباس‌هایی که در باد پَر می‌زنند مانند لباس‌های بدون دکمه نباید پوشیده شوند."
+    explanation: "L'abbigliamento non deve gonfiarsi con l'aria con il rischio di impigliarsi (non indossare indumenti svolazzanti). Gli indumenti ampi sono pericolosi perché possono impigliarsi nelle parti mobili del veicolo."
   },
 
   {
     id: 1953,
     chapter: 19,
-    question: "راننده وسیله دو چرخ چرا بیشتر از راننده خودرو در معرض خطر است؟",
+    question: "Perché il conducente di un veicolo a due ruote è più esposto ai rischi rispetto al conducente di un'autovettura?",
     options: [
-      "به تعادل بیشتری نیاز دارد، بیشتر در معرض شرایط جاده‌ای دشوار است و در تصادف بیشتر آسیب می‌بیند",
-      "فقط به دلیل سرعت بیشتر",
-      "فقط به خاطر نداشتن ایربگ",
-      "هیچ خطر بیشتری ندارد"
+      "Richiede maggiori doti di equilibrio, è più esposto alle condizioni della strada ed è a maggior rischio di traumi in caso di incidente",
+      "Solo per la velocità maggiore",
+      "Solo per la mancanza di airbag",
+      "Non è più esposto"
     ],
     correct: 0,
-    explanation: "رانندگی وسایل دو چرخ به تعادل بیشتری نیاز دارد، به ویژه روی سطوح با چسبندگی کم. رانندگان بیشتر در معرض آسیب‌های جسمی ناشی از تصادف هستند زیرا بدنشان مستقیماً در معرض خطر است."
+    explanation: "La guida dei veicoli a 2 ruote richiede maggiori doti di equilibrio rispetto alla guida di veicoli a motore a 4 ruote (ad esempio su terreni a bassa aderenza, strade sconnesse). Inoltre, i conducenti di veicoli a due ruote sono esposti a maggiori rischi di traumi in caso di incidente."
   },
 
 ];
