@@ -276,10 +276,7 @@ function HomePage({ progress, onNavigate }: {
             گواهینامه ایتالیایی
           </span>
         </h1>
-        <p style={{ color: "var(--text-secondary)", fontSize: 15, lineHeight: 1.7, direction: "rtl", textAlign: "right" }}>
-          کتاب آیین‌نامه <strong style={{ color: "var(--text-primary)" }}>۲۵ فصل</strong> دارد.
-          عکس‌های هر فصل را بفرست تا سوالات آزمون را با هم بسازیم.
-        </p>
+
       </div>
 
       {/* Stats row */}
