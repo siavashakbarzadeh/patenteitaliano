@@ -142,5 +142,18 @@ export const chapter17Content: ChapterContent = {
       ],
     },
 
+    {
+      id: "17-eng",
+      titleIt: "English Equivalents - Capitolo 17",
+      titleFa: "معادل های انگلیسی - فصل 17",
+      body: ["اتوبان و یدک:"],
+      englishEquivalents: [
+        { italian: "triangolo",     english: "triangle",      note: "مثلث" },
+        { italian: "autostrada",    english: "motorway",      note: "اتوبان" },
+        { italian: "traino",        english: "tow",           note: "یدک - tow = کشیدن" },
+        { italian: "giubbotto",     english: "jacket / vest", note: "جلیقه" },
+      ],
+    },
+
   ],
 };

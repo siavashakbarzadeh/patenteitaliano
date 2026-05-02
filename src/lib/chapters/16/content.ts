@@ -131,5 +131,19 @@ export const chapter16Content: ChapterContent = {
       ],
     },
 
+    {
+      id: "16-eng",
+      titleIt: "English Equivalents - Capitolo 16",
+      titleFa: "معادل های انگلیسی - فصل 16",
+      body: ["توقف و پارک:"],
+      englishEquivalents: [
+        { italian: "fermata",       english: "stop / halt",    note: "ایست - fermarsi = توقف" },
+        { italian: "sosta",         english: "stop / parking", note: "پارک - sostare = ماندن" },
+        { italian: "parcheggio",    english: "parking",        note: "پارک - دقیقاً همان" },
+        { italian: "portiera",      english: "door",           note: "در ماشین" },
+        { italian: "invalido",      english: "disabled",       note: "معلول - همریشه" },
+      ],
+    },
+
   ],
 };

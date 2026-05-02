@@ -57,5 +57,22 @@ export const chapter5Content: ChapterContent = {
         { italian: "rispettare i limiti di velocità", persian: "رعایت محدودیت‌های سرعت", example: "Il conducente deve rispettare i limiti di velocità. → راننده باید محدودیت‌های سرعت را رعایت کند." },
       ],
     },
+
+    {
+      id: "5-eng",
+      titleIt: "English Equivalents - Capitolo 5",
+      titleFa: "معادل های انگلیسی - فصل 5",
+      body: ["سرعت و فاصله:"],
+      englishEquivalents: [
+        { italian: "velocita",      english: "velocity",           note: "سرعت - دقیقاً همان" },
+        { italian: "limite",        english: "limit",              note: "محدودیت - همریشه" },
+        { italian: "distanza",      english: "distance",           note: "فاصله - همریشه" },
+        { italian: "frenata",       english: "braking",            note: "ترمز - freno = brake" },
+        { italian: "reazione",      english: "reaction",           note: "واکنش - همریشه" },
+        { italian: "conducente",    english: "conductor / driver", note: "راننده - همریشه" },
+        { italian: "extraurbano",   english: "extra-urban",        note: "خارج شهر - همریشه" },
+      ],
+    },
+
   ],
 };

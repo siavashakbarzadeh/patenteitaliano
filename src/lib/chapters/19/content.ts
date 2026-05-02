@@ -203,5 +203,19 @@ export const chapter19Content: ChapterContent = {
       ],
     },
 
+    {
+      id: "19-eng",
+      titleIt: "English Equivalents - Capitolo 19",
+      titleFa: "معادل های انگلیسی - فصل 19",
+      body: ["ایمنی فردی:"],
+      englishEquivalents: [
+        { italian: "cintura",       english: "belt / cincture", note: "کمربند" },
+        { italian: "airbag",        english: "airbag",          note: "دقیقاً همان" },
+        { italian: "casco",         english: "casque / helmet", note: "کلاه ایمنی" },
+        { italian: "seggiolino",    english: "child seat",      note: "صندلی کودک" },
+        { italian: "omologato",     english: "approved",        note: "تایید شده - همریشه" },
+      ],
+    },
+
   ],
 };

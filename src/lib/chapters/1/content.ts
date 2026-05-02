@@ -99,5 +99,22 @@ export const chapter1Content: ChapterContent = {
       ],
     },
 
+    {
+      id: "1-eng",
+      titleIt: "English Equivalents - Capitolo 1",
+      titleFa: "معادل های انگلیسی (حفظ آسان تر) - فصل 1",
+      body: ["کلمات این فصل با معادل انگلیسی:"],
+      englishEquivalents: [
+        { italian: "strada",        english: "street / road",       note: "خیابان - همریشه" },
+        { italian: "autostrada",    english: "motorway",            note: "auto = خودرو + strada = جاده" },
+        { italian: "carreggiata",   english: "carriageway",         note: "بخش اصلی جاده" },
+        { italian: "corsia",        english: "corridor / lane",     note: "خط جاده" },
+        { italian: "intersezione",  english: "intersection",        note: "دقیقاً همان کلمه" },
+        { italian: "rotatoria",     english: "rotary / roundabout", note: "rotate = چرخیدن" },
+        { italian: "precedenza",    english: "precedence",          note: "حق تقدم - همریشه" },
+        { italian: "striscia",      english: "stripe / strip",      note: "خط روی جاده" },
+      ],
+    },
+
   ],
 };

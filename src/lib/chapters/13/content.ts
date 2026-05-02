@@ -196,5 +196,18 @@ export const chapter13Content: ChapterContent = {
       ],
     },
 
+    {
+      id: "13-eng",
+      titleIt: "English Equivalents - Capitolo 13",
+      titleFa: "معادل های انگلیسی - فصل 13",
+      body: ["تردد و خطوط:"],
+      englishEquivalents: [
+        { italian: "circolazione",  english: "circulation",       note: "تردد - همریشه" },
+        { italian: "sorpasso",      english: "overtaking",        note: "سبقت - surpassare = گذشتن" },
+        { italian: "abbagliante",   english: "high beam",         note: "چراغ پر" },
+        { italian: "ostacolo",      english: "obstacle",          note: "مانع - همریشه" },
+      ],
+    },
+
   ],
 };

@@ -181,6 +181,19 @@ export const chapter18Content: ChapterContent = {
       ],
     },
 
+    {
+      id: "18-eng",
+      titleIt: "English Equivalents - Capitolo 18",
+      titleFa: "معادل های انگلیسی - فصل 18",
+      body: ["چراغ ها و دستگاه ها:"],
+      englishEquivalents: [
+        { italian: "luce",          english: "light",         note: "نور - lux = نور" },
+        { italian: "fanale",        english: "headlight",     note: "چراغ" },
+        { italian: "fendinebbia",   english: "fog light",     note: "مه شکن" },
+        { italian: "freccia",       english: "indicator",     note: "فرچه - freccia = پیکان" },
+        { italian: "acustico",      english: "acoustic",      note: "صوتی - همریشه" },
+      ],
+    },
 
   ],
 };

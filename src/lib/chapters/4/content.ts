@@ -53,5 +53,21 @@ export const chapter4Content: ChapterContent = {
         { italian: "ubbidire agli agenti", persian: "از مأموران اطاعت کردن", example: "Tutti devono ubbidire agli ordini degli agenti. → همه باید از دستورات مأموران اطاعت کنند." },
       ],
     },
+
+    {
+      id: "4-eng",
+      titleIt: "English Equivalents - Capitolo 4",
+      titleFa: "معادل های انگلیسی - فصل 4",
+      body: ["علائم مامور و راننده:"],
+      englishEquivalents: [
+        { italian: "agente",        english: "agent",               note: "مامور - همریشه" },
+        { italian: "braccio",       english: "brace / arm",         note: "بازو" },
+        { italian: "indicatore",    english: "indicator",           note: "فرچه - همریشه" },
+        { italian: "clacson",       english: "claxon / horn",       note: "بوق - همان کلمه" },
+        { italian: "abbagliante",   english: "high beam",           note: "چراغ پر" },
+        { italian: "anabbagliante", english: "low beam",            note: "چراغ پایین" },
+      ],
+    },
+
   ],
 };

@@ -154,5 +154,18 @@ export const chapter14Content: ChapterContent = {
       ],
     },
 
+    {
+      id: "14-eng",
+      titleIt: "English Equivalents - Capitolo 14",
+      titleFa: "معادل های انگلیسی - فصل 14",
+      body: ["تقدم در تقاطع:"],
+      englishEquivalents: [
+        { italian: "precedenza",    english: "precedence",     note: "حق تقدم - همریشه" },
+        { italian: "incrocio",      english: "crossing",       note: "تقاطع" },
+        { italian: "confluenza",    english: "confluence",     note: "تلاقی - همریشه" },
+        { italian: "rallentare",    english: "slow down",      note: "کند کردن - lento = کند" },
+      ],
+    },
+
   ],
 };

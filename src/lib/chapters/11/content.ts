@@ -54,5 +54,20 @@ export const chapter11Content: ChapterContent = {
         { italian: "verificare la pressione dei pneumatici", persian: "فشار باد لاستیک را بررسی کردن", example: "Bisogna verificare regolarmente la pressione dei pneumatici. → باید به‌طور منظم فشار باد لاستیک‌ها را بررسی کرد." },
       ],
     },
+
+    {
+      id: "11-eng",
+      titleIt: "English Equivalents - Capitolo 11",
+      titleFa: "معادل های انگلیسی - فصل 11",
+      body: ["سیستم های خودرو:"],
+      englishEquivalents: [
+        { italian: "pneumatico",    english: "pneumatic tyre",  note: "لاستیک - pneuma = هوا" },
+        { italian: "battistrada",   english: "tread",           note: "آج لاستیک" },
+        { italian: "ABS",           english: "Anti-lock Braking",note: "ضد قفل ترمز - دقیقاً همان" },
+        { italian: "ESP",           english: "Stability Program",note: "دقیقاً همان" },
+        { italian: "sterzo",        english: "steering",        note: "فرمان" },
+      ],
+    },
+
   ],
 };

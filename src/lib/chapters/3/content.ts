@@ -55,5 +55,22 @@ export const chapter3Content: ChapterContent = {
         { italian: "fermarsi al semaforo rosso", persian: "پشت سمافور قرمز توقف کردن", example: "Al semaforo rosso si deve fermarsi completamente. → پشت سمافور قرمز باید کاملاً توقف کرد." },
       ],
     },
+
+    {
+      id: "3-eng",
+      titleIt: "English Equivalents - Capitolo 3",
+      titleFa: "معادل های انگلیسی - فصل 3",
+      body: ["سمافور و چراغ ها:"],
+      englishEquivalents: [
+        { italian: "semaforo",     english: "semaphore / traffic light", note: "sema = علامت + phore = حامل" },
+        { italian: "rosso",         english: "rosy / red",              note: "قرمز - rose = گل سرخ" },
+        { italian: "verde",         english: "verdant / green",         note: "سبز - verdure = سبزیجات" },
+        { italian: "giallo",        english: "yellow",                  note: "زرد" },
+        { italian: "lampeggiante",  english: "lamp-flashing",           note: "چشمک زن - lamp = چراغ" },
+        { italian: "direzionale",   english: "directional",             note: "جهت دار - همریشه" },
+        { italian: "pedonale",      english: "pedestrian",              note: "پیاده - همریشه" },
+      ],
+    },
+
   ],
 };

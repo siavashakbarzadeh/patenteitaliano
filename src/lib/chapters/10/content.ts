@@ -54,5 +54,21 @@ export const chapter10Content: ChapterContent = {
         { italian: "fermarsi e prestare soccorso", persian: "توقف و کمک‌رسانی", example: "In caso di incidente è obbligatorio fermarsi e prestare soccorso. → در صورت تصادف توقف و کمک‌رسانی اجباری است." },
       ],
     },
+
+    {
+      id: "10-eng",
+      titleIt: "English Equivalents - Capitolo 10",
+      titleFa: "معادل های انگلیسی - فصل 10",
+      body: ["تصادف و کمک های اولیه:"],
+      englishEquivalents: [
+        { italian: "incidente",     english: "incident / accident", note: "تصادف - همریشه" },
+        { italian: "emergenza",     english: "emergency",           note: "اضطراری - همریشه" },
+        { italian: "ambulanza",     english: "ambulance",           note: "دقیقاً همان" },
+        { italian: "emorragia",     english: "hemorrhage",          note: "خونریزی - همریشه" },
+        { italian: "omissione",     english: "omission",            note: "ترک - همریشه" },
+        { italian: "constatazione", english: "assessment",          note: "ارزیابی - همریشه" },
+      ],
+    },
+
   ],
 };

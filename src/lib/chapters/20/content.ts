@@ -316,5 +316,19 @@ export const chapter20Content: ChapterContent = {
       ],
     },
 
+    {
+      id: "20-eng",
+      titleIt: "English Equivalents - Capitolo 20",
+      titleFa: "معادل های انگلیسی - فصل 20",
+      body: ["گواهینامه و امتیاز:"],
+      englishEquivalents: [
+        { italian: "patente",       english: "patent / licence", note: "گواهینامه - patent = امتیاز رسمی" },
+        { italian: "punteggio",     english: "score / points",   note: "امتیاز - punto = نقطه" },
+        { italian: "decurtazione",  english: "deduction",        note: "کسر امتیاز" },
+        { italian: "revoca",        english: "revocation",       note: "ابطال - همریشه" },
+        { italian: "sanzione",      english: "sanction",         note: "جریمه - همریشه" },
+      ],
+    },
+
   ],
 };

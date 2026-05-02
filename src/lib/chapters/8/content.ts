@@ -53,5 +53,20 @@ export const chapter8Content: ChapterContent = {
         { italian: "fermarsi alle strisce pedonali", persian: "پشت خط‌کشی عابر توقف کردن", example: "I conducenti devono fermarsi alle strisce pedonali quando ci sono pedoni. → رانندگان باید پشت خط‌کشی عابر توقف کنند وقتی عابر هست." },
       ],
     },
+
+    {
+      id: "8-eng",
+      titleIt: "English Equivalents - Capitolo 8",
+      titleFa: "معادل های انگلیسی - فصل 8",
+      body: ["عابران و دوچرخه سواران:"],
+      englishEquivalents: [
+        { italian: "pedone",        english: "pedestrian",       note: "عابر - همریشه" },
+        { italian: "ciclista",      english: "cyclist",          note: "دوچرخه سوار - همریشه" },
+        { italian: "marciapiede",   english: "pavement",         note: "marcia = حرکت + piede = پا" },
+        { italian: "vulnerabile",   english: "vulnerable",       note: "آسیب پذیر - همریشه" },
+        { italian: "laterale",      english: "lateral",          note: "جانبی - همریشه" },
+      ],
+    },
+
   ],
 };

@@ -56,5 +56,21 @@ export const chapter7Content: ChapterContent = {
         { italian: "dare la precedenza a destra", persian: "تقدم به سمت راست", example: "All'incrocio senza segnali, si dà la precedenza a chi viene da destra. → در تقاطع بدون علائم، به کسی که از راست می‌آید تقدم داده می‌شود." },
       ],
     },
+
+    {
+      id: "7-eng",
+      titleIt: "English Equivalents - Capitolo 7",
+      titleFa: "معادل های انگلیسی - فصل 7",
+      body: ["تقاطع و روتاریا:"],
+      englishEquivalents: [
+        { italian: "incrocio",      english: "crossing / junction", note: "تقاطع - cross = عبور" },
+        { italian: "rotatoria",     english: "rotary / roundabout", note: "rotate = چرخیدن" },
+        { italian: "precedenza",    english: "precedence",          note: "حق تقدم - همریشه" },
+        { italian: "corsia",        english: "corridor / lane",     note: "خط جاده" },
+        { italian: "tram",          english: "tram",               note: "دقیقاً همان" },
+        { italian: "emergenza",     english: "emergency",          note: "اضطراری - همریشه" },
+      ],
+    },
+
   ],
 };

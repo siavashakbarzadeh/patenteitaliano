@@ -53,5 +53,21 @@ export const chapter6Content: ChapterContent = {
         { italian: "tenersi a destra della carreggiata", persian: "در سمت راست جاده نگه داشتن", example: "I veicoli devono tenersi a destra della carreggiata. → وسایل باید در سمت راست جاده نگه دارند." },
       ],
     },
+
+    {
+      id: "6-eng",
+      titleIt: "English Equivalents - Capitolo 6",
+      titleFa: "معادل های انگلیسی - فصل 6",
+      body: ["موقعیت گیری و مانور:"],
+      englishEquivalents: [
+        { italian: "manovra",       english: "maneuver",          note: "مانور - همریشه" },
+        { italian: "inversione",    english: "inversion / U-turn", note: "دور زدن - همریشه" },
+        { italian: "retromarcia",   english: "reverse",           note: "retro = عقب + marcia = حرکت" },
+        { italian: "svolta",        english: "switch / turn",     note: "گردش، پیچ" },
+        { italian: "margine",       english: "margin / edge",     note: "لبه - همریشه" },
+        { italian: "senso",         english: "sense / direction", note: "جهت" },
+      ],
+    },
+
   ],
 };

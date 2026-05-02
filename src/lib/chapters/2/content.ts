@@ -89,5 +89,22 @@ export const chapter2Content: ChapterContent = {
       ],
     },
 
+    {
+      id: "2-eng",
+      titleIt: "English Equivalents - Capitolo 2",
+      titleFa: "معادل های انگلیسی - فصل 2",
+      body: ["تابلوهای عمودی:"],
+      englishEquivalents: [
+        { italian: "segnale",     english: "signal / sign",      note: "علامت - همریشه" },
+        { italian: "pericolo",    english: "peril / danger",     note: "خطر - peril انگلیسی" },
+        { italian: "divieto",     english: "prohibition",        note: "ممنوعیت" },
+        { italian: "obbligo",     english: "obligation",         note: "اجبار - همریشه" },
+        { italian: "triangolo",   english: "triangle",           note: "مثلث - دقیقاً همان" },
+        { italian: "cerchio",     english: "circle",             note: "دایره - همریشه" },
+        { italian: "priorita",    english: "priority",           note: "اولویت - همریشه" },
+        { italian: "temporaneo",  english: "temporary",          note: "موقت - همریشه" },
+      ],
+    },
+
   ],
 };

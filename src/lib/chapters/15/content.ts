@@ -136,5 +136,18 @@ export const chapter15Content: ChapterContent = {
       ],
     },
 
+    {
+      id: "15-eng",
+      titleIt: "English Equivalents - Capitolo 15",
+      titleFa: "معادل های انگلیسی - فصل 15",
+      body: ["سبقت:"],
+      englishEquivalents: [
+        { italian: "sorpasso",      english: "overtaking",     note: "سبقت" },
+        { italian: "visibilita",    english: "visibility",     note: "دید - همریشه" },
+        { italian: "divieto",       english: "prohibition",    note: "ممنوعیت" },
+        { italian: "accelerare",    english: "accelerate",     note: "شتاب - همریشه" },
+      ],
+    },
+
   ],
 };

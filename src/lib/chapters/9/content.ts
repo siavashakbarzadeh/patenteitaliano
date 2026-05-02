@@ -55,5 +55,21 @@ export const chapter9Content: ChapterContent = {
         { italian: "non guidare sotto l'influenza dell'alcol", persian: "تحت تأثیر الکل رانندگی نکردن", example: "È vietato guidare con tasso alcolemico superiore a 0,5 g/l. → رانندگی با سطح الکل بیش از ۰.۵ گرم/لیتر ممنوع است." },
       ],
     },
+
+    {
+      id: "9-eng",
+      titleIt: "English Equivalents - Capitolo 9",
+      titleFa: "معادل های انگلیسی - فصل 9",
+      body: ["الکل و حواس پرتی:"],
+      englishEquivalents: [
+        { italian: "alcol",         english: "alcohol",        note: "دقیقاً همان" },
+        { italian: "tasso",         english: "rate / level",   note: "سطح - tax = نرخ" },
+        { italian: "distrazione",   english: "distraction",    note: "حواس پرتی - همریشه" },
+        { italian: "sonnolenza",    english: "somnolence",     note: "خواب آلودگی - somno = خواب" },
+        { italian: "farmaco",       english: "pharmaceutical", note: "دارو - pharmacy = داروخانه" },
+        { italian: "concentrazione",english: "concentration",  note: "تمرکز - همریشه" },
+      ],
+    },
+
   ],
 };
