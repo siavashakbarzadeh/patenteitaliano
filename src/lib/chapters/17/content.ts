@@ -10,7 +10,51 @@ export const chapter17Content: ChapterContent = {
   titleIt: "Ingombro Carreggiata – Segnale di Veicolo Fermo – Circolazione in Autostrada – Trasporto Persone e Cose – Traino dei Veicoli",
   titleFa: "انسداد جاده – سیگنال وسیله متوقف – تردد در اتوبان – حمل مسافر و بار – یدک کشیدن",
   pageRange: "ص ۱۹۴–۲۱۳",
+  summary: "این فصل چند موضوع مهم را پوشش می‌دهد: اقدامات لازم هنگام انسداد جاده، نحوه و فاصله گذاشتن مثلث هشدار (۵۰م جاده/۱۰۰م اتوبان)، اجبار به جلیقه بازتاب‌دهنده، ممنوعیت‌های اتوبان (دور زدن/دنده عقب/توقف)، قوانین حمل مسافر و بار، و شرایط یدک کشیدن.",
   sections: [
+
+    // ─── متن اصلی ایتالیایی ───────────────────────────────────────────────────
+    {
+      id: "17-0-testo-italiano",
+      titleIt: "Testo Originale – Capitolo 17",
+      titleFa: "📖 متن اصلی ایتالیایی فصل ۱۷",
+      body: [
+        "**Art. 161 – Ingombro della carreggiata**\nIn caso di ingombro della carreggiata, il conducente deve rimuovere l'ostacolo. Se non è possibile, deve presegnalare con il triangolo, indossare il giubbotto ad alta visibilità e avvisare le autorità.",
+        "**Triangolo (segnale mobile di pericolo)**\n• Strade normali: almeno 50 m dal veicolo fermo.\n• Autostrade/extraurbane principali: almeno 100 m.\n• Deve essere visibile da almeno 100 m.\n• Il conducente deve indossare il giubbotto retroriflettente durante la presegnalazione.",
+        "**Artt. 175-176 – Autostrade**\nVietati: inversione di marcia, retromarcia, fermata fuori emergenza, uso del clacson, circolazione su corsia emergenza, circolazione di biciclette/ciclomotori/moto <120cc.\nObbligo: percorrere la corsia di destra; usare la corsia di sinistra solo per sorpasso; lasciare la corsia di emergenza libera.",
+        "**Traino dei veicoli**\nIl traino di emergenza è consentito con cavo o barra rigida. Velocità massima: 80 km/h. Il veicolo trainato non deve avere persone a bordo salvo il conducente al volante per sterzare. Il cavo deve essere ben visibile (segnalazione obbligatoria).",
+      ],
+      keyVerbs: [
+        { italian: "presegnalare con il triangolo", persian: "با مثلث هشدار دادن", example: "Il conducente deve presegnalare con il triangolo. → راننده باید با مثلث هشدار دهد." },
+        { italian: "indossare il giubbotto", persian: "جلیقه پوشیدن", example: "Deve indossare il giubbotto ad alta visibilità. → باید جلیقه دید بالا بپوشد." },
+      ],
+      highlights: [
+        "Triangolo su strada normale: minimo 50 m.",
+        "Triangolo in autostrada: minimo 100 m.",
+        "In autostrada: vietato invertire il senso di marcia.",
+        "Giubbotto: obbligatorio fuori dai centri abitati.",
+        "Traino: max 80 km/h, segnalazione cavo obbligatoria.",
+      ],
+      notes: [
+        "★ مثلث جاده عادی = ۵۰ متر. اتوبان = ۱۰۰ متر.",
+        "★ در اتوبان دور زدن مطلقاً ممنوع است.",
+        "★ جلیقه = اجباری خارج از شهر.",
+        "★ سرعت یدک = حداکثر ۸۰ کیلومتر.",
+      ],
+    },
+
+    // ─── ترجمه فارسی ──────────────────────────────────────────────────────────
+    {
+      id: "17-0-traduzione-persiana",
+      titleIt: "Traduzione Persiana – Capitolo 17",
+      titleFa: "🇮🇷 ترجمه فارسی متن اصلی فصل ۱۷",
+      body: [
+        "**ماده ۱۶۱ – انسداد جاده**\nدر صورت انسداد جاده، راننده باید مانع را برطرف کند. اگر ممکن نیست باید با مثلث هشدار دهد، جلیقه بازتاب‌دهنده بپوشد و مقامات را آگاه کند.",
+        "**مثلث (علامت خطر متحرک)**\n• جاده‌های عادی: حداقل ۵۰ متر از وسیله متوقف.\n• اتوبان/جاده برون‌شهری اصلی: حداقل ۱۰۰ متر.\n• باید از ۱۰۰ متری قابل رؤیت باشد.\n• هنگام گذاشتن مثلث باید جلیقه پوشیده شود.",
+        "**مواد ۱۷۵-۱۷۶ – اتوبان**\nممنوع: دور زدن، دنده عقب، توقف غیراورژانسی، بوق بدون ضرورت، تردد روی خط اضطراری، تردد دوچرخه/موپد/موتور <۱۲۰cc.\nاجباری: حرکت در خط راست؛ خط چپ فقط برای سبقت؛ خط اضطراری همیشه آزاد.",
+        "**یدک کشیدن**\nیدک اضطراری با طناب یا بار صلب مجاز است. حداکثر سرعت: ۸۰ کیلومتر. در وسیله یدک کشیده شده جز راننده پشت فرمان کسی نباشد. طناب باید کاملاً قابل دیدن باشد.",
+      ],
+    },
 
     // ─── 17.1 Ingombro della Carreggiata ─────────────────────────────────────
     {
@@ -82,6 +126,19 @@ export const chapter17Content: ChapterContent = {
         { italian: "immettersi progressivamente", persian: "به تدریج وارد شدن", example: "Si deve immettersi progressivamente nel traffico dalla corsia di accelerazione. → باید از خط شتاب به تدریج وارد ترافیک شوید." },
         { italian: "invertire il senso di marcia", persian: "جهت حرکت را عوض کردن", example: "In autostrada è vietato invertire il senso di marcia. → در اتوبان عوض کردن جهت حرکت ممنوع است." },
         { italian: "fondo verde / fondo blu", persian: "پس‌زمینه سبز / پس‌زمینه آبی", example: "Le autostrade hanno segnali con fondo verde, le extraurbane principali fondo blu. → اتوبان‌ها علائم با پس‌زمینه سبز دارند، جاده‌های برون‌شهری اصلی آبی." },
+      ],
+    },
+
+    // ─── خلاصه ────────────────────────────────────────────────────────────────
+    {
+      id: "17-4-riassunto",
+      titleIt: "Riassunto — Punti Chiave del Capitolo 17",
+      titleFa: "خلاصه — نکات کلیدی فصل ۱۷",
+      body: [
+        "**اعداد کلیدی فصل ۱۷:**\n\n| موضوع | عدد |\n|-------|-----|\n| مثلث — جاده عادی | حداقل ۵۰ م |\n| مثلث — اتوبان | حداقل ۱۰۰ م |\n| دید مثلث | از ۱۰۰ م |\n| سرعت یدک | حداکثر ۸۰ کم/س |\n\n**ممنوعیت‌های مطلق اتوبان:**\n- دور زدن (U-turn)\n- دنده عقب\n- توقف خارج از اورژانس\n- تردد روی خط اضطراری\n- دوچرخه/موپد/موتور <۱۲۰cc",
+      ],
+      keyVerbs: [
+        { italian: "rispettare le norme autostradali", persian: "قوانین اتوبان را رعایت کردن", example: "In autostrada bisogna rispettare rigorosamente le norme. → در اتوبان باید قوانین را دقیقاً رعایت کرد." },
       ],
     },
 

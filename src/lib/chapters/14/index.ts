@@ -443,4 +443,204 @@ export const chapter14Questions: Question[] = [
     explanation: "Chi emerge da una strada privata (passo carraio, parcheggio, cortile, ecc.) o da terreni non ad uso pubblico deve dare la precedenza a tutti i veicoli circolanti sulla strada pubblica, nonché ai pedoni."
   },
 
+  // ── Scenari Avanzati Tram e Precedenza ───────────────────────────────────
+
+  {
+    id: 1431,
+    chapter: 14,
+    question: "All'incrocio si avvicina un tram da sinistra e un veicolo da destra (senza segnali). Chi ha la precedenza?",
+    options: [
+      "Il tram, perché il tram ha sempre la precedenza sugli altri veicoli agli incroci",
+      "Il veicolo da destra, perché si applica la regola della destra",
+      "Passano contemporaneamente",
+      "Chi arriva prima all'incrocio"
+    ],
+    correct: 0,
+    explanation: "Il tram ha SEMPRE la precedenza sugli altri veicoli agli incroci, anche se questi provengono da destra. La regola della destra non si applica quando è presente un tram.",
+    tags: ["tram", "precedenza"],
+    pageRef: 171,
+    vocab: [
+      { italian: "il tram ha sempre la precedenza", persian: "تراموا همیشه اولویت دارد" },
+    ],
+  },
+
+  {
+    id: 1432,
+    chapter: 14,
+    question: "Due veicoli si avvicinano allo stesso incrocio: il veicolo A vuole svoltare a sinistra, il veicolo B viene in senso contrario e va dritto. Chi cede?",
+    options: [
+      "Il veicolo A deve cedere al veicolo B, perché chi svolta a sinistra deve sempre cedere ai veicoli in senso contrario",
+      "Il veicolo B deve cedere al veicolo A",
+      "Passano contemporaneamente",
+      "Dipende da quale ha la regola della destra"
+    ],
+    correct: 0,
+    explanation: "Chi svolta a sinistra deve sempre cedere la precedenza ai veicoli provenienti in senso contrario che procedono dritto o svoltano a destra. Questa regola si applica indipendentemente dalla regola della destra.",
+    tags: ["svolta-sinistra", "precedenza"],
+    pageRef: 172,
+    vocab: [
+      { italian: "svoltare a sinistra", persian: "چرخش به چپ" },
+      { italian: "veicolo in senso contrario", persian: "وسیله مقابل" },
+    ],
+  },
+
+  {
+    id: 1433,
+    chapter: 14,
+    question: "Due veicoli provenienti da direzioni opposte intendono entrambi svoltare a sinistra all'incrocio. Cosa devono fare?",
+    options: [
+      "Possono passare contemporaneamente, ciascuno passando al di là del centro dell'incrocio",
+      "Devono attendere che uno abbia completato la svolta prima che l'altro inizi",
+      "Quello che ha la precedenza (regola della destra) deve aspettare",
+      "È sempre vietato svoltare entrambi a sinistra contemporaneamente"
+    ],
+    correct: 0,
+    explanation: "Due veicoli provenienti da direzioni opposte che intendono entrambi svoltare a sinistra possono farlo contemporaneamente. Ciascuno deve passare al di là del centro dell'incrocio, tenendosi alla propria destra.",
+    tags: ["svolta-sinistra", "precedenza"],
+    pageRef: 172,
+    vocab: [
+      { italian: "passare al di là del centro", persian: "عبور از کنار مرکز" },
+      { italian: "contemporaneamente", persian: "همزمان" },
+    ],
+  },
+
+  {
+    id: 1434,
+    chapter: 14,
+    question: "Al segnale di STOP il conducente deve fermarsi. Questo obbligo vale anche se:",
+    options: [
+      "La strada sembra completamente libera e non si vede nessun veicolo",
+      "Solo se ci sono veicoli in arrivo",
+      "Solo se è di notte",
+      "Solo se c'è traffico intenso"
+    ],
+    correct: 0,
+    explanation: "Al segnale di STOP il conducente deve fermarsi SEMPRE, anche se la strada sembra completamente libera. La fermata completa è obbligatoria indipendentemente dalle condizioni del traffico.",
+    tags: ["stop", "segnali"],
+    pageRef: 170,
+    vocab: [
+      { italian: "fermarsi completamente", persian: "توقف کامل" },
+      { italian: "indipendentemente dal traffico", persian: "بدون توجه به ترافیک" },
+    ],
+  },
+
+  {
+    id: 1435,
+    chapter: 14,
+    question: "Con il segnale 'Dare Precedenza', il conducente deve fermarsi completamente prima di entrare nell'incrocio?",
+    options: [
+      "Non è obbligatorio fermarsi se non è necessario, ma se serve per cedere il passo, ci si deve fermare",
+      "Sì, sempre come al STOP",
+      "No, non deve mai fermarsi con quel segnale",
+      "Solo se il veicolo con precedenza è a meno di 50 metri"
+    ],
+    correct: 0,
+    explanation: "Con il segnale 'Dare Precedenza', fermarsi non è obbligatorio se non è necessario. Ma se ci sono veicoli ai quali si deve cedere il passo, ci si deve fermare quanto occorre per farlo. La differenza con STOP è che STOP impone la fermata in ogni caso.",
+    tags: ["dare-precedenza", "segnali"],
+    pageRef: 170,
+    vocab: [
+      { italian: "cedere il passo", persian: "راه دادن / تقدم دادن" },
+      { italian: "se necessario", persian: "در صورت لزوم" },
+    ],
+  },
+
+  {
+    id: 1436,
+    chapter: 14,
+    question: "Un veicolo percorre una strada con il segnale 'Strada con Precedenza' (rombo giallo). Questo significa che:",
+    options: [
+      "Ha diritto di precedenza su tutti i veicoli provenienti dalle strade laterali",
+      "Deve cedere la precedenza a tutti",
+      "Ha la precedenza solo sui veicoli più piccoli",
+      "Deve procedere più lentamente del solito"
+    ],
+    correct: 0,
+    explanation: "Il segnale 'Strada con Precedenza' (rombo giallo) indica che il conducente percorre la strada con diritto di precedenza e ha quindi priorità su tutti i veicoli che si immettono dalle strade laterali.",
+    tags: ["strada-precedenza", "segnali"],
+    pageRef: 170,
+    vocab: [
+      { italian: "strada con precedenza", persian: "جاده اولویت‌دار" },
+      { italian: "strade laterali", persian: "جاده‌های جانبی" },
+    ],
+  },
+
+  {
+    id: 1437,
+    chapter: 14,
+    question: "In un incrocio senza segnali, tre veicoli si avvicinano: A da nord, B da est, C da sud. A vuole andare dritto, B vuole andare dritto, C vuole andare dritto. Chi ha la precedenza?",
+    options: [
+      "B ha la precedenza su A (B viene da destra di A); C ha la precedenza su B (C viene da destra di B); A ha la precedenza su C (A viene da destra di C) — situazione di stallo che richiede accordo",
+      "Chi arriva prima ha la precedenza",
+      "A ha sempre la precedenza perché viene da nord",
+      "Tutti e tre passano contemporaneamente"
+    ],
+    correct: 0,
+    explanation: "In un incrocio a tre vie senza segnali con tutti e tre che vogliono andare dritto, si crea una situazione circolare dove B ha precedenza su A (viene da destra di A), C ha precedenza su B, A ha precedenza su C. Si crea uno stallo — nella pratica uno dei conducenti cede volontariamente.",
+    tags: ["incrocio", "precedenza", "stallo"],
+    pageRef: 173,
+    vocab: [
+      { italian: "situazione di stallo", persian: "وضعیت بن‌بست" },
+      { italian: "cedere volontariamente", persian: "داوطلبانه تقدم دادن" },
+    ],
+  },
+
+  {
+    id: 1438,
+    chapter: 14,
+    question: "Il segnale 'Fine della Precedenza' significa che:",
+    options: [
+      "La strada su cui si percorre non ha più il diritto di precedenza e si ritorna alle normali regole di precedenza",
+      "Si deve fermarsi",
+      "La strada principale finisce",
+      "Si entra in una zona a traffico limitato"
+    ],
+    correct: 0,
+    explanation: "Il segnale 'Fine della Precedenza' indica che termina il tratto di strada con precedenza. Da quel punto il conducente non ha più il diritto di precedenza e si applicano di nuovo le normali regole (regola della destra, ecc.).",
+    tags: ["fine-precedenza", "segnali"],
+    pageRef: 170,
+    vocab: [
+      { italian: "fine della precedenza", persian: "پایان اولویت" },
+      { italian: "ritorno alle normali regole", persian: "بازگشت به قوانین عادی" },
+    ],
+  },
+
+  {
+    id: 1439,
+    chapter: 14,
+    question: "Un veicolo A deve svoltare a sinistra e un veicolo B arriva dall'incrocio a destra (B ha la destra libera). Chi cede a chi?",
+    options: [
+      "A deve cedere a B sia per la regola della destra (B viene da destra di A) che perché A svolta a sinistra",
+      "B deve cedere ad A perché A sta svoltando",
+      "Passano contemporaneamente",
+      "Dipende dalla velocità di ciascuno"
+    ],
+    correct: 0,
+    explanation: "In questo scenario A deve cedere a B per due ragioni: (1) la regola della destra — B proviene da destra di A; (2) chi svolta a sinistra cede ai veicoli in senso opposto. Entrambe le regole portano alla stessa conclusione: B passa prima.",
+    tags: ["svolta-sinistra", "precedenza", "destra"],
+    pageRef: 172,
+    vocab: [
+      { italian: "due ragioni per cedere", persian: "دو دلیل برای تقدم دادن" },
+    ],
+  },
+
+  {
+    id: 1440,
+    chapter: 14,
+    question: "Quale affermazione sulla precedenza del tram è corretta?",
+    options: [
+      "Il tram ha sempre la precedenza agli incroci sugli altri veicoli, a prescindere dalla direzione da cui proviene, a meno che non sia regolato da semaforo",
+      "Il tram ha la precedenza solo se viene da destra",
+      "Il tram ha la precedenza solo in centro città",
+      "Il tram e il veicolo hanno la stessa precedenza — vale la regola della destra"
+    ],
+    correct: 0,
+    explanation: "Il tram ha SEMPRE la precedenza agli incroci sugli altri veicoli, indipendentemente dalla direzione da cui proviene (anche da sinistra), a meno che non sia il semaforo a regolare diversamente.",
+    tags: ["tram", "precedenza"],
+    pageRef: 171,
+    vocab: [
+      { italian: "a prescindere dalla direzione", persian: "صرف نظر از جهت" },
+      { italian: "regolato da semaforo", persian: "کنترل شده توسط سمافور" },
+    ],
+  },
+
 ];

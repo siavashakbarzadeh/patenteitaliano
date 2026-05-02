@@ -10,7 +10,49 @@ export const chapter16Content: ChapterContent = {
   titleIt: "Fermata – Sosta – Arresto e Partenza",
   titleFa: "توقف کوتاه – پارک – ایست و حرکت",
   pageRange: "ص ۱۸۴–۱۹۳",
+  summary: "این فصل قوانین توقف و پارک خودرو را توضیح می‌دهد: تفاوت Arresto، Fermata و Sosta، احتیاط‌های قبل از حرکت، موقعیت صحیح توقف، ممنوعیت‌های توقف در پیچ/خط‌کشی/تقاطع/پیاده‌رو، و قوانین باز کردن در خودرو.",
   sections: [
+
+    // ─── متن اصلی ایتالیایی ───────────────────────────────────────────────────
+    {
+      id: "16-0-testo-italiano",
+      titleIt: "Testo Originale – Capitolo 16",
+      titleFa: "📖 متن اصلی ایتالیایی فصل ۱۶",
+      body: [
+        "**Art. 157 – Fermata e sosta**\n\nFermata: breve interruzione della marcia con conducente a bordo pronto a ripartire — non deve arrecare intralcio alla circolazione.\nSosta: interruzione prolungata — il conducente può allontanarsi dal veicolo.\nArresto: interruzione involontaria o forzata (semaforo rosso, traffico).\n\nIl veicolo deve essere collocato il più vicino possibile al margine destro della carreggiata, parallelamente ad esso. Nelle strade a senso unico è consentita anche a sinistra. Se non esiste marciapiede, lasciare almeno 1 metro per i pedoni.",
+        "**Art. 158 – Divieti di fermata e sosta**\n\nÈ vietato fermarsi o sostare:\n• in corrispondenza o in prossimità di curve, dossi o strettoie;\n• in prossimità di incroci (meno di 5 m);\n• sulle strisce pedonali e nelle aree destinate ai pedoni;\n• in corrispondenza di segnali stradali o semaforici;\n• sulle corsie riservate ai veicoli di servizio pubblico;\n• sui binari tranviari o in modo da ostacolarne il transito;\n• nelle gallerie e nei sottovia;\n• sulle corsie di accelerazione e decelerazione;\n• sui marciapiedi (salvo autorizzazioni).",
+        "**Apertura delle portiere**: Prima di aprire una portiera, il conducente deve assicurarsi, anche tramite lo specchietto retrovisore, che non sopraggiungano veicoli o altri utenti. È vietato aprire le portiere in modo da arrecare intralcio o pericolo agli altri utenti.",
+      ],
+      keyVerbs: [
+        { italian: "la fermata non deve arrecare intralcio", persian: "توقف نباید مانع جریان ترافیک شود", example: "La fermata non deve arrecare intralcio alla circolazione. → توقف نباید مانع جریان ترافیک شود." },
+        { italian: "parallelamente al margine destro", persian: "موازی با لبه راست", example: "Il veicolo deve essere collocato parallelamente al margine destro. → وسیله باید موازی با لبه راست قرار گیرد." },
+      ],
+      highlights: [
+        "Fermata: conducente a bordo pronto a ripartire.",
+        "Sosta: conducente può allontanarsi.",
+        "Arresto: involontario (semaforo rosso).",
+        "In assenza di marciapiede: lasciare almeno 1 metro per i pedoni.",
+        "Vietato fermarsi a meno di 5 m dagli incroci.",
+      ],
+      notes: [
+        "★ Arresto = اجباری (چراغ قرمز). Fermata = ارادی کوتاه. Sosta = ارادی بلند.",
+        "★ فاصله از تقاطع: حداقل ۵ متر.",
+        "★ بدون پیاده‌رو: حداقل ۱ متر برای عابر.",
+        "★ باز کردن در: همیشه از آینه بررسی کنید.",
+      ],
+    },
+
+    // ─── ترجمه فارسی ──────────────────────────────────────────────────────────
+    {
+      id: "16-0-traduzione-persiana",
+      titleIt: "Traduzione Persiana – Capitolo 16",
+      titleFa: "🇮🇷 ترجمه فارسی متن اصلی فصل ۱۶",
+      body: [
+        "**ماده ۱۵۷ – توقف و پارک**\n\nFermata: توقف کوتاه با راننده حاضر برای حرکت — نباید مانع جریان ترافیک شود.\nSosta: توقف طولانی — راننده می‌تواند از وسیله دور شود.\nArresto: توقف اجباری (چراغ قرمز، ترافیک).\n\nوسیله باید تا حد ممکن نزدیک به لبه راست جاده و موازی با آن قرار گیرد. در خیابان‌های یک‌طرفه از سمت چپ هم مجاز است. اگر پیاده‌رو نیست، باید حداقل ۱ متر برای عابران باقی بگذارید.",
+        "**ماده ۱۵۸ – ممنوعیت‌های توقف و پارک**\n\nتوقف و پارک ممنوع است:\n• در پیچ، برجستگی یا تنگنا؛\n• نزدیک تقاطع (کمتر از ۵ متر)؛\n• روی خط‌کشی عابر و مناطق عابران؛\n• مقابل علائم و چراغ راهنمایی؛\n• روی خطوط اختصاصی سرویس عمومی؛\n• روی ریل تراموا یا مانع آن؛\n• در تونل‌ها و زیرگذرها؛\n• روی خطوط شتاب و کاهش سرعت؛\n• روی پیاده‌رو (مگر با مجوز).",
+        "**باز کردن در**: قبل از باز کردن در، راننده باید از آینه مطمئن شود هیچ وسیله یا کاربری نمی‌آید. باز کردن در به‌گونه‌ای که مانع یا خطر برای دیگران باشد ممنوع است.",
+      ],
+    },
 
     // ─── 16.1 Cautele alla Partenza ──────────────────────────────────────────
     {
@@ -73,6 +115,19 @@ export const chapter16Content: ChapterContent = {
         { italian: "sono vietate la fermata e la sosta", persian: "توقف و پارک ممنوع هستند", example: "Nelle curve sono vietate la fermata e la sosta. → در پیچ‌ها توقف و پارک ممنوع هستند." },
         { italian: "in corrispondenza di", persian: "در محل / مقابل", example: "È vietato sostare in corrispondenza dei passaggi pedonali. → پارک کردن مقابل خط‌کشی عابران ممنوع است." },
         { italian: "occultarli alla vista", persian: "آن‌ها را از دید پنهان کردن", example: "Vietato sostare sui segnali in modo da occultarli alla vista. → پارک کردن جلوی علائم به گونه‌ای که از دید پنهان شوند ممنوع است." },
+      ],
+    },
+
+    // ─── خلاصه و نکات کلیدی ──────────────────────────────────────────────────
+    {
+      id: "16-5-riassunto",
+      titleIt: "Riassunto — Punti Chiave del Capitolo 16",
+      titleFa: "خلاصه — نکات کلیدی فصل ۱۶",
+      body: [
+        "**جدول تفاوت‌های اصلی:**\n\n| اصطلاح | راننده | مدت | اجباری؟ |\n|--------|--------|------|---------|\n| Arresto | در وسیله | کوتاه | بله (خارجی) |\n| Fermata | در وسیله | کوتاه | خیر |\n| Sosta | می‌تواند برود | طولانی | خیر |\n\n**نکات مهم آزمون:**\n• بدون پیاده‌رو = حداقل **۱ متر** برای عابر\n• فاصله از تقاطع = حداقل **۵ متر**\n• مثلث اضطراری = حداقل **۵۰ متر** (جاده عادی) / **۱۰۰ متر** (اتوبان)\n• باز کردن در = همیشه از **آینه** بررسی کنید",
+      ],
+      keyVerbs: [
+        { italian: "rispettare le norme sulla sosta", persian: "رعایت قوانین پارک", example: "Tutti i conducenti devono rispettare le norme sulla sosta. → همه رانندگان باید قوانین پارک را رعایت کنند." },
       ],
     },
 

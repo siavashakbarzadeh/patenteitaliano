@@ -443,4 +443,205 @@ export const chapter15Questions: Question[] = [
     explanation: "Il sorpasso di veicoli della Polizia o similari: è ammesso quando non sono in servizio di emergenza e non vi sono altri tipi di impedimenti. È invece vietato sorpassarsi accostandosi (accostare) a un'ambulanza (o ad altro veicolo) in servizio di emergenza."
   },
 
+  // ── Scenari avanzati sorpasso ─────────────────────────────────────────────
+
+  {
+    id: 1531,
+    chapter: 15,
+    question: "Il veicolo che viene sorpassato, durante la manovra di sorpasso, deve:",
+    options: [
+      "Non accelerare e agevolare il sorpasso tenendosi verso il margine destro",
+      "Accelerare per ridurre i tempi di affiancamento",
+      "Frenare bruscamente per far passare il sorpassatore",
+      "Segnalare con il clacson per avvisare di non essere d'accordo"
+    ],
+    correct: 0,
+    explanation: "Il veicolo sorpassato deve: non accelerare durante il sorpasso; agevolare, per quanto possibile, la manovra di sorpasso; tenersi verso il margine destro della carreggiata. Accelerare durante il sorpasso è pericoloso e vietato.",
+    tags: ["sorpasso", "veicolo-sorpassato"],
+    pageRef: 176,
+    vocab: [
+      { italian: "il veicolo sorpassato", persian: "وسیله‌ای که سبقت می‌خورد" },
+      { italian: "non accelerare", persian: "شتاب نگرفتن" },
+    ],
+  },
+
+  {
+    id: 1532,
+    chapter: 15,
+    question: "È vietato sorpassare in curva su strade a doppio senso di circolazione. Questo divieto vale anche per sorpassare:",
+    options: [
+      "Trattori agricoli, animali e qualsiasi altro veicolo a lenta andatura",
+      "Solo i veicoli normali — i trattori possono essere sorpassati",
+      "Solo i veicoli di grandi dimensioni",
+      "No, il divieto vale solo per sorpassi che richiedono di occupare la corsia opposta"
+    ],
+    correct: 0,
+    explanation: "Il divieto di sorpasso in curva su strade a doppio senso vale per QUALSIASI veicolo, inclusi trattori agricoli, animali e altri veicoli a lenta velocità. Non ci sono eccezioni per veicoli lenti.",
+    tags: ["sorpasso", "curva", "divieto"],
+    pageRef: 177,
+    vocab: [
+      { italian: "trattori agricoli", persian: "تراکتورهای کشاورزی" },
+      { italian: "qualsiasi veicolo", persian: "هر نوع وسیله‌ای" },
+    ],
+  },
+
+  {
+    id: 1533,
+    chapter: 15,
+    question: "È consentito sorpassare un tram fermo alla fermata se:",
+    options: [
+      "È presente un'isola salvagente (isola pedonale) e si sorpassa a destra dell'isola",
+      "Il tram è fermo da più di 2 minuti",
+      "Non ci sono passeggeri che salgono o scendono",
+      "È sempre vietato sorpassare un tram fermo"
+    ],
+    correct: 0,
+    explanation: "Si può sorpassare un tram fermo alla fermata SOLO se è presente un'isola salvagente (isola pedonale protettiva), e il sorpasso va effettuato a destra dell'isola salvagente, con velocità moderata e massima prudenza.",
+    tags: ["tram", "salvagente", "sorpasso"],
+    pageRef: 178,
+    vocab: [
+      { italian: "isola salvagente", persian: "جزیره عابر (سالواجنته)" },
+      { italian: "fermata del tram", persian: "ایستگاه تراموا" },
+    ],
+  },
+
+  {
+    id: 1534,
+    chapter: 15,
+    question: "È vietato sorpassare quando il veicolo che precede ha rallentato o si è fermato per consentire ai pedoni di attraversare la carreggiata:",
+    options: [
+      "Sì, è vietato anche se i pedoni attraversano fuori dalle strisce pedonali",
+      "No, è consentito se i pedoni non sono sulle strisce",
+      "Solo se si è in centro abitato",
+      "Solo se il veicolo si è fermato completamente"
+    ],
+    correct: 0,
+    explanation: "È vietato sorpassare quando il veicolo che precede ha rallentato o si è fermato per consentire ai pedoni di attraversare la carreggiata, anche se i pedoni attraversano fuori dalle strisce pedonali. Sorpassare in quel momento potrebbe investire i pedoni.",
+    tags: ["pedoni", "divieto-sorpasso"],
+    pageRef: 178,
+    vocab: [
+      { italian: "rallentato o fermato per i pedoni", persian: "کند یا توقف کرده برای عابران" },
+    ],
+  },
+
+  {
+    id: 1535,
+    chapter: 15,
+    question: "Quando si può sorpassare in corrispondenza di un incrocio?",
+    options: [
+      "Quando il veicolo che si vuole sorpassare è una bicicletta e non è necessario occupare la corsia opposta; oppure quando l'incrocio è regolato da semaforo o agente",
+      "Mai, il sorpasso negli incroci è sempre vietato senza eccezioni",
+      "Solo di notte quando l'incrocio è deserto",
+      "Solo se la strada è a senso unico"
+    ],
+    correct: 0,
+    explanation: "Il sorpasso in corrispondenza di un incrocio è vietato, salvo eccezioni: (1) si sorpassa una bicicletta senza dover occupare la corsia opposta; (2) l'incrocio è regolato da semaforo o agente; (3) il veicolo da sorpassare ha segnalato la svolta a sinistra (sorpasso a destra).",
+    tags: ["incrocio", "sorpasso", "eccezioni"],
+    pageRef: 177,
+    vocab: [
+      { italian: "sorpassare in corrispondenza di un incrocio", persian: "سبقت در تقاطع" },
+      { italian: "regolato da semaforo o agente", persian: "کنترل شده با سمافور یا مامور" },
+    ],
+  },
+
+  {
+    id: 1536,
+    chapter: 15,
+    question: "Prima di effettuare un sorpasso, il conducente deve azionare la freccia (indicatore di direzione sinistro). Questo obbligo è:",
+    options: [
+      "Obbligatorio in tutti i casi — la freccia sinistra deve essere azionata prima e durante il sorpasso",
+      "Facoltativo — solo consigliato",
+      "Obbligatorio solo in autostrada",
+      "Obbligatorio solo di notte"
+    ],
+    correct: 0,
+    explanation: "L'azionamento dell'indicatore di direzione sinistro (freccia sinistra) prima e durante il sorpasso è OBBLIGATORIO in tutti i casi, non facoltativo. È uno dei requisiti fondamentali per effettuare il sorpasso legalmente.",
+    tags: ["freccia", "indicatore", "sorpasso"],
+    pageRef: 176,
+    vocab: [
+      { italian: "indicatore di direzione sinistro", persian: "فرچه/راهنمای چپ" },
+      { italian: "obbligatorio", persian: "اجباری" },
+    ],
+  },
+
+  {
+    id: 1537,
+    chapter: 15,
+    question: "Se durante un sorpasso il conducente si accorge di non riuscire a completarlo in sicurezza (es. veicolo in senso contrario che si avvicina), deve:",
+    options: [
+      "Abbandonare il sorpasso e rientrare nella propria corsia il prima possibile, segnalando con la freccia destra",
+      "Accelerare per completare il sorpasso più in fretta",
+      "Frenare bruscamente nella corsia opposta",
+      "Suonare il clacson e mantenere la posizione"
+    ],
+    correct: 0,
+    explanation: "Se durante un sorpasso si accorge di non poterlo completare in sicurezza, il conducente deve abbandonare la manovra e rientrare nella propria corsia il prima possibile. Deve segnalare il rientro con la freccia destra e assicurarsi che la propria corsia sia libera.",
+    tags: ["sorpasso", "rientro", "sicurezza"],
+    pageRef: 176,
+    vocab: [
+      { italian: "abbandonare il sorpasso", persian: "انصراف از سبقت" },
+      { italian: "rientrare nella propria corsia", persian: "بازگشت به خط خودی" },
+    ],
+  },
+
+  {
+    id: 1538,
+    chapter: 15,
+    question: "In quale situazione il sorpasso a destra di un tram in movimento è consentito?",
+    options: [
+      "Quando vi è spazio sufficiente a destra del tram per sorpassarlo senza pericolo",
+      "Solo se il tram è fermo",
+      "Solo nelle strade a senso unico",
+      "Mai, il tram si sorpassa sempre a sinistra"
+    ],
+    correct: 0,
+    explanation: "Il sorpasso di un tram in movimento è consentito a destra quando vi è spazio sufficiente a destra del tram. In questo caso si può sorpassare a destra con moderata velocità e massima prudenza.",
+    tags: ["tram", "sorpasso-destra"],
+    pageRef: 178,
+    vocab: [
+      { italian: "spazio sufficiente a destra", persian: "فضای کافی در سمت راست" },
+      { italian: "tram in movimento", persian: "تراموای در حرکت" },
+    ],
+  },
+
+  {
+    id: 1539,
+    chapter: 15,
+    question: "È consentito sorpassare in prossimità di un passaggio a livello senza barriere?",
+    options: [
+      "No, è espressamente vietato sorpassare in prossimità di passaggi a livello privi di barriere o dotati di soli segnali luminosi",
+      "Sì, se non si vedono treni in arrivo",
+      "Sì, se la velocità è ridotta",
+      "Sì, se la strada è a doppio senso"
+    ],
+    correct: 0,
+    explanation: "Il sorpasso è espressamente vietato in prossimità di passaggi a livello privi di barriere o dotati di soli segnali luminosi. Questo perché la distrazione durante il sorpasso potrebbe far perdere la percezione di treni in arrivo.",
+    tags: ["passaggio-a-livello", "divieto-sorpasso"],
+    pageRef: 177,
+    vocab: [
+      { italian: "passaggio a livello", persian: "گذرگاه ریلی" },
+      { italian: "senza barriere", persian: "بدون بند/باریره" },
+    ],
+  },
+
+  {
+    id: 1540,
+    chapter: 15,
+    question: "Quando un conducente intende sorpassare, ma il veicolo che lo segue ha già iniziato la manovra di sorpasso:",
+    options: [
+      "Deve rinunciare al proprio sorpasso — non è consentito sorpassare se ciò implica di invadere la corsia già occupata da chi sorpassa",
+      "Può sorpassare ugualmente, ha la precedenza perché era davanti",
+      "Può sorpassare se va più veloce",
+      "Deve suonare il clacson e procedere"
+    ],
+    correct: 0,
+    explanation: "Se il veicolo che segue ha già iniziato la manovra di sorpasso, il conducente davanti deve rinunciare al proprio sorpasso se ciò comporta di dover invadere la corsia già occupata dal veicolo che sta sorpassando. È vietato effettuare un 'doppio sorpasso' contestuale.",
+    tags: ["sorpasso", "divieto", "veicolo-seguente"],
+    pageRef: 177,
+    vocab: [
+      { italian: "rinunciare al sorpasso", persian: "از سبقت صرف نظر کردن" },
+      { italian: "il veicolo che segue", persian: "وسیله پشت سر" },
+    ],
+  },
+
 ];

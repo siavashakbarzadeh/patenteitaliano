@@ -41,7 +41,57 @@ export const chapter20Content: ChapterContent = {
   titleIt: "Patenti di Guida – Sistema Sanzionatorio – Documenti di Circolazione – Obblighi verso Funzionari e Agenti – Uso di Lenti e di Altri Apparecchi",
   titleFa: "گواهینامه‌های رانندگی – سیستم جریمه – مدارک گردش – تعهدات در برابر مأموران – استفاده از عینک و وسایل دیگر",
   pageRange: "ص ۲۳۴–۲۴۷",
+  summary: "این فصل سیستم گواهینامه‌های ایتالیایی را پوشش می‌دهد: دسته‌بندی گواهینامه (AM، A1، A2، A، B1، B، BE، C، D)، سیستم امتیاز (20 امتیاز - کسر پس از تخلف، بازیابی پس از 3 سال)، مدارک لازم هنگام رانندگی، و الزامات در برابر مأموران راهنمایی.",
   sections: [
+
+    // ─── متن اصلی ایتالیایی
+    {
+      id: "20-0-testo-italiano",
+      titleIt: "Testo Originale – Capitolo 20",
+      titleFa: "📖 متن اصلی ایتالیایی فصل ۲۰",
+      body: [
+        "**Categorie di patente principali**:\nAM: ciclomotori ≤45 km/h, età min 14 anni.\nA1: moto fino a 125cc/11 kW, età min 16 anni.\nA2: moto fino a 35 kW, età min 18 anni.\nA: qualunque moto (diretto 24 anni o progressivo 20+2 anni).\nB1: quadricicli, età min 16 anni.\nB: auto fino a 3.500 kg/8 posti, età min 18 anni.\nBE: auto + rimorchio >750 kg.\nC: veicoli merci >3.500 kg.\nD: autobus >8 posti passeggeri.",
+        "**Sistema a punti (Art. 126-bis)**:\nLa patente di guida prevede un punteggio iniziale di 20 punti. Ogni infrazione comporta la decurtazione di un determinato numero di punti. Se il punteggio scende a zero, la patente viene revocata. Il punteggio viene ripristinato di 2 punti ogni anno senza infrazioni, fino al massimo di 20.\n\n**Patente neopatentati (prime infrazioni)**: i neopatentati perdono il doppio dei punti previsti per ciascuna violazione.",
+        "**Documenti obbligatori in auto**:\n• Patente di guida valida\n• Carta di circolazione (libretto)\n• Certificato di assicurazione RC (responsabilità civile)\n\n**Obblighi verso gli agenti**:\nIl conducente deve esibire i documenti a richiesta degli agenti. In caso di fermo per controllo, deve seguire le istruzioni degli agenti.",
+      ],
+      highlights: [
+        "Patente B: auto fino a 3.500 kg, massimo 8 posti, età min 18.",
+        "Punteggio iniziale: 20 punti.",
+        "Punteggio a zero: patente revocata.",
+        "Recupero punti: +2 per ogni anno senza infrazioni.",
+        "Neopatentati: decurtazione doppia dei punti.",
+      ],
+      notes: [
+        "★ امتیاز اولیه: 20. بازیابی: +2 در سال بدون تخلف.",
+        "★ امتیاز صفر = ابطال گواهینامه.",
+        "★ نوپاتنت: کسر دو برابر.",
+        "★ مدارک اجباری: پاتنته + لیبرتو + بیمه.",
+      ],
+    },
+
+    // ─── ترجمه فارسی
+    {
+      id: "20-0-traduzione-persiana",
+      titleIt: "Traduzione Persiana – Capitolo 20",
+      titleFa: "🇮🇷 ترجمه فارسی فصل ۲۰",
+      body: [
+        "**دسته‌بندی گواهینامه‌ها**:\nAM: موپد ≤۴۵ کیلومتر، حداقل ۱۴ سال.\nA1: موتو تا ۱۲۵cc/۱۱ کیلووات، حداقل ۱۶ سال.\nA2: موتو تا ۳۵ کیلووات، حداقل ۱۸ سال.\nA: هر موتو (مستقیم ۲۴ سال یا تدریجی ۲سال+2 سال A2).\nB: خودرو تا ۳سووچ کیلوگرم، حداقل ۱۸ سال.",
+        "**سیستم امتیاز (20 امتیاز)**: هر تخلف امتیاز کسر می‌دهد. امتیاز صفر = ابطال گواهینامه. بازیابی: +2 در سال بدون تخلف (حداکثر تا 20). نوپاتنت: کسر دو برابر.\n\n**مدارک اجباری**: پاتنته معتبر + کارت لیبرتو + بیمهنامه. باید در صورت درخواست مأمور ارائه شوند.",
+      ],
+    },
+
+    // ─── خلاصه
+    {
+      id: "20-7-riassunto",
+      titleIt: "Riassunto — Punti Chiave del Capitolo 20",
+      titleFa: "خلاصه — نکات کلیدی فصل ۲۰",
+      body: [
+        "**جدول سریع گواهینامه‌ها:**\n\n| گواهینامه | حداقل سن | وسیله |\n|-----------|----------|--------|\n| AM | ۱۴ سال | موپد ≤۴۵ کم/ساعت |\n| A1 | ۱۶ سال | موتو ≤۱۲۵cc |\n| A2 | ۱۸ سال | موتو ≤۳۵ kW |\n| A | ۲۴ سال | هر موتو |\n| B | ۱۸ سال | خودرو ≤۳سووچ kg |\n\n**سیستم امتیاز:**\n- امتیاز اولیه: **20**\n- امتیاز صفر = ابطال گواهینامه\n- بازیابی: **+2** در سال بدون تخلف\n- نوپاتنت: کسر **دو برابر**",
+      ],
+      keyVerbs: [
+        { italian: "esibire i documenti", persian: "مدارک را ارائه دادن", example: "Il conducente deve esibire i documenti agli agenti. → راننده باید مدارک را به مأموران ارائه دهد." },
+      ],
+    },
 
     // ─── 20.1 ─────────────────────────────────────────────────────────────────
     {

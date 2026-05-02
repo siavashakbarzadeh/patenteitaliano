@@ -10,7 +10,55 @@ export const chapter18Content: ChapterContent = {
   titleIt: "Uso delle Luci – Uso dei Dispositivi Acustici – Spie e Simboli",
   titleFa: "استفاده از چراغ‌ها – استفاده از دستگاه‌های صوتی – چراغ‌های هشدار و نمادها",
   pageRange: "ص ۲۱۴–۲۲۴",
+  summary: "این فصل کلیه سیستم‌های روشنایی خودرو را شامل می‌شود: چراغ‌های جانبی، کم‌فاصله (پایین/anabbagliante)، پرفاصله (بالا/abbagliante)، زمان‌بندی روشن کردن چراغ‌ها (نیم ساعت بعد غروب)، وسایل با چراغ ویژه (آمبولانس/پلیس/تاکسی)، چراغ‌های راهنما، مه‌شکن، ترمز و دنده عقب.",
   sections: [
+
+    // ─── متن اصلی ایتالیایی
+    {
+      id: "18-0-testo-italiano",
+      titleIt: "Testo Originale – Capitolo 18",
+      titleFa: "📖 متن اصشی ایتالیایی فصل ۱۸",
+      body: [
+        "**Luci anabbaglianti**: illuminano la strada davanti senza abbagliare. Fascio rivolto verso il basso. Obbligatorie di notte, in galleria, e in caso di scarsa visibilità.\n\n**Luci abbaglianti**: fascio in profondità. Vietate fuori centro abitato in presenza di altri veicoli, salvo uso breve e intermittente per segnalazione.\n\n**Luci di posizione**: bianche davanti, rosse dietro. Sempre insieme ai proiettori.\n\n**Indicatori di direzione (frecce)**: giallo-arancio. Obbligatori prima di qualsiasi manovra.\n\n**Luci per nebbia anteriori**: solo con nebbia/neve/pioggia intensa.\n**Luci per nebbia posteriori (retronebbia)**: rosso intenso — per essere visibili da dietro.\n\n**Luci stop**: rosse, automatiche alla frenata.\n**Retromarcia**: bianca, in retromarcia.\n\n**Obbligo accensione luci**: da mezz'ora dopo il tramonto a mezz'ora prima del sorgere; in galleria; in caso di scarsa visibilità. Motocicli e ciclomotori: sempre accese anche di giorno.",
+      ],
+      highlights: [
+        "Anabbaglianti (payo): fascio in basso, non abbagliano.",
+        "Abbaglianti (bala): vietati con altri veicoli fuori città.",
+        "Motocicli: luci sempre accese, giorno e notte.",
+        "Frecce: obbligatorie PRIMA di qualsiasi manovra.",
+        "Retronebbia: solo con scarsa visibilità.",
+      ],
+      notes: [
+        "★ موتورسیکل = چراغ همیشه روشن (روز و شب).",
+        "★ چراغ پر = ممنوع خارج شهر در حضور وسایل دیگر.",
+        "★ مه‌شکن جلو = فقط در مه/برف/باران شدید.",
+        "★ روشن شدن: نیم ساعت بعد غروب تا نیم ساعت قبل طلوع.",
+      ],
+    },
+
+    // ─── ترجمه فارسی
+    {
+      id: "18-0-traduzione-persiana",
+      titleIt: "Traduzione Persiana – Capitolo 18",
+      titleFa: "🇮🇷 ترجمه فارسی فصل ۱۸",
+      body: [
+        "**چراغ کم‌فاصله (anabbaglianti/پایین)**: جاده جلو را بدون کور کردن رانندگان روبرو روشن می‌کند. پرتو رو به پایین. اجباری شبانه، در تونل و در کم‌دیدی.\n\n**چراغ پرفاصله (abbaglianti/بالا)**: پرتو عمیق. خارج شهر در حضور وسایل دیگر ممنوع، جز به‌طور کوتاه و متناوب.\n\n**چراغ جانبی**: جلو سفید، عقب قرمز. همیشه همراه چراغ‌های اصلی.\n\n**فرچه (indicatori di direzione)**: زرد-نارنجی. اجباری قبل هر مانور.\n\n**مه‌شکن جلو**: فقط در مه/برف/باران شدید.\n**مه‌شکن عقب (retronebbia)**: قرمز شدید — برای دیده شدن از پشت.",
+        "**زمان روشن کردن**: از نیم ساعت بعد غروب تا نیم ساعت قبل طلوع؛ در تونل حتی اگر روشن باشد؛ در هر مورد کم‌دیدی. **موتورسیکل: همیشه روشن، روز و شب.**",
+      ],
+    },
+
+    // ─── خلاصه
+    {
+      id: "18-6-riassunto",
+      titleIt: "Riassunto — Punti Chiave del Capitolo 18",
+      titleFa: "خلاصه — نکات کلیدی فصل ۱۸",
+      body: [
+        "**جدول سریع چراغ‌ها:**\n\n| چراغ | رنگ | کاربرد |\n|-------|-----|--------|\n| جانبی جلو | سفید | دیده شدن |\n| جانبی عقب | قرمز | دیده شدن |\n| فرچه | زرد-نارنج | مانور |\n| ترمز | قرمز | فرمان |\n| دنده عقب | سفید | دیدن پشت |\n| مه‌شکن عقب | قرمز شدید | کم‌دیدی |\n| پلاک | سفید | روشن کردن پلاک |\n\n**قوانین مهم:**\n• موتورسیکل: چراغ = همیشه روشن\n• چراغ پر خارج شهر + وسیله دیگر = ممنوع\n• مه‌شکن جلو = فقط در کم‌دیدی",
+      ],
+      keyVerbs: [
+        { italian: "usare correttamente le luci", persian: "استفاده صحیح از چراغ‌ها", example: "Il conducente deve usare correttamente le luci. → راننده باید صحیحاً از چراغ‌ها استفاده کند." },
+      ],
+    },
 
     // ─── 18.1 مقدمه ──────────────────────────────────────────────────────────
     {
@@ -132,6 +180,7 @@ export const chapter18Content: ChapterContent = {
         { italian: "sensibilmente la visibilità", persian: "دید را به‌طور محسوس", example: "Nebbia che riduce sensibilmente la visibilità. → مهی که دید را به‌طور محسوس کاهش می‌دهد." },
       ],
     },
+
 
   ],
 };

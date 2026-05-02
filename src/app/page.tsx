@@ -34,6 +34,22 @@ import { chapter15Content } from "@/lib/chapters/15/content";
 import { chapter14Content } from "@/lib/chapters/14/content";
 import { chapter13Content } from "@/lib/chapters/13/content";
 import { chapter12Content } from "@/lib/chapters/12/content";
+import { chapter11Content } from "@/lib/chapters/11/content";
+import { chapter10Content } from "@/lib/chapters/10/content";
+import { chapter9Content }  from "@/lib/chapters/9/content";
+import { chapter8Content }  from "@/lib/chapters/8/content";
+import { chapter7Content }  from "@/lib/chapters/7/content";
+import { chapter6Content }  from "@/lib/chapters/6/content";
+import { chapter5Content }  from "@/lib/chapters/5/content";
+import { chapter4Content }  from "@/lib/chapters/4/content";
+import { chapter3Content }  from "@/lib/chapters/3/content";
+import { chapter2Content }  from "@/lib/chapters/2/content";
+import { chapter1Content }  from "@/lib/chapters/1/content";
+import { chapter21Content } from "@/lib/chapters/21/content";
+import { chapter22Content } from "@/lib/chapters/22/content";
+import { chapter23Content } from "@/lib/chapters/23/content";
+import { chapter24Content } from "@/lib/chapters/24/content";
+import { chapter25Content } from "@/lib/chapters/25/content";
 import type { ChapterContent } from "@/lib/chapters/20/content";
 import {
   CheckCircle2,
@@ -100,6 +116,17 @@ interface QuizState {
 }
 
 const contentRegistry: Record<number, ChapterContent> = {
+  1:  chapter1Content,
+  2:  chapter2Content,
+  3:  chapter3Content,
+  4:  chapter4Content,
+  5:  chapter5Content,
+  6:  chapter6Content,
+  7:  chapter7Content,
+  8:  chapter8Content,
+  9:  chapter9Content,
+  10: chapter10Content,
+  11: chapter11Content,
   12: chapter12Content,
   13: chapter13Content,
   14: chapter14Content,
@@ -109,6 +136,11 @@ const contentRegistry: Record<number, ChapterContent> = {
   18: chapter18Content,
   19: chapter19Content,
   20: chapter20Content,
+  21: chapter21Content,
+  22: chapter22Content,
+  23: chapter23Content,
+  24: chapter24Content,
+  25: chapter25Content,
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -566,9 +598,11 @@ function StudyPage({ chapterNum, onBack, onGoToQuiz }: {
 
 
 // ─── Home Page ────────────────────────────────────────────────────────────────
-function HomePage({ progress, onNavigate }: {
+function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter }: {
   progress: UserProgress;
   onNavigate: (p: Page) => void;
+  onSelectChapter: (ch: number) => void;
+  onStudyChapter: (ch: number) => void;
 }) {
   const accuracy = getAccuracy(progress);
   const availableCount = chapters.filter((c) => c.available).length;
@@ -696,13 +730,13 @@ function HomePage({ progress, onNavigate }: {
               {hasContent && (
                 <button id={`btn-study-ch${ch.number}`} className="btn-secondary"
                   style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
-                  onClick={() => onNavigate("study")}>
+                  onClick={() => onStudyChapter(ch.number)}>
                   <BookOpen size={15} /> مطالعه
                 </button>
               )}
               <button id={`btn-start-ch${ch.number}`} className="btn-primary"
                 style={{ flex: 1 }}
-                onClick={() => onNavigate("quiz")}>
+                onClick={() => onSelectChapter(ch.number)}>
                 آزمون ←
               </button>
             </div>
@@ -1614,11 +1648,12 @@ export default function App() {
       })()}
 
       {page === "home" && (
-        <HomePage progress={progress} onNavigate={(p) => {
-          if (p === "quiz") handleSelectChapter(20);
-          else if (p === "study") handleStudyChapter(20);
-          else setPage(p as Page);
-        }} />
+        <HomePage
+          progress={progress}
+          onSelectChapter={handleSelectChapter}
+          onStudyChapter={handleStudyChapter}
+          onNavigate={(p) => setPage(p as Page)}
+        />
       )}
       {page === "chapters" && (
         <ChaptersPage progress={progress}

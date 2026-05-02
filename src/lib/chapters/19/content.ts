@@ -10,7 +10,56 @@ export const chapter19Content: ChapterContent = {
   titleIt: "Cinture di Sicurezza – Seggiolini per Bambini – Airbag – Casco Protettivo – Abbigliamento di Sicurezza per Conducenti di Veicoli a 2 Ruote",
   titleFa: "کمربند ایمنی – صندلی کودک – ایربگ – کلاه ایمنی – لباس ایمنی موتورسواری",
   pageRange: "ص ۲۲۵–۲۳۳",
+  summary: "این فصل تجهیزات ایمنی فعال و غیرفعال خودرو را پوشش می‌دهد: کمربند ایمنی (اجباری برای همه سرنشینان)، معافیت‌های کمربند، صندلی کودک (R129 و R44)، ایربگ و خطر بدون کمربند، کلاه ایمنی (اجباری برای موتورسیکل و موپد)، لباس/دستکش/چکمه ایمنی.",
   sections: [
+
+    // ─── متن اصلی ایتالیایی
+    {
+      id: "19-0-testo-italiano",
+      titleIt: "Testo Originale – Capitolo 19",
+      titleFa: "📖 متن اصلی ایتالیایی فصل ۱۹",
+      body: [
+        "**Art. 172 – Cinture di sicurezza**: Conducente e tutti i passeggeri (inclusi quelli nei sedili posteriori) devono allacciare le cinture in qualsiasi situazione di marcia e a qualsiasi velocità. Il conducente deve rammentare ai passeggeri l'obbligo. La presenza di airbag NON esenta dall'obbligo. Esenzioni: agenti di polizia in servizio, raccoglitori rifiuti, istruttori di guida, donne in gravidanza con certificato medico, persone con malattie specifiche.\n\n**Seggiolini per bambini**: bambini con altezza ≬ 150 cm devono essere protetti da seggiolino idoneo. Standard R129 (in base all'altezza, protezione urti laterali) ha sostituito R44 (in base al peso). Dal 1/9/2024 vietata la vendita di R44.\n\n**Airbag**: dispositivo di sicurezza passiva. Si attiva in millisecondi. Pericoloso senza cintura. Non può essere testato periodicamente.\n\n**Art. 171 – Casco**: obbligatorio per conducenti e passeggeri di motocicli, ciclomotori, quad e scooter elettrici. Deve essere omologato, integro, ben allacciato. Va sostituito dopo ogni urto forte.",
+      ],
+      highlights: [
+        "Cinture: obbligatorie per TUTTI, anche nei sedili posteriori.",
+        "Airbag NON esenta dall'obbligo della cintura.",
+        "R129 (altezza) ha sostituito R44 (peso) dal 2024.",
+        "Seggiolino rivolto all'indietro sul sedile con airbag: airbag deve essere disattivato.",
+        "Casco: obbligatorio, omologato, ben allacciato.",
+      ],
+      notes: [
+        "★ کمربند = اجباری برای همه — حتی سرعت پایین.",
+        "★ ایربگ + بدون کمربند = خطرناک‌تر.",
+        "★ R129 = بر اساس قد. R44 = بر اساس وزن.",
+        "★ کلاه بعد ضربه شدید = فوری تعویض کنید.",
+      ],
+    },
+
+    // ─── ترجمه فارسی
+    {
+      id: "19-0-traduzione-persiana",
+      titleIt: "Traduzione Persiana – Capitolo 19",
+      titleFa: "🇮🇷 ترجمه فارسی فصل ۱۹",
+      body: [
+        "**ماده ۱۷۲ – کمربند ایمنی**: راننده و همه سرنشینان (از جمله صندلی عقب) باید در هر شرایط و هر سرعتی کمربند ببندند. راننده باید سرنشینان را آگاه کند. حضور ایربگ معافیتی از کمربند نمی‌دهد. معافیت: ماموران پلیس در خدمت، زباله‌کش، مربیان رانندگی، زنان باردار با گواهی.",
+        "**صندلی کودک**: کودکان کمتر از ۱سوم باید در صندلی مناسب باشند. R129 (بر اساس قد، محافظت جانبی) جای R44 (وزن) را گرفته. صندلی رو به عقب روی صندلی آیربگدار: ایربگ باید غیرفعال باشد.",
+        "**ایربگ**: منفعل غیرفعال. در چند میلی‌ثانیه فعال. بدون کمربند خطرناک‌تر است.\n\n**ماده ۱۷۱ – کلاه**: اجباری برای موتورسیکل، موپد، قواد و اسکوتر برقی. باید تاییدشده، سالم و محکم بسته باشد. بعد ضربه شدید فوری تعویض کنید.",
+      ],
+    },
+
+    // ─── خلاصه
+    {
+      id: "19-5-riassunto",
+      titleIt: "Riassunto — Punti Chiave del Capitolo 19",
+      titleFa: "خلاصه — نکات کلیدی فصل ۱۹",
+      body: [
+        "**جدول سریع تجهیزات ایمنی:**\n\n| تجهیز | اجباری؟ | برای چه کسانی |\n|--------|---------|-------------|\n| کمربند | بله | همه (از جمله عقب) |\n| صندلی کودک | بله | کودک ≤ ۱سوم |\n| کلاه | بله | موتور/موپد |\n\n**نکات مهم:**\n• ایربگ + بدون کمربند = خطرناک‌تر\n• R129 بر اساس قد (از 2024)\n• R44 بر اساس وزن (منسوخ)\n• کلاه بعد ضربه = فوری تعویض",
+      ],
+      keyVerbs: [
+        { italian: "allacciare sempre la cintura", persian: "همیشه کمربند بستن", example: "Tutti devono allacciare sempre la cintura. → همه باید همیشه کمربند ببندند." },
+      ],
+    },
 
     // ─── 19.1 ─────────────────────────────────────────────────────────────────
     {
