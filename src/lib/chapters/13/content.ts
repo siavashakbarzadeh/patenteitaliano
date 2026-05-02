@@ -10,7 +10,52 @@ export const chapter13Content: ChapterContent = {
   titleIt: "Norme sulla Circolazione dei Veicoli",
   titleFa: "قوانین تردد وسایل نقلیه در جاده",
   pageRange: "ص ۱۵۰–۱۶۹",
+  summary: "این فصل قوانین اصلی تردد وسایل نقلیه را پوشش می‌دهد: موقعیت صحیح روی جاده (خط راست)، تغییر جهت و دور زدن، رفتار در تقاطع‌ها و روتاری، قوانین تقدم (راست، داره پرچدنزا)، رفتار با عابران روی خط‌کشی، تعهد در قبال وسایل اورژانسی، و استفاده صحیح از آینه‌های عقب‌نما.",
   sections: [
+
+    // ─── متن اصلی ایتالیایی ───────────────────────────────────────────────────
+    {
+      id: "13-0-testo-italiano",
+      titleIt: "Testo Originale – Capitolo 13",
+      titleFa: "📖 متن اصلی ایتالیایی فصل ۱۳",
+      body: [
+        "**Art. 143 – Posizione dei veicoli sulla carreggiata**\n\nI veicoli devono circolare sulla parte destra della carreggiata e in prossimità del margine destro della stessa, anche quando la strada è libera. Su strade a doppio senso a due corsie: la corsia di sinistra è riservata al sorpasso. Su strade a tre corsie a doppio senso: la corsia centrale solo per sorpasso. Su strade a più corsie per senso di marcia: percorrere la corsia libera più a destra.",
+        "**Art. 154 – Cambiamento di direzione e di corsia**\n\nPrima di effettuare le manovre di svolta, di cambiamento di corsia o di inversione di marcia il conducente deve:\n1. assicurarsi di poter effettuare la manovra senza creare pericolo o intralcio;\n2. segnalare con sufficiente anticipo la propria intenzione azionando gli appositi indicatori di direzione, che devono restare in funzione per tutta la durata della manovra.\nL'inosservanza comporta la perdita di 2 punti dalla patente.",
+        "**Art. 145 – Precedenze**\n\nI conducenti devono dare la precedenza ai veicoli provenienti da destra, a meno che diversamente indicato dalla segnaletica. Si è obbligati a dare la precedenza sia a destra che a sinistra: in presenza del segnale DARE PRECEDENZA; immettendosi nel flusso; effettuando inversione di marcia; effettuando retromarcia; uscendo da passi carrai o autorimesse.",
+        "**Art. 191 – Comportamento verso i pedoni**\n\nQuando il traffico non è regolato da agenti o semafori, i conducenti devono dare la precedenza, fermandosi, ai pedoni che transitano sugli attraversamenti pedonali. Devono altresì fermarsi obbligatoriamente quando una persona con ridotte capacità motorie su carrozzella, munita di bastone bianco o bianco-rosso, attraversa la carreggiata.\n\n**Art. 177 – Veicoli di emergenza**\n\nChiunque si trovi sulla strada percorsa da veicoli con sirena e lampeggiante blu deve lasciare libero il passo e, se necessario, fermarsi. È vietato seguirli da vicino per trarne vantaggio nel traffico.",
+      ],
+      keyVerbs: [
+        { italian: "circolare sulla parte destra", persian: "در قسمت راست تردد کردن", example: "I veicoli devono circolare sulla parte destra. → وسایل باید در قسمت راست تردد کنند." },
+        { italian: "dare la precedenza", persian: "تقدم دادن", example: "Il conducente deve dare la precedenza ai veicoli da destra. → راننده باید به وسایل از راست تقدم دهد." },
+        { italian: "presegnalare la manovra", persian: "از قبل مانور را علامت دادن", example: "Bisogna presegnalare con sufficiente anticipo. → باید به موقع علامت داد." },
+      ],
+      highlights: [
+        "I veicoli devono circolare sulla parte destra della carreggiata anche quando la strada è libera.",
+        "Su strade a due corsie a doppio senso: la corsia di sinistra è riservata al sorpasso.",
+        "Prima di ogni manovra: segnalare + controllare specchi + non creare pericolo.",
+        "Dare la precedenza ai pedoni sulle strisce è obbligo assoluto.",
+        "Veicoli con sirena E lampeggiante blu: libero passo obbligatorio.",
+      ],
+      notes: [
+        "★ La corsia sinistra su strade a 2 corsie = SOLO sorpasso.",
+        "★ DARE PRECEDENZA = a destra E a sinistra (non solo a destra!).",
+        "★ Mancato rispetto precedenza all'immissione = -2 punti patente.",
+        "★ Pedone con bastone bianco = FERMATA OBBLIGATORIA sempre.",
+      ],
+    },
+
+    // ─── ترجمه فارسی متن اصلی ─────────────────────────────────────────────────
+    {
+      id: "13-0-traduzione-persiana",
+      titleIt: "Traduzione Persiana del Testo Originale",
+      titleFa: "🇮🇷 ترجمه فارسی متن اصلی فصل ۱۳",
+      body: [
+        "**ماده ۱۴۳ – موقعیت وسایل روی جاده**\n\nوسایل باید در قسمت راست جاده و نزدیک به لبه راست حرکت کنند، حتی اگر جاده خالی باشد. در جاده‌های دوطرفه با دو خط: خط چپ فقط برای سبقت. در جاده‌های دوطرفه با سه خط: خط وسط فقط برای سبقت. در جاده‌های چندخطه: آزادترین خط از سمت راست.",
+        "**ماده ۱۵۴ – تغییر جهت و خط**\n\nقبل از هر مانور تغییر جهت، تغییر خط یا دور زدن، راننده باید:\n۱. مطمئن شود که می‌تواند مانور را بدون خطر یا مزاحمت انجام دهد؛\n۲. قصد خود را با فعال‌سازی فرچه به موقع اعلام کند — فرچه باید در تمام مدت مانور روشن بماند.\nعدم رعایت: کسر ۲ امتیاز از گواهینامه.",
+        "**ماده ۱۴۵ – تقدم‌ها**\n\nرانندگان باید به وسایل از سمت راست تقدم دهند، مگر علائم دیگری باشد. تقدم به راست و چپ اجباری است: در صورت وجود علامت DARE PRECEDENZA؛ هنگام ورود به جریان ترافیک؛ هنگام دور زدن؛ هنگام عقب دادن؛ هنگام خروج از پارکینگ یا پاس‌کار.",
+        "**ماده ۱۹۱ – رفتار با عابران**\n\nوقتی ترافیک توسط مأمور یا سمافور کنترل نمی‌شود، رانندگان باید با توقف، به عابران روی خط‌کشی تقدم دهند. همچنین در صورت وجود معلول با ویلچر، عصای سفید یا سفید-قرمز توقف اجباری است.\n\n**ماده ۱۷۷ – وسایل اورژانسی**\n\nهر کسی در مسیر وسایل دارای سیرن و چراغ آبی چشمک‌زن باشد باید مسیر را آزاد کند و در صورت لزوم بایستد. دنبال کردن این وسایل برای استفاده از مسیر باز ممنوع است.",
+      ],
+    },
 
     // ─── رفتار صحیح در جاده ────────────────────────────────────────────────
     {
@@ -135,6 +180,19 @@ export const chapter13Content: ChapterContent = {
       keyVerbs: [
         { italian: "regolare gli specchi prima di partire", persian: "تنظیم آینه‌ها قبل از حرکت", example: "Gli specchi devono essere regolati quando il veicolo non è ancora in marcia. → آینه‌ها باید قبل از شروع حرکت تنظیم شوند." },
         { italian: "controllare gli angoli ciechi", persian: "بررسی نقاط کور", example: "Bisogna integrare il controllo degli specchi con il controllo visivo diretto. → باید کنترل آینه‌ها را با نگاه مستقیم تکمیل کرد." },
+      ],
+    },
+
+    // ─── خلاصه و نکات کلیدی ──────────────────────────────────────────────────
+    {
+      id: "13-11-riassunto",
+      titleIt: "Riassunto — Punti Chiave del Capitolo 13",
+      titleFa: "خلاصه — نکات کلیدی فصل ۱۳",
+      body: [
+        "**نمودار ذهنی فصل ۱۳:**\n\n```\nقوانین تردد\n├── موقعیت روی جاده → خط راست (همیشه)\n├── تغییر جهت → فرچه + آینه + بدون خطر\n├── تقاطع → فقط اگر می‌توانی کامل خارج شوی\n├── تقدم → راست در تقاطع | راست+چپ در ورود/دور زدن\n├── عابران → توقف اجباری روی خط‌کشی\n└── اورژانسی → آزاد کردن مسیر فوری\n```\n\n**مهم‌ترین اعداد برای آزمون:**\n- عدم رعایت ورود به جریان = **-۲ امتیاز**\n- پشت برف‌روب/نمک‌پاش = حداقل **۲۰ متر**\n- کامیون +۳.۵ تن (ممنوعیت سبقت) = حداقل **۱۰۰ متر**\n\n**تفاوت کلیدی تقدم:**\n| نوع | تقدم به |\n|-----|---------|\n| تقاطع بدون علامت | فقط راست |\n| علامت DARE PRECEDENZA | راست + چپ |\n| ورود به ترافیک | راست + چپ |\n| دور زدن | راست + چپ |\n| عقب دادن | راست + چپ |",
+      ],
+      keyVerbs: [
+        { italian: "rispettare le norme di circolazione", persian: "رعایت قوانین تردد", example: "Tutti devono rispettare le norme di circolazione. → همه باید قوانین تردد را رعایت کنند." },
       ],
     },
 
