@@ -95,6 +95,7 @@ import SupportHubPage from "@/components/SupportHubPage";
 import GamificationPage from "@/components/GamificationPage";
 import OnboardingFlow, { getOnboardingData } from "@/components/OnboardingFlow";
 import DictionaryPage from "@/components/DictionaryPage";
+import ItalianoSection from "@/components/ItalianoSection";
 import { getUserSettings, applySettings, checkExamClearance } from "@/lib/userSettings";
 import { claimDailyLogin, awardQuizXP, getGamification, getBadge } from "@/lib/gamification";
 import { validateCode, applyCode, getAppliedCode } from "@/lib/discountCodes";
@@ -604,140 +605,299 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter }: {
   onSelectChapter: (ch: number) => void;
   onStudyChapter: (ch: number) => void;
 }) {
-  const accuracy = getAccuracy(progress);
+  const accuracy   = getAccuracy(progress);
   const availableCount = chapters.filter((c) => c.available).length;
+  const doneCount  = Object.values(progress.chapterStats).filter(s => s.answered > 0).length;
+  const pct        = availableCount > 0 ? Math.round((doneCount / availableCount) * 100) : 0;
+  const circumference = 2 * Math.PI * 26; // r=26
 
   return (
     <div className="page-wrap">
-      {/* Header */}
-      <div className="animate-fade-in-up" style={{ marginBottom: 32 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+
+      {/* ── Hero header ───────────────────────────────────────────────────── */}
+      <div className="animate-fade-in-up" style={{ marginBottom: 28 }}>
+        {/* Badge */}
+        <div style={{
+          display: "inline-flex", alignItems: "center", gap: 8,
+          background: "rgba(147,51,234,0.12)", border: "1px solid rgba(147,51,234,0.25)",
+          borderRadius: 20, padding: "5px 14px", marginBottom: 14,
+        }}>
           <ItalianFlag />
-          <span style={{ fontSize: 12, color: "var(--text-muted)", fontWeight: 600, letterSpacing: "0.1em" }}>
-            PATENTE B • CODICE DELLA STRADA
+          <span style={{ fontSize: 11, color: "#c084fc", fontWeight: 700, letterSpacing: "0.08em" }}>
+            PATENTE B · CODICE DELLA STRADA
           </span>
         </div>
-        <h1 style={{ fontSize: 32, fontWeight: 900, lineHeight: 1.2, marginBottom: 10, direction: "rtl" }}>
+
+        <h1 style={{ fontSize: 30, fontWeight: 900, lineHeight: 1.25, marginBottom: 6, direction: "rtl" }}>
           آموزش{" "}
           <span style={{
-            background: "linear-gradient(135deg, #6366f1, #a78bfa)",
+            background: "linear-gradient(135deg, #9333ea, #f97316)",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>
             گواهینامه ایتالیایی
           </span>
         </h1>
-
+        <p style={{ fontSize: 13, color: "var(--text-muted)", direction: "rtl" }}>
+          آزمون تمرینی، مطالعه فارسی، پیگیری پیشرفت
+        </p>
       </div>
 
-      {/* Stats row */}
+      {/* ── Stats cards ───────────────────────────────────────────────────── */}
       <div className="animate-fade-in-up" style={{
         display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
-        gap: 12, marginBottom: 32, animationDelay: "0.1s",
+        gap: 10, marginBottom: 24, animationDelay: "0.08s",
       }}>
-        {[
-          { icon: <Target size={20} color="#9333ea" />, val: `${accuracy}%`, label: "دقت" },
-          { icon: <Zap size={20} color="#f97316" />, val: progress.totalAnswered, label: "پاسخ داده" },
-          { icon: <Flame size={20} color={progress.streak > 0 ? "#f97316" : "#6b568a"} />,
-            val: progress.streak, label: "روز متوالی 🔥" },
-        ].map((s, i) => (
-          <div key={i} className="stat-badge">
-            {s.icon}
-            <span style={{ fontSize: 22, fontWeight: 800 }}>{s.val}</span>
-            <span style={{ fontSize: 11, color: "var(--text-muted)" }}>{s.label}</span>
-          </div>
-        ))}
+        {/* Accuracy */}
+        <div style={{
+          background: "linear-gradient(135deg, rgba(99,102,241,0.18), rgba(139,92,246,0.1))",
+          border: "1px solid rgba(99,102,241,0.3)", borderRadius: 16,
+          padding: "16px 10px", textAlign: "center",
+          display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+        }}>
+          <Target size={20} color="#818cf8" />
+          <span style={{ fontSize: 22, fontWeight: 900, color: "#818cf8" }}>{accuracy}%</span>
+          <span style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 600 }}>دقت</span>
+        </div>
+        {/* Answers */}
+        <div style={{
+          background: "linear-gradient(135deg, rgba(249,115,22,0.15), rgba(234,88,12,0.08))",
+          border: "1px solid rgba(249,115,22,0.25)", borderRadius: 16,
+          padding: "16px 10px", textAlign: "center",
+          display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+        }}>
+          <Zap size={20} color="#fb923c" />
+          <span style={{ fontSize: 22, fontWeight: 900, color: "#fb923c" }}>{progress.totalAnswered}</span>
+          <span style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 600 }}>پاسخ داده</span>
+        </div>
+        {/* Streak */}
+        <div style={{
+          background: progress.streak > 0
+            ? "linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.08))"
+            : "rgba(255,255,255,0.03)",
+          border: `1px solid ${progress.streak > 0 ? "rgba(251,191,36,0.3)" : "rgba(255,255,255,0.07)"}`,
+          borderRadius: 16, padding: "16px 10px", textAlign: "center",
+          display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+        }}>
+          <Flame size={20} color={progress.streak > 0 ? "#fbbf24" : "#6b7280"} />
+          <span style={{ fontSize: 22, fontWeight: 900, color: progress.streak > 0 ? "#fbbf24" : "var(--text-muted)" }}>
+            {progress.streak}
+          </span>
+          <span style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 600 }}>روز 🔥</span>
+        </div>
       </div>
 
-      {/* Progress overview */}
-      <div className="animate-fade-in-up glass-card animate-pulse-glow"
-        style={{ padding: "24px", marginBottom: 24, animationDelay: "0.15s" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
-          <div>
-            <h2 style={{ fontSize: 17, fontWeight: 700, marginBottom: 4, direction: "rtl" }}>پیشرفت کتاب</h2>
-            <p style={{ fontSize: 13, color: "var(--text-secondary)", direction: "rtl" }}>
-              {availableCount} از ۲۵ فصل در دسترس
-            </p>
+      {/* ── Progress overview card ─────────────────────────────────────────── */}
+      <div className="animate-fade-in-up glass-card" style={{ padding: "20px", marginBottom: 20, animationDelay: "0.12s" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 18 }}>
+          {/* SVG ring */}
+          <div style={{ position: "relative", width: 64, height: 64, flexShrink: 0 }}>
+            <svg width="64" height="64" viewBox="0 0 64 64">
+              <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(147,51,234,0.12)" strokeWidth="7" />
+              <circle cx="32" cy="32" r="26" fill="none"
+                stroke="url(#pgGrad)" strokeWidth="7"
+                strokeDasharray={circumference}
+                strokeDashoffset={circumference * (1 - pct / 100)}
+                strokeLinecap="round"
+                style={{ transform: "rotate(-90deg)", transformOrigin: "32px 32px", transition: "stroke-dashoffset 1s ease" }}
+              />
+              <defs>
+                <linearGradient id="pgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#9333ea" />
+                  <stop offset="100%" stopColor="#f97316" />
+                </linearGradient>
+              </defs>
+              <text x="32" y="37" textAnchor="middle" fill="white" fontSize="12" fontWeight="800">{pct}%</text>
+            </svg>
           </div>
-          <span style={{
-            fontSize: 13, fontWeight: 700, color: "#d8aaff",
-            background: "rgba(147,51,234,0.15)", padding: "4px 12px",
-            borderRadius: 20, border: "1px solid rgba(147,51,234,0.3)"
-          }}>
-            {Math.round((availableCount / 25) * 100)}%
-          </span>
+          <div style={{ flex: 1, direction: "rtl" }}>
+            <h2 style={{ fontSize: 16, fontWeight: 800, marginBottom: 4 }}>پیشرفت مطالعه</h2>
+            <p style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6 }}>
+              <strong style={{ color: "#c084fc" }}>{doneCount}</strong> فصل تمرین شده از{" "}
+              <strong style={{ color: "var(--text-primary)" }}>{availableCount}</strong> فصل در دسترس
+            </p>
+            {progress.completedQuizzes > 0 && (
+              <p style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 3 }}>
+                🏆 {progress.completedQuizzes} آزمون کامل شده
+              </p>
+            )}
+          </div>
         </div>
 
-        {/* 25 chapter dots */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
+        {/* Chapter dots grid */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
           {chapters.map((ch) => {
             const stats = progress.chapterStats[String(ch.number)];
             const done = stats && stats.answered > 0;
+            const acc = done ? Math.round((stats.correct / stats.answered) * 100) : null;
             return (
-              <div key={ch.number} title={`فصل ${ch.number}: ${ch.title}`} style={{
-                width: 28, height: 28, borderRadius: 8,
-                background: !ch.available ? "rgba(255,255,255,0.04)"
-                  : done ? "linear-gradient(135deg, #9333ea, #f97316)"
-                  : "rgba(147,51,234,0.2)",
-                border: ch.available ? "1px solid rgba(147,51,234,0.4)" : "1px solid rgba(255,255,255,0.06)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 10, fontWeight: 700,
-                color: ch.available ? "white" : "var(--text-muted)",
-                transition: "all 0.2s",
-              }}>
+              <div
+                key={ch.number}
+                title={`فصل ${ch.number}: ${ch.title}`}
+                onClick={() => ch.available && onSelectChapter(ch.number)}
+                style={{
+                  width: 30, height: 30, borderRadius: 9,
+                  background: !ch.available ? "rgba(255,255,255,0.03)"
+                    : done && acc !== null && acc >= 70 ? "linear-gradient(135deg, #22c55e, #16a34a)"
+                    : done ? "linear-gradient(135deg, #f97316, #dc2626)"
+                    : "rgba(147,51,234,0.18)",
+                  border: ch.available
+                    ? done ? "1px solid rgba(255,255,255,0.2)" : "1px solid rgba(147,51,234,0.35)"
+                    : "1px solid rgba(255,255,255,0.05)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 10, fontWeight: 700,
+                  color: ch.available ? "white" : "rgba(255,255,255,0.2)",
+                  cursor: ch.available ? "pointer" : "default",
+                  transition: "all 0.2s",
+                  boxShadow: done ? "0 2px 8px rgba(0,0,0,0.3)" : "none",
+                }}
+              >
                 {ch.number}
               </div>
             );
           })}
         </div>
 
-        <button id="btn-go-chapters" className="btn-primary" style={{ width: "100%" }}
+        {/* Legend */}
+        <div style={{ display: "flex", gap: 14, marginBottom: 16, direction: "rtl", flexWrap: "wrap" }}>
+          {[
+            { color: "linear-gradient(135deg,#22c55e,#16a34a)", label: "≥۷۰٪" },
+            { color: "linear-gradient(135deg,#f97316,#dc2626)", label: "تمرین شده" },
+            { color: "rgba(147,51,234,0.18)", label: "شروع نشده" },
+          ].map(l => (
+            <div key={l.label} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+              <div style={{ width: 12, height: 12, borderRadius: 4, background: l.color, border: "1px solid rgba(255,255,255,0.1)" }} />
+              <span style={{ fontSize: 10, color: "var(--text-muted)" }}>{l.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <button id="btn-go-chapters" className="btn-primary" style={{ width: "100%", fontSize: 14 }}
           onClick={() => onNavigate("chapters")}>
-          مشاهده همه فصل‌ها ←
+          مشاهده همه ۲۵ فصل ←
         </button>
       </div>
 
-      {/* Available chapter cards */}
+      {/* ── Quick actions ─────────────────────────────────────────────────── */}
+      <div className="animate-fade-in-up" style={{ marginBottom: 24, animationDelay: "0.16s" }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 10, direction: "rtl" }}>
+          ⚡ دسترسی سریع
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          {[
+            { icon: "🎯", label: "آزمون مختلط", sub: "از همه فصل‌ها", id: "mixed", color: "#818cf8" },
+            { icon: "📋", label: "آزمون استاندارد", sub: "۳۰ سوال", id: "standard", color: "#34d399" },
+            { icon: "🔍", label: "مرور سوالات", sub: "با جواب", id: "browse", color: "#f59e0b" },
+            { icon: "📊", label: "گزارش آمار", sub: "پیشرفت تفصیلی", id: "charts", color: "#f87171" },
+          ].map(a => (
+            <button key={a.id} onClick={() => onNavigate(a.id as Page)} style={{
+              background: "var(--bg-card)", border: "1px solid rgba(255,255,255,0.06)",
+              borderRadius: 16, padding: "14px 16px", cursor: "pointer",
+              display: "flex", alignItems: "center", gap: 12, direction: "rtl",
+              transition: "all 0.2s", textAlign: "right",
+            }}>
+              <div style={{
+                width: 40, height: 40, borderRadius: 12, flexShrink: 0,
+                background: `${a.color}18`, border: `1px solid ${a.color}30`,
+                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20,
+              }}>{a.icon}</div>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text-primary)" }}>{a.label}</div>
+                <div style={{ fontSize: 11, color: "var(--text-muted)" }}>{a.sub}</div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Chapter cards ─────────────────────────────────────────────────── */}
+      <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 12, direction: "rtl" }}>
+        📚 فصل‌های در دسترس
+      </div>
       {chapters.filter(c => c.available).map((ch) => {
         const stats = progress.chapterStats[String(ch.number)];
-        const acc = stats && stats.answered > 0
-          ? Math.round((stats.correct / stats.answered) * 100) : null;
+        const answered = stats?.answered ?? 0;
+        const correct  = stats?.correct ?? 0;
+        const acc = answered > 0 ? Math.round((correct / answered) * 100) : null;
         const total = questions.filter(q => q.chapter === ch.number).length;
         const hasContent = !!contentRegistry[ch.number];
+        const accColor = acc === null ? "var(--text-muted)"
+          : acc >= 70 ? "#22c55e" : acc >= 40 ? "#f59e0b" : "#ef4444";
+
         return (
           <div key={ch.number} className="animate-fade-in-up glass-card"
-            style={{ padding: "20px", marginBottom: 16, animationDelay: "0.2s" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 14 }}>
-              <div style={{ width: 50, height: 50, borderRadius: 14, flexShrink: 0,
-                background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
-                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>
+            style={{ padding: "18px", marginBottom: 12, animationDelay: "0.2s" }}>
+            {/* Top row */}
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
+              {/* Icon */}
+              <div style={{
+                width: 48, height: 48, borderRadius: 14, flexShrink: 0,
+                background: "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.2))",
+                border: "1px solid rgba(99,102,241,0.3)",
+                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22,
+              }}>
                 {ch.icon}
               </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 11, color: "#c084fc", fontWeight: 700, marginBottom: 2 }}>
+              {/* Info */}
+              <div style={{ flex: 1, direction: "rtl" }}>
+                <div style={{ fontSize: 10, color: "#a78bfa", fontWeight: 700, letterSpacing: "0.05em", marginBottom: 2 }}>
                   فصل {ch.number}
                 </div>
-                <div style={{ fontSize: 16, fontWeight: 700 }}>{ch.title}</div>
-                <div style={{ fontSize: 12, color: "var(--text-muted)" }}>{total} سوال</div>
+                <div style={{ fontSize: 15, fontWeight: 800, color: "var(--text-primary)", marginBottom: 2 }}>{ch.title}</div>
+                <div style={{ fontSize: 11, color: "var(--text-muted)" }}>{total} سوال</div>
               </div>
-              {acc !== null && (
-                <span style={{ fontSize: 18, fontWeight: 800,
-                  color: acc >= 70 ? "var(--success)" : acc >= 40 ? "var(--warning)" : "var(--error)" }}>
-                  {acc}%
-                </span>
+              {/* Accuracy badge */}
+              {acc !== null ? (
+                <div style={{
+                  textAlign: "center", background: `${accColor}15`,
+                  border: `1px solid ${accColor}30`, borderRadius: 12,
+                  padding: "6px 12px", flexShrink: 0,
+                }}>
+                  <div style={{ fontSize: 18, fontWeight: 900, color: accColor }}>{acc}%</div>
+                  <div style={{ fontSize: 9, color: "var(--text-muted)" }}>دقت</div>
+                </div>
+              ) : (
+                <div style={{
+                  textAlign: "center", background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12,
+                  padding: "6px 12px", flexShrink: 0,
+                }}>
+                  <div style={{ fontSize: 18 }}>🆕</div>
+                  <div style={{ fontSize: 9, color: "var(--text-muted)" }}>جدید</div>
+                </div>
               )}
             </div>
-            <div style={{ display: "flex", gap: 10 }}>
+
+            {/* Progress bar */}
+            {answered > 0 && (
+              <div style={{ marginBottom: 14 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5, direction: "rtl" }}>
+                  <span style={{ fontSize: 10, color: "var(--text-muted)" }}>{answered} سوال تمرین شده</span>
+                  <span style={{ fontSize: 10, color: accColor, fontWeight: 700 }}>{correct} صحیح</span>
+                </div>
+                <div style={{ height: 5, borderRadius: 3, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+                  <div style={{
+                    height: "100%", borderRadius: 3,
+                    width: `${Math.min(100, (answered / total) * 100)}%`,
+                    background: `linear-gradient(90deg, ${accColor}, ${accColor}90)`,
+                    transition: "width 0.8s ease",
+                  }} />
+                </div>
+              </div>
+            )}
+
+            {/* Actions */}
+            <div style={{ display: "flex", gap: 8 }}>
               {hasContent && (
                 <button id={`btn-study-ch${ch.number}`} className="btn-secondary"
-                  style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
+                  style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, fontSize: 13 }}
                   onClick={() => onStudyChapter(ch.number)}>
-                  <BookOpen size={15} /> مطالعه
+                  <BookOpen size={14} /> مطالعه
                 </button>
               )}
               <button id={`btn-start-ch${ch.number}`} className="btn-primary"
-                style={{ flex: 1 }}
+                style={{ flex: hasContent ? 1 : 2, fontSize: 13 }}
                 onClick={() => onSelectChapter(ch.number)}>
-                آزمون ←
+                ✍️ آزمون
               </button>
             </div>
           </div>
@@ -746,6 +906,7 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter }: {
     </div>
   );
 }
+
 
 // ── presetCount helper — how many questions match each preset ─────────────────
 function presetCount(mode: string, progress: UserProgress): number {
@@ -1539,9 +1700,125 @@ function ReviewPage({ progress, onBack, onStartWrong, onStartFlagged }: {
   );
 }
 
+// ─── Landing Page — Section Selector ─────────────────────────────────────────
+function LandingPage({ onSelectPatente, onSelectItaliano }: {
+  onSelectPatente: () => void;
+  onSelectItaliano: () => void;
+}) {
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 16px" }}>
+      {/* Hero */}
+      <div style={{ textAlign: "center", marginBottom: 40 }}>
+        <div style={{ fontSize: 52, marginBottom: 12 }}>🇮🇹</div>
+        <h1 style={{ fontSize: 26, fontWeight: 900, color: "var(--text-primary)", margin: 0, lineHeight: 1.3 }}>
+          Italian Learning Hub
+        </h1>
+        <p style={{ color: "var(--text-muted)", fontSize: 14, marginTop: 8 }}>
+          پلتفرم آموزشی برای ساکنان ایتالیا
+        </p>
+      </div>
+
+      {/* Two Section Cards */}
+      <div style={{ width: "100%", maxWidth: 540, display: "flex", flexDirection: "column", gap: 16 }}>
+
+        {/* Patente Card */}
+        <button onClick={onSelectPatente} style={{
+          background: "linear-gradient(135deg, rgba(147,51,234,0.2), rgba(249,115,22,0.12))",
+          border: "1.5px solid rgba(147,51,234,0.35)",
+          borderRadius: 22, padding: "24px 22px", cursor: "pointer", textAlign: "right",
+          width: "100%", transition: "all 0.3s", direction: "rtl",
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
+            <div style={{
+              width: 60, height: 60, borderRadius: 16, flexShrink: 0,
+              background: "linear-gradient(135deg, rgba(147,51,234,0.25), rgba(249,115,22,0.15))",
+              border: "2px solid rgba(147,51,234,0.4)",
+              display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28,
+            }}>🚗</div>
+            <div>
+              <div style={{ fontSize: 20, fontWeight: 900, color: "var(--text-primary)" }}>Patente Italiana</div>
+              <div style={{ fontSize: 13, color: "rgba(147,51,234,0.8)", fontWeight: 600 }}>گواهینامه رانندگی</div>
+            </div>
+          </div>
+          <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.7, margin: "0 0 16px" }}>
+            ۲۵ فصل آیین‌نامه، سوالات آزمون تمرینی، مطالعه با ترجمه فارسی، آمار پیشرفت و بیشتر...
+          </p>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" as const }}>
+            {["📚 ۲۵ فصل", "✍️ آزمون تمرینی", "📊 آمار", "🏆 امتیاز"].map(b => (
+              <span key={b} style={{
+                fontSize: 11, padding: "3px 10px", borderRadius: 20,
+                background: "rgba(147,51,234,0.15)", color: "#c084fc",
+                border: "1px solid rgba(147,51,234,0.2)",
+              }}>{b}</span>
+            ))}
+          </div>
+          <div style={{ marginTop: 16, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 12, color: "var(--text-muted)" }}></span>
+            <div style={{
+              background: "linear-gradient(135deg, #9333ea, #f97316)",
+              borderRadius: 12, padding: "9px 20px", color: "white", fontSize: 13, fontWeight: 700,
+            }}>ورود به بخش ← </div>
+          </div>
+        </button>
+
+        {/* Italiano Section Card */}
+        <button onClick={onSelectItaliano} style={{
+          background: "linear-gradient(135deg, rgba(14,165,233,0.18), rgba(16,185,129,0.1))",
+          border: "1.5px solid rgba(14,165,233,0.3)",
+          borderRadius: 22, padding: "24px 22px", cursor: "pointer", textAlign: "right",
+          width: "100%", transition: "all 0.3s", direction: "rtl",
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
+            <div style={{
+              width: 60, height: 60, borderRadius: 16, flexShrink: 0,
+              background: "linear-gradient(135deg, rgba(14,165,233,0.25), rgba(16,185,129,0.15))",
+              border: "2px solid rgba(14,165,233,0.4)",
+              display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28,
+            }}>💬</div>
+            <div>
+              <div style={{ fontSize: 20, fontWeight: 900, color: "var(--text-primary)" }}>Italiano per Argomenti</div>
+              <div style={{ fontSize: 13, color: "rgba(14,165,233,0.9)", fontWeight: 600 }}>آموزش موضوعی زبان</div>
+            </div>
+          </div>
+          <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.7, margin: "0 0 16px" }}>
+            یادگیری ایتالیایی از طریق موضوعات روزانه: پزشک، بانک، خرید، شهرداری، مدرسه و بیشتر...
+          </p>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" as const }}>
+            {["🏥 Dal Medico", "🛒 Supermercato", "🏦 Banca", "🏛️ Comune"].map(b => (
+              <span key={b} style={{
+                fontSize: 11, padding: "3px 10px", borderRadius: 20,
+                background: "rgba(14,165,233,0.15)", color: "#0ea5e9",
+                border: "1px solid rgba(14,165,233,0.2)",
+              }}>{b}</span>
+            ))}
+          </div>
+          <div style={{ marginTop: 16, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 12, color: "var(--text-muted)" }}></span>
+            <div style={{
+              background: "linear-gradient(135deg, #0ea5e9, #10b981)",
+              borderRadius: 12, padding: "9px 20px", color: "white", fontSize: 13, fontWeight: 700,
+            }}>ورود به بخش ← </div>
+          </div>
+        </button>
+      </div>
+
+      <p style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 32, textAlign: "center" }}>
+        هر بار می‌توانید بخش دیگر را انتخاب کنید
+      </p>
+    </div>
+  );
+}
+
 // ─── Main App ─────────────────────────────────────────────────────────────────
 export default function App() {
   const [page, setPage] = useState<Page>("home");
+  const [appSection, setAppSection] = useState<"landing" | "patente" | "italiano">(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("app_section");
+      if (saved === "patente" || saved === "italiano") return saved;
+    }
+    return "landing";
+  });
   const [activeChapter, setActiveChapter] = useState<number>(20);
   const [quizKey, setQuizKey] = useState(0);
   const [quizMode, setQuizMode] = useState<QuizMode>("chapter");
@@ -1617,34 +1894,23 @@ export default function App() {
     <>
       <div className="mesh-bg" />
 
-      {/* User bar */}
-      {(() => {
-        const user = getSession();
-        if (!user) return null;
-        return (
-          <div style={{
-            position: "fixed", top: 0, left: 0, right: 0, zIndex: 9999,
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-            padding: "6px 16px",
-            background: "rgba(10,10,20,0.85)", backdropFilter: "blur(12px)",
-            borderBottom: "1px solid rgba(255,255,255,0.06)",
-          }}>
-            <span style={{ fontSize: 11, color: "var(--text-muted)" }}>
-              👤 <strong style={{ color: "var(--text-secondary)" }}>{user.displayName}</strong>
-            </span>
-            <button
-              onClick={() => { logout(); window.location.reload(); }}
-              style={{
-                fontSize: 11, color: "rgba(239,68,68,0.7)",
-                background: "none", border: "1px solid rgba(239,68,68,0.2)",
-                borderRadius: 6, padding: "3px 10px", cursor: "pointer",
-              }}
-            >
-              خروج
-            </button>
-          </div>
-        );
-      })()}
+      {/* ── Landing: Section selector ── */}
+      {appSection === "landing" && !showOnboarding && (
+        <LandingPage
+          onSelectPatente={() => { setAppSection("patente"); localStorage.setItem("app_section", "patente"); }}
+          onSelectItaliano={() => { setAppSection("italiano"); localStorage.setItem("app_section", "italiano"); }}
+        />
+      )}
+
+      {/* ── Italiano Section (fully independent) ── */}
+      {appSection === "italiano" && !showOnboarding && (
+        <ItalianoSection onBack={() => { setAppSection("landing"); localStorage.setItem("app_section", "landing"); }} />
+      )}
+
+      {/* ── Patente Section ── */}
+      {appSection === "patente" && (
+      <>
+
 
       {page === "home" && (
         <HomePage
@@ -1795,11 +2061,16 @@ export default function App() {
         <DictionaryPage onBack={() => setPage("support")} />
       )}
 
+      <NavBar page={page} onNav={setPage} />
+      </> /* end patente inner */
+      )} {/* end appSection patente */}
+
+
       {/* ── Onboarding Flow (First Launch) ── */}
       {showOnboarding && (
         <OnboardingFlow onComplete={() => {
           setShowOnboarding(false);
-          // Claim daily bonus after onboarding
+          setAppSection("landing");
           const bonus = claimDailyLogin();
           if (bonus.granted) {
             setDailyToast({ message: bonus.message + ` (+${bonus.xpEarned} XP)` });
@@ -1807,8 +2078,6 @@ export default function App() {
           }
         }} />
       )}
-
-      <NavBar page={page} onNav={setPage} />
     </>
   );
 }

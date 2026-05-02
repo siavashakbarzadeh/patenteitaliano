@@ -6,6 +6,7 @@ import {
   type UserSettings, type AppTheme, type FontScale,
   getDaysUntilExam, getStudyPlanSummary,
 } from "@/lib/userSettings";
+import { getSession, logout } from "@/lib/auth";
 
 // ─── SettingsPage — رنگ، فونت، برنامه مطالعاتی ────────────────────────────────
 export default function SettingsPage({ onBack }: { onBack: () => void }) {
@@ -50,6 +51,8 @@ export default function SettingsPage({ onBack }: { onBack: () => void }) {
     fontSize: 13, outline: "none", cursor: "pointer",
   };
 
+  const user = getSession();
+
   return (
     <div className="page-wrap">
       {/* Header */}
@@ -73,6 +76,49 @@ export default function SettingsPage({ onBack }: { onBack: () => void }) {
           {saved ? "✓ ذخیره شد" : "ذخیره"}
         </button>
       </div>
+
+      {/* ── Account Card ── */}
+      {user && (
+        <div className="glass-card" style={{ marginBottom: 16, padding: "18px 20px" }}>
+          <h3 style={{ fontSize: 13, fontWeight: 700, color: "var(--text-primary)", marginBottom: 16, direction: "rtl" }}>
+            👤 حساب کاربری
+          </h3>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", direction: "rtl" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              {/* Avatar circle */}
+              <div style={{
+                width: 48, height: 48, borderRadius: "50%", flexShrink: 0,
+                background: "linear-gradient(135deg, #9333ea, #f97316)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 20, fontWeight: 900, color: "white",
+              }}>
+                {user.displayName?.[0]?.toUpperCase() ?? "?"}
+              </div>
+              <div>
+                <div style={{ fontSize: 15, fontWeight: 800, color: "var(--text-primary)" }}>
+                  {user.displayName}
+                </div>
+                <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 2 }}>
+                  @{user.username}
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={() => { logout(); window.location.reload(); }}
+              style={{
+                fontSize: 12, fontWeight: 700,
+                color: "#ef4444",
+                background: "rgba(239,68,68,0.1)",
+                border: "1px solid rgba(239,68,68,0.25)",
+                borderRadius: 10, padding: "8px 16px", cursor: "pointer",
+                flexShrink: 0,
+              }}
+            >
+              🚪 خروج
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ── Theme ── */}
       <SectionCard title="🎨 تم رنگی">
