@@ -5,16 +5,17 @@ import { questions, chapters } from "@/lib/questions";
 import { getProgress, resetProgress, getAccuracy, type UserProgress,
   getHardQuestionIds, setHardQuestion,
   getRaisedHands, resolveRaisedHand,
-  getTagConfigs, saveTagConfigs,
-  type QueryPreset } from "@/lib/store";
+  getTagConfigs, saveTagConfigs } from "@/lib/store";
 import type { Question } from "@/lib/types";
 import { DEFAULT_TAG_CONFIGS } from "@/lib/types";
 import { loadVideos, addVideo, deleteVideo, type VideoItem } from "@/lib/videos";
 import { getAllSubscriptions, setPlan, getSubscription, planLabel, type Plan } from "@/lib/subscription";
 import { getSession } from "@/lib/auth";
+import { getFeedbackHistory } from "@/lib/userSettings";
+import { getSupportRequests, resolveSupportRequest, getGamification } from "@/lib/gamification";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags";
+type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function StatCard({ icon, label, value, color }: { icon: string; label: string; value: string | number; color: string }) {
@@ -654,6 +655,166 @@ function TagConfigTab() {
   );
 }
 
+// ─── Feedback Tab ─────────────────────────────────────────────────────────────
+function FeedbackTab() {
+  const history = getFeedbackHistory();
+  const stars = ["", "⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"];
+  const avgRating = history.length > 0
+    ? (history.reduce((s, h) => s + h.rating, 0) / history.length).toFixed(1)
+    : "—";
+
+  const typeLabel: Record<string, string> = {
+    chapter: "فصل", quiz_batch: "تست", course_complete: "دوره", general: "عمومی",
+  };
+
+  return (
+    <div>
+      <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 20, direction: "rtl" }}>
+        <div style={{ background: "rgba(251,191,36,0.08)", border: "1px solid rgba(251,191,36,0.2)", borderRadius: 14, padding: "14px 20px", textAlign: "center" }}>
+          <div style={{ fontSize: 28, fontWeight: 800, color: "#fbbf24" }}>{avgRating}</div>
+          <div style={{ fontSize: 10, color: "#888" }}>میانگین امتیاز</div>
+        </div>
+        <div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text-primary)" }}>{history.length} نظر دریافتی</div>
+          <div style={{ fontSize: 12, color: "#888", marginTop: 4 }}>از ارزشیابی‌های دانش‌آموزان</div>
+        </div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, maxHeight: "65vh", overflowY: "auto" }}>
+        {history.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>هنوز ارزشیابی‌ای ثبت نشده است.</p>}
+        {history.map((h, i) => (
+          <div key={i} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(251,191,36,0.15)", borderRadius: 12, padding: "12px 16px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+              <span style={{ fontSize: 12, color: "#fbbf24" }}>{stars[h.rating]}</span>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                {h.chapterNum && <span style={{ fontSize: 10, color: "#9333ea" }}>ف{h.chapterNum}</span>}
+                <span style={{ fontSize: 10, color: "#555" }}>{typeLabel[h.type] ?? h.type}</span>
+                <span style={{ fontSize: 10, color: "#444" }}>{new Date(h.submittedAt).toLocaleDateString("fa-IR")}</span>
+              </div>
+            </div>
+            {h.comment && (
+              <div style={{ fontSize: 12, direction: "rtl", textAlign: "right", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+                {h.comment}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Requests Tab (درخواست‌های کاربران) ───────────────────────────────────────
+function RequestsTab() {
+  const [requests, setRequests] = useState(() => getSupportRequests());
+
+  const typeLabel: Record<string, string> = {
+    class_test: "کلاس تست", online_course: "دوره آنلاین",
+    collaboration: "همکاری", suggestion: "پیشنهاد", contact: "تماس",
+  };
+  const typeColor: Record<string, string> = {
+    class_test: "#60a5fa", online_course: "#a78bfa",
+    collaboration: "#22d3a5", suggestion: "#fbbf24", contact: "#f97316",
+  };
+
+  const handleResolve = (id: string) => {
+    resolveSupportRequest(id);
+    setRequests(getSupportRequests());
+  };
+
+  const pending = requests.filter(r => !r.resolved);
+  const resolved = requests.filter(r => r.resolved);
+
+  return (
+    <div>
+      <div style={{ display: "flex", gap: 14, marginBottom: 20, direction: "rtl" }}>
+        <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 12, padding: "12px 18px", textAlign: "center" }}>
+          <div style={{ fontSize: 22, fontWeight: 800, color: "#ef4444" }}>{pending.length}</div>
+          <div style={{ fontSize: 10, color: "#888" }}>در انتظار</div>
+        </div>
+        <div style={{ background: "rgba(34,211,165,0.08)", border: "1px solid rgba(34,211,165,0.2)", borderRadius: 12, padding: "12px 18px", textAlign: "center" }}>
+          <div style={{ fontSize: 22, fontWeight: 800, color: "#22d3a5" }}>{resolved.length}</div>
+          <div style={{ fontSize: 10, color: "#888" }}>رسیدگی شده</div>
+        </div>
+      </div>
+
+      {requests.length === 0 && (
+        <p style={{ color: "#555", fontSize: 13, direction: "rtl" }}>هنوز درخواستی ثبت نشده است.</p>
+      )}
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, maxHeight: "65vh", overflowY: "auto" }}>
+        {requests.map(r => (
+          <div key={r.id} style={{
+            background: r.resolved ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.04)",
+            border: `1px solid ${r.resolved ? "rgba(255,255,255,0.08)" : "rgba(147,51,234,0.2)"}`,
+            borderRadius: 12, padding: "12px 16px",
+            opacity: r.resolved ? 0.6 : 1,
+          }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                {!r.resolved && (
+                  <button onClick={() => handleResolve(r.id)}
+                    style={{ padding: "4px 10px", borderRadius: 8, fontSize: 10, cursor: "pointer",
+                      background: "rgba(34,211,165,0.15)", color: "#22d3a5", border: "1px solid rgba(34,211,165,0.3)", fontWeight: 700 }}>
+                    ✓ رسیدگی شد
+                  </button>
+                )}
+                {r.resolved && <span style={{ fontSize: 10, color: "#22d3a5" }}>✓ رسیدگی شد</span>}
+              </div>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <span style={{ fontSize: 10, padding: "2px 8px", borderRadius: 6,
+                  background: `rgba(${typeColor[r.type]?.replace("#","")},0.1)`,
+                  color: typeColor[r.type] || "#888" }}>
+                  {typeLabel[r.type] || r.type}
+                </span>
+                <span style={{ fontSize: 10, color: "#444" }}>
+                  {new Date(r.submittedAt).toLocaleDateString("fa-IR")}
+                </span>
+              </div>
+            </div>
+            <div style={{ direction: "rtl", textAlign: "right", fontSize: 12, color: "var(--text-secondary)" }}>
+              {r.name && <div style={{ fontWeight: 600, marginBottom: 2 }}>{r.name} {r.phone && `· ${r.phone}`} {r.email && `· ${r.email}`}</div>}
+              {r.message && <div style={{ color: "var(--text-muted)" }}>{r.message}</div>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Gamification Admin Tab (آمار نظام انگیزشی) ─────────────────────────────
+function GamificationAdminTab() {
+  const gm = getGamification();
+  const badge = {1:"🐣",2:"🚗",3:"📚",4:"🎯",5:"⭐",6:"🏆",7:"💎",8:"🦋",9:"🌟",10:"👑"};
+
+  const rows: { label: string; value: string | number; icon: string }[] = [
+    { icon: "⭐", label: "کل XP", value: gm.totalXP },
+    { icon: "📊", label: "سطح", value: `${badge[Math.min(gm.level,10) as keyof typeof badge] ?? "👑"} سطح ${gm.level}` },
+    { icon: "📅", label: "XP از ورود روزانه", value: gm.loginXP },
+    { icon: "🎯", label: "XP از آزمون‌ها", value: gm.quizXP },
+    { icon: "⏱️", label: "XP از زمان مطالعه", value: gm.timeXP },
+    { icon: "🔥", label: "streak روزانه", value: `${gm.consecutiveDays} روز` },
+    { icon: "🔗", label: "تعداد معرفی‌ها", value: gm.referralCount },
+    { icon: "📱", label: "آخرین ورود", value: gm.lastLoginDate ? new Date(gm.lastLoginDate).toLocaleDateString("fa-IR") : "—" },
+  ];
+
+  return (
+    <div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        {rows.map((row, i) => (
+          <div key={i} style={{
+            background: "rgba(255,255,255,0.03)", border: "1px solid rgba(147,51,234,0.12)",
+            borderRadius: 12, padding: "14px 16px", direction: "rtl",
+          }}>
+            <div style={{ fontSize: 10, color: "var(--text-muted)", marginBottom: 4 }}>{row.icon} {row.label}</div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: "var(--text-primary)" }}>{row.value}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Admin Page ──────────────────────────────────────────────────────────
 export default function AdminPage() {
   const [tab, setTab] = useState<AdminTab>("dashboard");
@@ -684,6 +845,7 @@ export default function AdminPage() {
     { id: "hard",          label: "سخت‌ها",    icon: "🔥" },
     { id: "support",       label: "پشتیبانی",  icon: "✋" },
     { id: "tags",          label: "تگ‌رنگ‌ها",  icon: "🏷️" },
+    { id: "feedback",      label: "ارزشیابی",  icon: "⭐" },
   ];
 
   return (
@@ -792,6 +954,7 @@ export default function AdminPage() {
           {tab === "hard"            && <HardQuestionsTab />}
           {tab === "support"         && <SupportTab />}
           {tab === "tags"            && <TagConfigTab />}
+          {tab === "feedback"        && <FeedbackTab />}
         </main>
       </div>
     </div>

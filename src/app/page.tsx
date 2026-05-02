@@ -64,12 +64,24 @@ import {
   StickyNote,
   Image as ImageIcon,
   Timer,
+  Settings,
+  HelpCircle,
+  Award,
+  MessageCircle,
 } from "lucide-react";
 import VideoPanel from "@/components/VideoPanel";
 import BrowsePage from "@/components/BrowsePage";
+import SettingsPage from "@/components/SettingsPage";
+import FAQPage from "@/components/FAQPage";
+import RatingModal from "@/components/RatingModal";
+import ProgressChartsPage from "@/components/ProgressChartsPage";
+import SupportHubPage from "@/components/SupportHubPage";
+import GamificationPage from "@/components/GamificationPage";
+import { getUserSettings, applySettings, checkExamClearance } from "@/lib/userSettings";
+import { claimDailyLogin, awardQuizXP, getGamification, getBadge } from "@/lib/gamification";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type Page = "home" | "chapters" | "quiz" | "results" | "stats" | "study" | "review" | "browse";
+type Page = "home" | "chapters" | "quiz" | "results" | "stats" | "study" | "review" | "browse" | "settings" | "faq" | "charts" | "support" | "gamification";
 type QuizMode = "chapter" | "wrong" | "flagged" | "mixed" | "standard" | "hard" | "tagged0" | "tagged1" | "tagged2" | "hardWrong";
 
 interface QuizState {
@@ -133,11 +145,15 @@ function ItalianFlag() {
 
 // ─── NavBar ───────────────────────────────────────────────────────────────────
 function NavBar({ page, onNav }: { page: Page; onNav: (p: Page) => void }) {
-  if (page === "quiz" || page === "results" || page === "study") return null;
+  if (["quiz", "results", "study"].includes(page)) return null;
   const items: { id: Page; label: string; icon: React.ReactNode }[] = [
-    { id: "home",     label: "خانه",      icon: <Home size={20} /> },
-    { id: "chapters", label: "فصل‌ها",   icon: <BookOpen size={20} /> },
-    { id: "stats",    label: "آمار",      icon: <BarChart2 size={20} /> },
+    { id: "home",         label: "خانه",      icon: <Home size={18} /> },
+    { id: "chapters",     label: "فصل‌ها",    icon: <BookOpen size={18} /> },
+    { id: "charts",       label: "آمار",       icon: <BarChart2 size={18} /> },
+    { id: "gamification", label: "امتیاز",    icon: <Award size={18} /> },
+    { id: "support",      label: "پشتیبانی",  icon: <MessageCircle size={18} /> },
+    { id: "faq",          label: "راهنما",    icon: <HelpCircle size={18} /> },
+    { id: "settings",     label: "تنظیمات",   icon: <Settings size={18} /> },
   ];
   return (
     <nav style={{
@@ -145,17 +161,18 @@ function NavBar({ page, onNav }: { page: Page; onNav: (p: Page) => void }) {
       background: "rgba(10,10,15,0.96)",
       borderTop: "1px solid rgba(255,255,255,0.06)",
       backdropFilter: "blur(20px)",
-      display: "flex", justifyContent: "center", gap: 8,
-      padding: "8px 20px 20px", zIndex: 100,
+      display: "flex", justifyContent: "flex-start", gap: 0,
+      overflowX: "auto", paddingBottom: 20, zIndex: 100,
     }}>
       {items.map((item) => (
         <button
           key={item.id} id={`nav-${item.id}`}
           className={`nav-item ${page === item.id ? "active" : ""}`}
           onClick={() => onNav(item.id)}
+          style={{ flexShrink: 0, padding: "8px 12px", minWidth: 68 }}
         >
           {item.icon}
-          {item.label}
+          <span style={{ fontSize: 9 }}>{item.label}</span>
         </button>
       ))}
     </nav>
@@ -1494,9 +1511,25 @@ export default function App() {
   const [quizMode, setQuizMode] = useState<QuizMode>("chapter");
   const [lastResult, setLastResult] = useState<{ score: number; total: number } | null>(null);
   const [progress, setProgress] = useState<UserProgress>(() => getProgress());
+  const [showRating, setShowRating] = useState(false);
+  const [ratingChapter, setRatingChapter] = useState(0);
+  const [dailyToast, setDailyToast] = useState<{ message: string } | null>(null);
+
+  // Apply user settings on start + claim daily login bonus
+  useEffect(() => {
+    applySettings(getUserSettings());
+    const bonus = claimDailyLogin();
+    if (bonus.granted) {
+      setDailyToast({ message: bonus.message + ` (+${bonus.xpEarned} XP)` });
+      setTimeout(() => setDailyToast(null), 5000);
+    }
+  }, []);
 
   const refreshProgress = () => setProgress(getProgress());
   useEffect(() => { refreshProgress(); }, [page]);
+
+  // Exam clearance check whenever progress updates
+  const clearance = checkExamClearance(progress.totalCorrect, progress.totalAnswered, progress.completedQuizzes);
 
   const handleSelectChapter = (ch: number) => {
     setActiveChapter(ch); setQuizMode("chapter"); setQuizKey((k) => k + 1); setPage("quiz");
@@ -1505,7 +1538,20 @@ export default function App() {
     setActiveChapter(ch); setPage("study");
   };
   const handleQuizFinish = (score: number, total: number) => {
-    setLastResult({ score, total }); refreshProgress(); setPage("results");
+    setLastResult({ score, total });
+    refreshProgress();
+    // Award XP for quiz performance
+    const xpResult = awardQuizXP(score, total);
+    if (xpResult.xpEarned > 0) {
+      setDailyToast({ message: `🎯 +${xpResult.xpEarned} XP${xpResult.milestone ? ` · ${xpResult.milestone}` : ""}` });
+      setTimeout(() => setDailyToast(null), 3000);
+    }
+    // Show rating prompt for chapter quizzes if user has it enabled
+    if (quizMode === "chapter" && getUserSettings().showChapterRating) {
+      setRatingChapter(activeChapter);
+      setShowRating(true);
+    }
+    setPage("results");
   };
   const handleReset = () => {
     if (confirm("مطمئنی؟ همه پیشرفت‌هات پاک می‌شه!")) {
@@ -1629,6 +1675,74 @@ export default function App() {
       )}
       {page === "stats" && (
         <StatsPage progress={progress} onReset={handleReset} onReview={() => setPage("review")} />
+      )}
+      {page === "charts" && (
+        <ProgressChartsPage progress={progress} onBack={() => setPage("home")} />
+      )}
+      {page === "settings" && (
+        <SettingsPage onBack={() => setPage("home")} />
+      )}
+      {page === "faq" && (
+        <FAQPage onBack={() => setPage("home")} />
+      )}
+      {page === "support" && (
+        <SupportHubPage onBack={() => setPage("home")} />
+      )}
+      {page === "gamification" && (
+        <GamificationPage progress={progress} onBack={() => setPage("home")} />
+      )}
+
+      {/* ── Rating Modal ── */}
+      {showRating && (
+        <RatingModal
+          type="chapter"
+          chapterNum={ratingChapter}
+          chapterTitle={chapters.find(c => c.number === ratingChapter)?.title}
+          onClose={() => setShowRating(false)}
+        />
+      )}
+
+      {/* ── Exam Clearance Toast ── */}
+      {clearance.cleared && page === "home" && (
+        <div style={{
+          position: "fixed", top: 70, left: "50%", transform: "translateX(-50%)",
+          zIndex: 8000, background: "rgba(13,10,20,0.95)", backdropFilter: "blur(16px)",
+          border: "1px solid rgba(34,211,165,0.4)", borderRadius: 14,
+          padding: "12px 20px", maxWidth: 340, width: "90%",
+          display: "flex", alignItems: "center", gap: 10,
+        }}>
+          <span style={{ fontSize: 24 }}>🎉</span>
+          <div style={{ direction: "rtl", flex: 1 }}>
+            <div style={{ fontSize: 12, fontWeight: 700, color: "#22d3a5" }}>Exam Clearance!</div>
+            <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 2 }}>
+              دقت {clearance.score}٪ — آماده آزمون واقعی هستی
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Daily Login / XP Toast ── */}
+      {dailyToast && (
+        <div style={{
+          position: "fixed", bottom: 90, left: "50%", transform: "translateX(-50%)",
+          zIndex: 9500, background: "rgba(13,10,20,0.97)", backdropFilter: "blur(16px)",
+          border: "1px solid rgba(147,51,234,0.4)", borderRadius: 16,
+          padding: "14px 20px", maxWidth: 360, width: "92%",
+          display: "flex", alignItems: "flex-start", gap: 10,
+          boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+          animation: "fadeInUp 0.4s ease",
+        }}>
+          <span style={{ fontSize: 26, flexShrink: 0 }}>🌟</span>
+          <div style={{ direction: "rtl", flex: 1 }}>
+            <div style={{ fontSize: 12, lineHeight: 1.7, color: "var(--text-secondary)" }}>
+              {dailyToast.message}
+            </div>
+          </div>
+          <button onClick={() => setDailyToast(null)}
+            style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 4, flexShrink: 0 }}>
+            ✕
+          </button>
+        </div>
       )}
 
       <NavBar page={page} onNav={setPage} />
