@@ -65,7 +65,103 @@ export const dalMedicoContent: ItalianoTopic = {
     { italian: "il fegato", persian: "کبد", phonetic: "fegato", example: "Il fegato filtra il sangue.", examplePersian: "کبد خون را فیلتر می‌کند." },
     { italian: "i reni", persian: "کلیه‌ها", phonetic: "reni", example: "Ho un calcolo ai reni.", examplePersian: "سنگ کلیه دارم." },
     { italian: "l'encefalo / il cervello", persian: "مغز", phonetic: "cervello", example: "Ha avuto un trauma cerebrale.", examplePersian: "ضربه مغزی خورده." },
+
+    // ── Parole utili per chiedere aiuto ──
+    { italian: "lo sciroppo", persian: "شربت دارو", phonetic: "sciroppo", example: "Prendo lo sciroppo per la tosse.", examplePersian: "شربت سرفه می‌خورم." },
+    { italian: "la pastiglia / la compressa", persian: "قرص دارو", phonetic: "pastiglia", example: "Prendo una pastiglia tre volte al giorno.", examplePersian: "روزی سه قرص می‌خورم." },
+    { italian: "il termometro", persian: "دماسنج", phonetic: "termometro", example: "Mi misura con il termometro.", examplePersian: "با دماسنج اندازه می‌گیرد." },
+    { italian: "il cerotto", persian: "چسب زخم", phonetic: "cerotto", example: "Metto un cerotto sul taglio.", examplePersian: "روی بریدگی چسب زخم می‌زنم." },
+    { italian: "la diagnosi", persian: "تشخیص", phonetic: "diagnosi", example: "La diagnosi è influenza.", examplePersian: "تشخیص آنفولانزا است." },
+    { italian: "la prognosi", persian: "پیش آگهی", phonetic: "prognosi", example: "La prognosi è buona.", examplePersian: "پیش آگهی خوب است." },
+    { italian: "la posologia", persian: "دوزبندی دارو", phonetic: "posologia", example: "Segui la posologia indicata.", examplePersian: "دوزبندی توضیح داده شده را رعایت کن." },
+    { italian: "il consenso informato", persian: "رضایت آگاهانه", phonetic: "consenso", example: "Devo firmare il consenso informato.", examplePersian: "باید رضایتنامه امضا کنم." },
+    // Verbi importanti
+    { italian: "guarire", persian: "بهبود یافتن", phonetic: "guarire", example: "Spero di guarire presto.", examplePersian: "امیدوارم زود بهبود بیابم." },
+    { italian: "riposare", persian: "استراحت کردن", phonetic: "riposare", example: "Devo riposare a letto.", examplePersian: "باید در تخت استراحت کنم." },
+    { italian: "prenotare", persian: "نوبت گرفتن", phonetic: "prenotare", example: "Devo prenotare una visita.", examplePersian: "باید ویزیت رزرو کنم." },
+    { italian: "visitare", persian: "معاینه کردن", phonetic: "visitare", example: "Il medico mi visita.", examplePersian: "دکتر معاینه‌ام می‌کند." },
+    { italian: "curare", persian: "درمان کردن", phonetic: "curare", example: "Il dottore mi cura bene.", examplePersian: "دکتر خوب درمانم می‌کند." },
+    // Aggettivi per descrivere il dolore
+    { italian: "acuto", persian: "تیز (درد ناگهانی)", phonetic: "acuto", example: "Ho un dolore acuto al petto.", examplePersian: "درد تیزی در سینه دارم." },
+    { italian: "cronico", persian: "مزمن (درد دورانی)", phonetic: "cronico", example: "Ho un dolore cronico alla schiena.", examplePersian: "کمردرد مزمن دارم." },
+    { italian: "sordo", persian: "کند (درد دایمی)", phonetic: "sordo", example: "Un dolore sordo alla spalla.", examplePersian: "درد کند در شانه." },
+    { italian: "pulsante", persian: "ضرباندار (درد)", phonetic: "pulsante", example: "Ho un dolore pulsante alla testa.", examplePersian: "سردرد ضرباندار دارم." },
+    { italian: "bruciante", persian: "سوزانده (درد)", phonetic: "bruciante", example: "Sento un bruciore bruciante.", examplePersian: "حس سوزش دارم." },
+    { italian: "intermittente", persian: "تناوبی (درد)", phonetic: "intermittente", example: "Il dolore è intermittente.", examplePersian: "درد تناوبی است." },
+    { italian: "irradiato", persian: "انتشاری (درد)", phonetic: "irradiato", example: "Dolore irradiato dalla schiena alla gamba.", examplePersian: "دردی که از کمر به پا می‌رسد." },
+
+    // ── Problemi comuni ──
+    { italian: "lo starnuto / starnutire", persian: "عطسه / عطسه کردن", phonetic: "starnuto", example: "Ho gli starnuti continui.", examplePersian: "عطسه‌های مداوم دارم." },
+    { italian: "il brivido", persian: "لرز", phonetic: "brivido", example: "Ho la febbre e i brividi.", examplePersian: "تب و لرز دارم." },
+    { italian: "il giramento di testa / le vertigini", persian: "سرگیجه", phonetic: "vertigini", example: "Ho le vertigini.", examplePersian: "سرم گیج می‌رود." },
+    { italian: "la stanchezza / l'astenia", persian: "خستگی", phonetic: "stanchezza", example: "Sento molta stanchezza.", examplePersian: "خیلی خسته‌ام." },
+    { italian: "l'insonnia", persian: "بی‌خوابی", phonetic: "insonnia", example: "Soffro di insonnia.", examplePersian: "از بی‌خوابی رنج می‌برم." },
+    { italian: "la raucedine", persian: "گرفتگی صدا", phonetic: "raucedine", example: "Ho la raucedine.", examplePersian: "صدایم گرفته." },
+    { italian: "il respiro affannoso", persian: "تنگی نفس", phonetic: "respiro affannoso", example: "Ho il respiro affannoso.", examplePersian: "نفسم تنگ است." },
+    { italian: "la rinorrea", persian: "آبریزش بینی", phonetic: "rinorrea", example: "Ho il naso che cola (rinorrea).", examplePersian: "بینی‌ام آب می‌چکد." },
+    // Problemi digestivi
+    { italian: "il gonfiore addominale", persian: "نفخ شکم", phonetic: "gonfiore", example: "Ho il gonfiore addominale.", examplePersian: "نفخ شکم دارم." },
+    { italian: "la stitichezza", persian: "یبوست", phonetic: "stitichezza", example: "Soffro di stitichezza.", examplePersian: "یبوست دارم." },
+    { italian: "i crampi addominali", persian: "دل‌پیچه", phonetic: "crampi", example: "Ho crampi addominali forti.", examplePersian: "دل‌پیچه شدید دارم." },
+    // Infortuni
+    { italian: "l'ustione", persian: "سوختگی", phonetic: "ustione", example: "Ho un'ustione sulla mano.", examplePersian: "سوختگی روی دستم دارم." },
+    { italian: "la storta / la distorsione", persian: "پیچ خوردگی", phonetic: "storta", example: "Mi sono fatto una storta alla caviglia.", examplePersian: "مچ پایم پیچ خورد." },
+    { italian: "il taglio", persian: "بریدگی", phonetic: "taglio", example: "Ho un taglio profondo.", examplePersian: "بریدگی عمیقی دارم." },
+    { italian: "la caduta", persian: "افتادن", phonetic: "caduta", example: "Ho fatto una brutta caduta.", examplePersian: "بد افتادم." },
+    { italian: "la puntura d'insetto", persian: "نیش حشره", phonetic: "puntura", example: "Ho una puntura di zanzara.", examplePersian: "نیش پشه دارم." },
+    // Pelle
+    { italian: "il prurito", persian: "خارش", phonetic: "prurito", example: "Ho prurito su tutta la pelle.", examplePersian: "پوستم می‌خارد." },
+    { italian: "il rossore / l'eritema", persian: "قرمزی پوست", phonetic: "rossore", example: "Ho un rossore sul braccio.", examplePersian: "روی بازویم قرمزی دارم." },
+    { italian: "il livido / l'ematoma", persian: "کبودی / کوفتگی", phonetic: "livido", example: "Ho un livido sulla coscia.", examplePersian: "روی رانم کبودی دارم." },
+    { italian: "il brufolo / il pomfo", persian: "جوش / کهیر", phonetic: "brufolo", example: "Ho dei brufoli sul viso.", examplePersian: "روی صورتم جوش دارم." },
+    // Sintomi muscolari
+    { italian: "il crampo", persian: "گرفتگی عضله", phonetic: "crampo", example: "Ho un crampo alla gamba.", examplePersian: "عضله پایم گرفت." },
+    { italian: "lo strappo muscolare", persian: "پارگی عضله", phonetic: "strappo", example: "Ho uno strappo muscolare.", examplePersian: "پارگی عضله دارم." },
+    { italian: "il formicolio", persian: "سوزن‌سوزن شدن", phonetic: "formicolio", example: "Ho formicolio al braccio.", examplePersian: "بازویم سوزن‌سوزن می‌شود." },
+    { italian: "l'intorpidimento", persian: "بی‌حسی", phonetic: "intorpidimento", example: "Sento intorpidimento alla mano.", examplePersian: "دستم بی‌حس می‌شود." },
+    // Termini diagnostici
+    { italian: "l'edema", persian: "ورم / تجمع مایع", phonetic: "edema", example: "Ho edema alle caviglie.", examplePersian: "مچ پایم ورم کرده." },
+    { italian: "l'astenia", persian: "ضعف شدید", phonetic: "astenia", example: "Soffro di astenia cronica.", examplePersian: "از ضعف مزمن رنج می‌برم." },
+    { italian: "la parestesia", persian: "احساس غیرعادی پوست", phonetic: "parestesia", example: "Sento una parestesia al piede.", examplePersian: "در پایم احساس غیرعادی دارم." },
+    { italian: "l'acufene", persian: "وزوز گوش", phonetic: "acufene", example: "Ho un acufene costante.", examplePersian: "وزوز گوش مداوم دارم." },
+    { italian: "la cefalea / l'emicrania", persian: "سردرد / میگرن", phonetic: "cefalea", example: "Soffro di emicrania.", examplePersian: "از میگرن رنج می‌برم." },
+
+    // ── Gli Specialisti ──
+    { italian: "l'oculista", persian: "چشم‌پزشک", phonetic: "oculista", example: "Vado dall'oculista per la vista.", examplePersian: "برای بینایی پیش چشم‌پزشک می‌روم." },
+    { italian: "il dentista", persian: "دندانپزشک", phonetic: "dentista", example: "Ho un appuntamento dal dentista.", examplePersian: "وقت دندانپزشکی دارم." },
+    { italian: "il pediatra", persian: "متخصص کودکان", phonetic: "pediatra", example: "Il pediatra visita i bambini.", examplePersian: "متخصص کودکان بچه‌ها را معاینه می‌کند." },
+    { italian: "il cardiologo", persian: "متخصص قلب", phonetic: "cardiologo", example: "Ho fatto l'ECG dal cardiologo.", examplePersian: "نوار قلب پیش قلب‌پزشک گرفتم." },
+    { italian: "il ginecologo", persian: "متخصص زنان", phonetic: "ginecologo", example: "Devo andare dal ginecologo.", examplePersian: "باید پیش متخصص زنان بروم." },
+    { italian: "il dermatologo", persian: "پوست‌پزشک", phonetic: "dermatologo", example: "Il dermatologo cura le malattie della pelle.", examplePersian: "پوست‌پزشک بیماری‌های پوستی را درمان می‌کند." },
+    { italian: "l'otorinolaringoiatra (otorino)", persian: "گوش و حلق و بینی", phonetic: "otorino", example: "Sono dall'otorino per l'orecchio.", examplePersian: "پیش متخصص گوش و حلق و بینی هستم." },
+    { italian: "il chirurgo", persian: "جراح", phonetic: "chirurgo", example: "Il chirurgo mi ha operato.", examplePersian: "جراح عملم کرد." },
+    { italian: "l'ortopedico", persian: "ارتوپد", phonetic: "ortopedico", example: "L'ortopedico si occupa delle ossa.", examplePersian: "ارتوپد با استخوان‌ها سر و کار دارد." },
+    { italian: "lo psichiatra / lo psicologo", persian: "روان‌پزشک / روان‌شناس", phonetic: "psichiatra", example: "Lo psichiatra cura le malattie mentali.", examplePersian: "روان‌پزشک بیماری‌های روانی را درمان می‌کند." },
+    { italian: "il medico di medicina generale (MMG)", persian: "پزشک خانواده (اصطلاح رسمی)", phonetic: "MMG", example: "Il mio MMG è il dottor Rossi.", examplePersian: "پزشک خانواده‌ام دکتر روسی است." },
+    // Strumenti e oggetti medici
+    { italian: "la siringa", persian: "سرنگ/آمپول", phonetic: "siringa", example: "L'infermiera usa la siringa.", examplePersian: "پرستار از سرنگ استفاده می‌کند." },
+    { italian: "lo stetoscopio", persian: "گوشی پزشکی", phonetic: "stetoscopio", example: "Il medico usa lo stetoscopio.", examplePersian: "دکتر از گوشی پزشکی استفاده می‌کند." },
+    { italian: "la fasciatura / la benda", persian: "باند / پانسمان", phonetic: "fasciatura", example: "Mi hanno messo una fasciatura.", examplePersian: "برایم باند گذاشتند." },
+    { italian: "l'ingessatura", persian: "گچ (اندام شکسته)", phonetic: "ingessatura", example: "Ho il braccio in ingessatura.", examplePersian: "بازویم گچ گرفته." },
+    { italian: "le stampelle", persian: "عصا (زیر بغل)", phonetic: "stampelle", example: "Cammino con le stampelle.", examplePersian: "با عصا راه می‌روم." },
+    { italian: "la sedia a rotelle", persian: "ویلچر", phonetic: "sedia a rotelle", example: "Usa la sedia a rotelle.", examplePersian: "از ویلچر استفاده می‌کند." },
+    { italian: "la flebo / la fleboclisi", persian: "سرم / دریپ", phonetic: "flebo", example: "Mi hanno messo la flebo.", examplePersian: "برایم سرم وصل کردند." },
+    { italian: "il bisturi", persian: "اسکالپل (تیغ جراحی)", phonetic: "bisturi", example: "Il chirurgo usa il bisturi.", examplePersian: "جراح از اسکالپل استفاده می‌کند." },
+    { italian: "la lettiga", persian: "برانکارد", phonetic: "lettiga", example: "Il paziente è sulla lettiga.", examplePersian: "بیمار روی برانکارد است." },
+    { italian: "lo sfigmomanometro", persian: "دستگاه فشارسنج", phonetic: "sfigmomanometro", example: "Misura la pressione con lo sfigmomanometro.", examplePersian: "فشار را با فشارسنج اندازه می‌گیرد." },
+    { italian: "il cotone idrofilo", persian: "پنبه هیدروفیل", phonetic: "cotone", example: "Usa il cotone idrofilo per pulire.", examplePersian: "از پنبه برای تمیز کردن استفاده می‌کند." },
+    { italian: "il laccio emostatico", persian: "تورنیکه", phonetic: "laccio", example: "Il laccio emostatico ferma il sangue.", examplePersian: "تورنیکه خونریزی را متوقف می‌کند." },
+    // Esami
+    { italian: "l'emocromo", persian: "آزمایش خون کامل", phonetic: "emocromo", example: "Il medico ha chiesto l'emocromo.", examplePersian: "دکتر آزمایش خون کامل خواسته." },
+    { italian: "la glicemia", persian: "قند خون", phonetic: "glicemia", example: "Controllo la glicemia ogni mese.", examplePersian: "هر ماه قند خونم را کنترل می‌کنم." },
+    { italian: "l'ecografia", persian: "اکوگرافی / سونوگرافی", phonetic: "ecografia", example: "Ho fatto un'ecografia addominale.", examplePersian: "سونوگرافی شکمی انجام دادم." },
+    { italian: "la radiografia (RX)", persian: "عکس اشعه ایکس", phonetic: "radiografia", example: "Devo fare una radiografia al torace.", examplePersian: "باید عکس ریه بگیرم." },
+    { italian: "l'elettrocardiogramma (ECG)", persian: "نوار قلب", phonetic: "ECG", example: "Il cardiologo ha fatto l'ECG.", examplePersian: "قلب‌پزشک نوار قلب گرفت." },
+    { italian: "la TAC / la risonanza magnetica (RM)", persian: "سی‌تی‌اسکن / ام‌آر‌آی", phonetic: "TAC / RM", example: "Ho fatto la TAC al cervello.", examplePersian: "سی‌تی‌اسکن مغز انجام دادم." },
+    { italian: "l'impegnativa", persian: "برگه ارجاع آزمایش", phonetic: "impegnativa", example: "Ho l'impegnativa per l'ecografia.", examplePersian: "برگه ارجاع برای سونوگرافی دارم." },
+    { italian: "la tessera sanitaria", persian: "کارت بهداشت", phonetic: "tessera sanitaria", example: "Porta sempre la tessera sanitaria.", examplePersian: "همیشه کارت بهداشتت را همراه داشته باش." },
   ],
+
 
   phrases: [
     { italian: "Non mi sento bene.", persian: "حالم خوب نیست.", context: "بیان احساس بد عمومی" },
@@ -83,7 +179,49 @@ export const dalMedicoContent: ItalianoTopic = {
     { italian: "Ha la tessera sanitaria?", persian: "کارت بهداشت دارید؟", context: "سوال در مطب" },
     { italian: "Devo restare a letto?", persian: "باید استراحت بکنم؟", context: "سوال از دکتر" },
     { italian: "Può scrivere la ricetta?", persian: "می‌توانید نسخه بنویسید؟", context: "درخواست نسخه" },
+    // ── Prenotare ──
+    { italian: "Buongiorno, vorrei fissare un appuntamento con il dottore.", persian: "صبح بخیر، می‌خواهم با دکتر وقت بگیرم.", context: "رایج‌ترین جمله برای گرفتن وقت" },
+    { italian: "Avrei bisogno di una visita urgente.", persian: "نیاز به ویزیت فوری دارم.", context: "اضطراری" },
+    { italian: "Qual è il primo posto disponibile?", persian: "اولین وقت خالی چه زمانی است؟", context: "پرسیدن وقت خالی" },
+    { italian: "Dovrei prenotare una visita di controllo.", persian: "باید ویزیت کنترلی رزرو کنم.", context: "ویزیت دوره‌ای" },
+    { italian: "Potrebbe darmi un appuntamento per domani mattina?", persian: "می‌توانید فردا صبح وقت بدهید؟", context: "درخواست مشخص" },
+    // ── Descrivere sintomi ──
+    { italian: "Non mi sento bene da un paio di giorni.", persian: "چند روزی است حالم خوب نیست.", context: "شروع توضیح" },
+    { italian: "Ho un po' di febbre, stamattina era a 38.", persian: "کمی تب دارم، صبح ۳۸ بود.", context: "بیان تب با عدد" },
+    { italian: "Sento un formicolio alle braccia/gambe.", persian: "بازوها/پاهایم سوزن‌سوزن می‌شود.", context: "علائم عصبی" },
+    { italian: "Ho una sensazione di oppressione al petto.", persian: "احساس سنگینی روی سینه دارم.", context: "علائم قلبی/تنفسی" },
+    { italian: "Ho avuto degli attacchi di vertigini stamattina.", persian: "امروز صبح چند بار سرم گیج رفت.", context: "علائم عصبی" },
+    { italian: "Ho il naso completamente chiuso e non sento i sapori.", persian: "بینی‌ام کاملاً بسته است و طعم نمی‌فهمم.", context: "علائم سرماخوردگی" },
+    { italian: "Sono a pezzi.", persian: "حالم خیلی بد است / کاملاً له شده‌ام.", context: "عامیانه برای احساس خیلی بد" },
+    { italian: "Mi sento giù di corda.", persian: "بی‌حال و بی‌انرژی‌ام.", context: "خستگی + ضعف روحی" },
+    { italian: "Ho un calo di zuccheri.", persian: "قندم پایین افتاده.", context: "احساس ضعف ناگهانی" },
+    { italian: "Ho preso una storta alla caviglia.", persian: "مچ پایم پیچ خورد.", context: "آسیب معمول" },
+    // ── Durante visita ──
+    { italian: "Da quanto tempo ha questi sintomi?", persian: "از کی این علائم را دارید؟", context: "سوال دکتر" },
+    { italian: "Il dolore va e viene, non è costante.", persian: "درد می‌آید و می‌رود، مداوم نیست.", context: "توصیف درد متناوب" },
+    { italian: "Ho già avuto questo problema in passato.", persian: "قبلاً هم این مشکل را داشته‌ام.", context: "سابقه پزشکی" },
+    { italian: "Sto prendendo questo medicinale...", persian: "دارم این دارو را می‌خورم...", context: "اطلاع از دارو مصرفی" },
+    // ── Chiedere diagnosi ──
+    { italian: "È qualcosa di grave?", persian: "چیز جدی است؟", context: "سوال از شدت بیماری" },
+    { italian: "Devo fare degli esami del sangue?", persian: "باید آزمایش خون بدهم؟", context: "سوال از آزمایشات" },
+    { italian: "Ogni quanto devo prendere questa medicina?", persian: "هر چند وقت باید این دارو را بخورم؟", context: "سوال از دوز" },
+    { italian: "Ci sono effetti collaterali?", persian: "عوارض جانبی دارد؟", context: "سوال از عوارض دارو" },
+    { italian: "Quando dovrei tornare per un controllo?", persian: "چه وقت باید برای کنترل بیایم؟", context: "سوال از ویزیت بعدی" },
+    { italian: "Potrebbe spiegarmi questo termine medico con parole più semplici?", persian: "می‌توانید این اصطلاح پزشکی را ساده‌تر توضیح دهید؟", context: "درخواست توضیح ساده" },
+    { italian: "Può ripetere più lentamente, per favore?", persian: "لطفاً آهسته‌تر تکرار کنید؟", context: "درخواست تکرار آهسته" },
+    // ── Emergenza ──
+    { italian: "C'è un'emergenza in via [Nome via]!", persian: "اینجا اورژانس داریم، خیابان ...!", context: "تماس اورژانس ۱۱۲/۱۱۸" },
+    { italian: "Ho bisogno di un'ambulanza, subito!", persian: "فوری آمبولانس نیاز دارم!", context: "اورژانس فوری" },
+    { italian: "C'è una persona a terra che non risponde.", persian: "یک نفر روی زمین است و پاسخ نمی‌دهد.", context: "بیهوشی" },
+    { italian: "Ho perso molto sangue dal braccio/dalla gamba.", persian: "از بازو/پایم خون زیادی از دست داده‌ام.", context: "خونریزی" },
+    { italian: "Sono svenuto/a per qualche minuto.", persian: "چند دقیقه بیهوش شدم.", context: "غش کردن" },
+    { italian: "Il mio gruppo sanguigno è...", persian: "گروه خونی من ... است.", context: "اطلاعات حیاتی اورژانس" },
+    // ── In farmacia ──
+    { italian: "Ho una ricetta del mio medico.", persian: "نسخه دکترم را دارم.", context: "داروخانه" },
+    { italian: "Esiste una versione generica di questo farmaco?", persian: "آیا نسخه ژنریک این دارو وجود دارد؟", context: "دارو ارزان‌تر" },
+    { italian: "Questo farmaco richiede la conservazione in frigorifero?", persian: "این دارو باید در یخچال نگهداری شود؟", context: "نگهداری دارو" },
   ],
+
 
   dialogue: [
     { speaker: "A", role: "Paziente",     italian: "Buongiorno, vorrei prendere un appuntamento con il dottor Bianchi.", persian: "صبح بخیر، می‌خواهم با دکتر بیانکی وقت بگیرم." },
@@ -522,8 +660,358 @@ export const dalMedicoContent: ItalianoTopic = {
           ],
         },
       },
+
+      {
+        heading: "Azioni del corpo",
+        headingFa: "افعال حرکتی بدن",
+        body:
+          "Verbi di movimenti generali:\n" +
+          "• Piegare le ginocchia / le braccia.\n" +
+          "• Ruotare il collo / le caviglie.\n" +
+          "• Incrociare le braccia / le gambe.\n" +
+          "• Sollevare le sopracciglia (per mostrare sorpresa).\n" +
+          "• Scuotere la testa (per dire no) o fare un cenno (per dire sì).\n\n" +
+          "Verbi che descrivono come posizioniamo il corpo:\n" +
+          "• Piegarsi / Chinarsi: Curvare il busto in avanti (es. per raccogliere qualcosa).\n" +
+          "• Sdraiarsi: Mettersi in posizione orizzontale (es. a letto).\n" +
+          "• Inginocchiarsi: Appoggiare le ginocchia a terra.\n" +
+          "• Inarcare (la schiena): Curvare la schiena all'indietro.\n" +
+          "• Raddrizzarsi: Tornare in posizione eretta.\n\n" +
+          "Verbi legati al movimento e allo sport (Gambe e Piedi):\n" +
+          "• Camminare / Correre: I verbi base.\n" +
+          "• Saltellare: Fare piccoli salti (spesso su una gamba sola).\n" +
+          "• Inciampare: Battere il piede contro un ostacolo e rischiare di cadere.\n" +
+          "• Scivolare: Perdere l'equilibrio su una superficie liscia o bagnata.\n" +
+          "• Calciare: Dare un colpo con il piede (es. a un pallone).\n" +
+          "• Pedalare: Muovere le gambe sulla bicicletta.\n\n" +
+          "Verbi per indicare manipolazione e contatto (Braccia e Mani):\n" +
+          "• Afferrare: Prendere qualcosa con forza o decisione.\n" +
+          "• Accarezzare: Muovere la mano con dolcezza su una superficie o qualcuno.\n" +
+          "• Grattare: Usare le unghie sulla pelle.\n" +
+          "• Pizzicare: Stringere un po' di pelle tra pollice e indice.\n" +
+          "• Indicare: Usare il dito indice per mostrare qualcosa.\n" +
+          "• Applaudire: Battere le mani.\n" +
+          "• Gesticolare: Muovere molto le braccia mentre si parla.",
+        bodyFa:
+          "افعال حرکتی عمومی:\n" +
+          "• خم کردن زانو / بازو\n" +
+          "• چرخاندن گردن / مچ پا\n" +
+          "• ضربدری کردن بازوها / پاها\n" +
+          "• بالا بردن ابروها (برای نشان دادن تعجب)\n\n" +
+          "افعال وضعیتی:\n" +
+          "• خم شدن به جلو — Piegarsi\n" +
+          "• دراز کشیدن — Sdraiarsi\n" +
+          "• زانو زدن — Inginocchiarsi\n" +
+          "• صاف ایستادن — Raddrizzarsi\n\n" +
+          "افعال حرکتی پاها: راه رفتن، دویدن، لی‌لی کردن، لغزیدن، لگد زدن، پدال کردن\n\n" +
+          "افعال دستی: چنگ زدن، نوازش کردن، خاراندن، نیشگون گرفتن، اشاره کردن، دست زدن، ژست کردن",
+        keywords: ["piegare", "ruotare", "sdraiarsi", "inginocchiarsi", "camminare", "correre", "afferrare", "gesticolare"],
+      },
+      {
+        heading: "Descrizione dei Sintomi e Lessico Medico",
+        headingFa: "توصیف علائم و واژگان پزشکی",
+        body:
+          "Descrizione dei Sintomi:\n" +
+          "• Sintomi stabili/diversi: Specificare se il problema è nuovo o se c'è stato un cambiamento.\n" +
+          "• Dolore/Fastidio: Localizzazione precisa, intensità e tipo di dolore.\n" +
+          "• Dolore: Acuto (improvviso e forte), Cronico (che dura da tempo), Sordo (costante ma lieve), Intermittente (che va e viene).\n" +
+          "• Sintomi comuni: Febbre, brividi, nausea, vertigini (giramenti di testa), stanchezza (astenia), inappetenza.\n" +
+          "• Effetti collaterali: Menzionare reazioni inattese a farmaci.\n" +
+          "• Stato di salute: Descrivere il proprio benessere fisico e mentale.\n\n" +
+          "Lessico di base per il paziente:\n" +
+          "• Visitare: L'atto compiuto dal medico per esaminare il paziente alla ricerca di una malattia.\n" +
+          "• Curare: Sottoporre il paziente a una specifica terapia medica.\n" +
+          "• Guarire: Far scomparire una malattia e tornare in salute.\n" +
+          "• Diagnosi: Identificazione della natura di una malattia attraverso i sintomi.\n" +
+          "• Prognosi: Giudizio sulla probabile evoluzione e sull'esito finale della malattia.\n\n" +
+          "Prescrizioni e Trattamenti:\n" +
+          "• Ricetta bianca: La ricetta personale del medico per farmaci a totale carico del paziente.\n" +
+          "• Trattamento medico: La prestazione professionale finalizzata a migliorare le condizioni di salute.\n" +
+          "• Consenso informato: Il documento con cui il paziente accetta consapevolmente un trattamento dopo averne capito rischi e benefici.\n" +
+          "• Posologia: Indica le dosi e i tempi di assunzione di un farmaco.",
+        bodyFa:
+          "توصیف علائم:\n" +
+          "• مشخص کنید آیا مشکل جدید است یا سابقه دارد\n" +
+          "• محل دقیق، شدت و نوع درد را بیان کنید\n" +
+          "• انواع درد: تیز (ناگهانی)، مزمن (طولانی)، کند (ملایم)، متناوب\n" +
+          "• علائم معمول: تب، لرز، حالت تهوع، سرگیجه، خستگی، بی‌اشتهایی\n\n" +
+          "واژگان پایه بیمار:\n" +
+          "• Visitare: معاینه کردن توسط دکتر\n" +
+          "• Curare: درمان کردن\n" +
+          "• Guarire: بهبود یافتن\n" +
+          "• Diagnosi: تشخیص بیماری\n" +
+          "• Prognosi: پیش‌آگهی بیماری\n\n" +
+          "تجویز و درمان:\n" +
+          "• Ricetta bianca: نسخه شخصی دکتر\n" +
+          "• Consenso informato: رضایتنامه آگاهانه\n" +
+          "• Posologia: دوزبندی و زمان‌بندی مصرف دارو",
+        keywords: ["sintomi", "dolore", "diagnosi", "prognosi", "ricetta", "consenso informato", "posologia", "guarire", "curare"],
+      },
+      {
+        heading: "Aggettivi per il dolore e Termini dei Referti",
+        headingFa: "صفات برای درد و اصطلاحات رفرت",
+        body:
+          "Aggettivi per descrivere il dolore:\n" +
+          "Il medico potrebbe chiederti: \"Che tipo di dolore sente?\". Puoi rispondere usando questi aggettivi:\n" +
+          "• Acuto: Forte e improvviso.\n" +
+          "• Sordo: Un dolore costante ma non molto forte.\n" +
+          "• Pungente / Trafittivo: Come se sentissi delle punture di spilli.\n" +
+          "• Pulsante: Un dolore che segue il battito del cuore (tipico del mal di denti o emicrania).\n" +
+          "• Bruciante: Una sensazione di bruciore intenso.\n" +
+          "• Irradiato: Quando il dolore parte da un punto e si sposta (es. dalla schiena alla gamba).\n\n" +
+          "Parti del corpo comuni (per comunicare col medico):\n" +
+          "• Testa: Occhi, orecchie, naso, gola, bocca (gengive, denti, lingua).\n" +
+          "• Busto e Tronco: Collo, spalle, petto (o seno), schiena (zona lombare, nuca), addome (pancia), stomaco.\n" +
+          "• Arti Superiori: Braccio, gomito, polso, mano, dita.\n" +
+          "• Arti Inferiori: Gamba, anca, coscia, ginocchio, caviglia, piede.\n\n" +
+          "Descrizioni nei Referti:\n" +
+          "• Alvo: Si riferisce alle funzioni intestinali.\n" +
+          "• Alvo regolare: Funzionamento normale.\n" +
+          "• Alvo stitico: Presenza di stitichezza.\n" +
+          "• Anamnesi: L'intervista iniziale dove il medico raccoglie la storia clinica del paziente e della sua famiglia.\n" +
+          "• Quesito diagnostico: La domanda o il dubbio per cui è stato richiesto un esame.\n" +
+          "• Assenza di focalità: Significa che non ci sono lesioni o problemi localizzati in un punto specifico (comune nei referti neurologici).\n" +
+          "• Reperti: Ciò che il medico ha effettivamente visto o trovato durante l'esame.",
+        bodyFa:
+          "صفات توصیف درد:\n" +
+          "• Acuto: تیز و ناگهانی\n" +
+          "• Sordo: مداوم اما نه خیلی شدید\n" +
+          "• Pungente / Trafittivo: مثل سوزن فرو رفتن\n" +
+          "• Pulsante: همراه با ضربان قلب (مثل دندان‌درد یا میگرن)\n" +
+          "• Bruciante: احساس سوزش شدید\n" +
+          "• Irradiato: دردی که از یک جا به جای دیگر می‌رود\n\n" +
+          "اصطلاحات رفرت:\n" +
+          "• Anamnesi: تاریخچه پزشکی\n" +
+          "• Alvo regolare / stitico: عملکرد طبیعی / یبوست\n" +
+          "• Quesito diagnostico: سوال تشخیصی برای آزمایش\n" +
+          "• Assenza di focalità: فقدان ضایعه موضعی\n" +
+          "• Reperti: یافته‌های پزشک در معاینه",
+        keywords: ["acuto", "sordo", "pulsante", "bruciante", "irradiato", "anamnesi", "alvo", "reperti", "diagnosi", "quesito"],
+        callout: {
+          title: "💊 Parole utili per chiedere aiuto:",
+          items: [
+            "La medicina / Il farmaco: quello che prendi per stare meglio (es. lo sciroppo, la pastiglia).",
+            "La ricetta: il foglio del medico per comprare le medicine.",
+            "L'appuntamento: l'orario in cui vai dal dottore.",
+            "Il termometro: lo strumento per misurare la febbre.",
+            "Il cerotto: quello che metti sopra un piccolo taglio.",
+          ],
+        },
+      },
+      {
+        heading: "Conversazioni Corti — Dal Medico",
+        headingFa: "مکالمات کوتاه — پیش دکتر",
+        body:
+          "Per un'influenza (Dottore di base):\n" +
+          "Dottore: Buongiorno, cosa succede?\n" +
+          "Paziente: Non mi sento bene da due giorni. Ho la febbre a 38.5 e molta tosse.\n" +
+          "Dottore: Ha anche mal di gola? Paziente: Sì, e mi sento molto spossato.\n" +
+          "Dottore: La visito. Respiri profondamente... È un'influenza. Le scrivo una ricetta per uno sciroppo e del paracetamolo.\n\n" +
+          "Per un dolore articolare (Ortopedico):\n" +
+          "Paziente: Ho un forte dolore al ginocchio destro.\n" +
+          "Dottore: Quando è iniziato? Ha subito un trauma?\n" +
+          "Paziente: È iniziato ieri dopo una corsa. È molto gonfio e sento una rigidità quando provo a piegarlo.\n" +
+          "Dottore: Sente dolore se premo qui? Paziente: Sì, sento una fitta molto forte.\n" +
+          "Dottore: Per sicurezza facciamo una radiografia. Per ora metta del ghiaccio.\n\n" +
+          "Per un problema agli occhi (Oculista):\n" +
+          "Paziente: Ho gli occhi molto arrossati e sento un forte prurito.\n" +
+          "Dottore: Ha anche problemi di vista o vede sfocato?\n" +
+          "Paziente: No, ma ho una forte lacrimazione e mi dà fastidio la luce.\n" +
+          "Dottore: Sembra una congiuntivite allergica. Le prescrivo un collirio da mettere tre volte al giorno.\n\n" +
+          "In Farmacia:\n" +
+          "Farmacista: Buongiorno, desidera?\n" +
+          "Paziente: Salve, ho questa ricetta del mio medico.\n" +
+          "Farmacista: Ecco qui. Sono due confezioni di antibiotico.\n" +
+          "Paziente: Esiste il farmaco generico? Farmacista: Certamente, il principio attivo è lo stesso.\n" +
+          "Paziente: Come devo prenderlo? Farmacista: Una compressa ogni 12 ore, preferibilmente a stomaco pieno.",
+        bodyFa:
+          "مکالمه اول — آنفولانزا:\n" +
+          "• دکتر: خوش آمدید، چه مشکلی دارید؟\n" +
+          "• بیمار: دو روزه حالم خوب نیست. تب ۳۸.۵ و سرفه شدید دارم.\n" +
+          "• دکتر: آنفولانزاست. برایتان شربت و پاراستامول می‌نویسم.\n\n" +
+          "مکالمه دوم — درد مفصلی:\n" +
+          "• بیمار: زانوی راستم درد شدیدی دارد.\n" +
+          "• دکتر: کِی شروع شد؟ آسیب دیدید؟\n" +
+          "• دکتر: رادیوگرافی می‌گیریم. فعلاً یخ بگذارید.\n\n" +
+          "داروخانه:\n" +
+          "• بیمار: نسخه دکترم را دارم.\n" +
+          "• داروساز: آیا نسخه ژنریک می‌خواهید؟ همان ماده مؤثره دارد.",
+        keywords: ["influenza", "ortopedico", "oculista", "farmacia", "congiuntivite", "antibiotico", "sciroppo", "collirio"],
+      },
+      {
+        heading: "Racconti Brevi — Storie Vere",
+        headingFa: "داستان‌های کوتاه — تجربیات واقعی",
+        body:
+          "Il mio piede dolorante:\n" +
+          "Ieri vado al parco per correre. Corro per venti minuti, ma improvvisamente cado a terra. Mi fa molto male il piede destro. Provo a camminare, ma non sto in piedi.\n" +
+          "Vado subito dal medico. In ambulatorio, l'infermiera mi chiede: «Cosa è successo?».\n" +
+          "Il medico arriva e guarda il mio piede. È un po' rosso e gonfio. Il medico tocca il piede e io grido: «Ah! Mi fa male qui!».\n" +
+          "Il dottore dice: «Non è rotto, ma devi riposare». Mi scrive una ricetta per una crema e mi dice di mettere il ghiaccio.\n\n" +
+          "Parole utili: Cado/Sono caduto = cadere | Gonfio = quando una parte del corpo diventa più grande | Ghiaccio = si mette sulle ferite per sentire meno dolore.\n\n" +
+          "Paolo ha l'influenza:\n" +
+          "Oggi Paolo non va al lavoro. Ha un forte mal di testa e sente freddo, anche se ha due coperte. La febbre è a 38.5. Gli fanno male le braccia, le gambe e la schiena.\n" +
+          "Paolo chiama il suo medico: «Pronto, dottore? Ho la febbre alta e mi fa male tutto il corpo.»\n" +
+          "Il dottore spiega: «Paolo, tu hai l'influenza. Devi stare a riposo per cinque giorni.»\n" +
+          "Consigli del dottore: Prendi la tachipirina. Bevi molto: acqua, spremuta d'arancia e brodo caldo. Resta a letto al caldo.\n\n" +
+          "Il prelievo del sangue:\n" +
+          "Oggi vado in ospedale per fare un prelievo del sangue. Ieri sera ho cenato presto perché devo essere a digiuno.\n" +
+          "L'infermiere mi fa sedere su una sedia comoda. Mi chiede di tirare su la manica. Poi pulisce la pelle con un po' di disinfettante.\n" +
+          "Usa un ago piccolo — sento solo un piccolo pizzico. La procedura dura solo un minuto.\n" +
+          "Alla fine, l'infermiere mette un pezzo di cotone e un cerotto sul mio braccio. I risultati saranno pronti tra tre giorni.",
+        bodyFa:
+          "داستان اول — پای دردناک:\n" +
+          "• در پارک دویدم، افتادم. پایم درد گرفت.\n" +
+          "• پیش دکتر رفتم. دکتر گفت نشکسته اما باید استراحت کنم.\n" +
+          "• کرم نوشت و گفت یخ بگذار.\n\n" +
+          "داستان دوم — پائولو آنفولانزا دارد:\n" +
+          "• تب ۳۸.۵، سردرد، درد بدن.\n" +
+          "• دکتر گفت ۵ روز استراحت کن، تاکی‌پیرین بخور، آب زیاد بنوش.\n\n" +
+          "داستان سوم — آزمایش خون:\n" +
+          "• باید ناشتا بود | پرستار ورید را پیدا کرد\n" +
+          "• فقط یک نیش کوچک | نتیجه ۳ روز دیگر آماده می‌شود",
+        keywords: ["piede", "influenza", "prelievo", "sangue", "riposo", "febbre", "ago", "infermiere", "digiuno"],
+      },
+      {
+        heading: "Punti Culturali — Abitudini Italiane dal Medico",
+        headingFa: "نکات فرهنگی — عادات ایتالیایی پیش دکتر",
+        body:
+          "Le abitudini e i tratti culturali principali:\n\n" +
+          "Il Medico di Base come punto di riferimento: Per gli italiani il 'medico di famiglia' è quasi un confessore. Si tende ad avere un rapporto di lunghissima durata; lui conosce la storia di tutta la famiglia.\n\n" +
+          "La cultura della 'chiacchierata': Non si va dritti al punto. È normale iniziare con un saluto cordiale e due parole sulla situazione generale prima di descrivere i sintomi.\n\n" +
+          "Il 'pezzo di carta': Nonostante la ricetta elettronica, molti pazienti (soprattutto i più anziani) tengono molto al promemoria cartaceo e alle indicazioni scritte a mano dal dottore.\n\n" +
+          "Fidacia nel parere, meno nella puntualità: C'è un grande rispetto per l'autorità del medico, ma le sale d'attesa sono spesso luoghi di socializzazione involontaria.\n\n" +
+          "Il 'colpo d'aria': Molti italiani attribuiscono piccoli malesseri (dolori cervicali o raffreddori) al 'colpo d'aria' o alla 'cervicale', concetti culturali molto forti in Italia.\n\n" +
+          "Modi di dire e proverbi legati alla salute:\n" +
+          "• 'Una mela al giorno toglie il medico di torno': Il più classico dei proverbi sulla prevenzione alimentare.\n" +
+          "• 'Prevenire è meglio che curare': Lo slogan per eccellenza della medicina preventiva.\n" +
+          "• 'Essere sano come un pesce': Essere in perfetta salute.\n" +
+          "• 'Campa cavallo che l'erba cresce': Usato ironicamente per le lunghe liste d'attesa nella sanità pubblica.\n" +
+          "• 'La salute non è tutto, ma senza salute tutto è niente.' (Schopenhauer)\n\n" +
+          "Piccola curiosità: I 'pazienti' diventano 'assistiti'\n" +
+          "Burocraticamente verrai spesso chiamato 'persona assistita' o 'assistito', per sottolineare il diritto alla cura garantito dallo Stato.\n\n" +
+          "Numeri utili in emergenza:\n" +
+          "• 118 = Ambulanza (Emergenza grave)\n" +
+          "• 112 = Numero unico emergenze\n" +
+          "• Guardia Medica = Urgenza non grave di notte o nel weekend\n" +
+          "• Medico di Base (MMG) = Controllo o ricetta",
+        bodyFa:
+          "نکات فرهنگی مهم:\n" +
+          "• پزشک خانواده در ایتالیا مثل یک مشاور قدیمی است — رابطه طولانی‌مدت دارند\n" +
+          "• قبل از توضیح علائم معمولاً احوال‌پرسی می‌کنند\n" +
+          "• 'colpo d\'aria' = سرمای ناگهانی — مفهوم فرهنگی رایج\n" +
+          "• ضرب‌المثل‌ها: یک سیب در روز دکتر را فراری می‌دهد | پیشگیری بهتر از درمان است\n\n" +
+          "اعداد اورژانسی:\n" +
+          "• ۱۱۸ = آمبولانس | ۱۱۲ = اورژانس عمومی\n" +
+          "• Guardia Medica = شب و آخر هفته (غیراورژانسی)",
+        keywords: ["medico di base", "colpo d'aria", "cervicale", "guardia medica", "118", "112", "assistito", "proverbi", "salute"],
+      },
+      {
+        heading: "Espressioni Colloquiali — Come parlano gli italiani di salute",
+        headingFa: "عبارات محاوره‌ای — چطور ایتالیایی‌ها از سلامتی صحبت می‌کنند",
+        body:
+          "1. Come ti senti?\n" +
+          "'Cova qualcosa': sta arrivando l'influenza.\n" +
+          "'Sentirsi uno straccio': sentirsi molto male/stanchi.\n" +
+          "'Cerchio alla testa': mal di testa forte.\n" +
+          "'Pressione sotto i piedi': sentirsi molto deboli.\n\n" +
+          "2. Dal Medico\n" +
+          "'Farsi dare un'occhiata': andare a farsi visitare.\n" +
+          "'Fare un salto dal dottore': andare dal medico velocemente.\n" +
+          "'Dica 33': frase del medico per controllare i polmoni.\n" +
+          "'Fare l'impegnativa': il foglio del medico per visite speciali.\n\n" +
+          "3. Cosa fare\n" +
+          "'Stare a riposo': stare a letto per guarire.\n" +
+          "'Mettere il ghiaccio': per botte o storte.\n" +
+          "'Disinfettare': pulire un taglio.\n" +
+          "'Mettere un cerotto': coprire una ferita.\n\n" +
+          "4. Per i piccoli traumi\n" +
+          "'Prendere una botta': farsi male dopo un urto.\n" +
+          "'Avere un bernoccolo': il rigonfiamento sulla testa dopo un colpo.\n" +
+          "'Prendere una storta': girarsi la caviglia.\n" +
+          "'Mettere la pomata': spalmare la crema sul dolore.\n\n" +
+          "5. Frasi del medico\n" +
+          "'Faccia un bel respiro': quando il medico ascolta i polmoni.\n" +
+          "'Tiri fuori la lingua': per guardare la gola.\n" +
+          "'Si sdrai qui': per farsi visitare sul lettino.\n\n" +
+          "6. Raccontare dopo la visita\n" +
+          "'Mi ha rivoltato come un calzino': visita molto approfondita.\n" +
+          "'Mi ha dato una sfilza di esami': ha prescritto tantissime analisi.\n" +
+          "'Mi ha messo in mutua / mi ha dato i giorni': ha dato il certificato per stare a casa dal lavoro.",
+        bodyFa:
+          "عبارات محاوره‌ای رایج:\n" +
+          "• Cova qualcosa = داره مریض می‌شه\n" +
+          "• Sentirsi uno straccio = حالم خرابه\n" +
+          "• Cerchio alla testa = سردرد شدید\n" +
+          "• Farsi dare un'occhiata = رفتن پیش دکتر\n" +
+          "• Dica 33 = جمله کلاسیک دکتر برای معاینه ریه\n" +
+          "• Prendere una storta = مچ پا پیچ خورد\n" +
+          "• Mi ha messo in mutua = گواهی مریضی داد",
+        keywords: ["straccio", "cerchio", "cova", "storta", "impegnativa", "mutua", "bernoccolo", "pomata"],
+      },
+      {
+        heading: "Come Scrivere al Medico (WhatsApp / Email)",
+        headingFa: "چطور به دکتر پیام بدهیم",
+        body:
+          "Se devi scrivere un messaggio (WhatsApp/SMS) al tuo medico di base, segui questo schema:\n\n" +
+          "Opzione A — Richiesta di Rinnovo Ricetta:\n" +
+          "'Gentile Dott./Dott.ssa [Cognome], sono [Tuo Nome e Cognome]. Le scrivo per chiederle cortesemente il rinnovo della ricetta per il farmaco [Nome del farmaco]. Può inviarmela via email o tramite codice NRE via SMS? La ringrazio, cordiali saluti.'\n\n" +
+          "Opzione B — Descrizione di un sintomo:\n" +
+          "'Buongiorno Dottore, sono [Tuo Nome]. Da circa [Numero] giorni soffro di una forte rinorrea accompagnata da [es. mal di gola/febbre]. Vorrei sapere se posso assumere qualcosa o se è necessaria una visita in studio. Resto in attesa di un suo riscontro. Grazie.'\n\n" +
+          "Opzione C — Richiesta di appuntamento per controllo:\n" +
+          "'Gentile Dottore, vorrei fissare un appuntamento il prima possibile. Avrei bisogno di parlarle di un disturbo a [indicare la parte del corpo] che persiste da qualche giorno. Quando posso venire in ambulatorio? Buona giornata.'\n\n" +
+          "Consigli per l'invio:\n" +
+          "• Orari: Invia il messaggio preferibilmente negli orari di apertura dello studio.\n" +
+          "• Dati: Includi sempre il tuo Codice Fiscale se è la prima volta che scrivi.\n" +
+          "• Usa sempre il 'Lei': Il rapporto medico-paziente in Italia è formale.",
+        bodyFa:
+          "قالب‌های پیام به دکتر:\n\n" +
+          "الف — تمدید نسخه:\n" +
+          "جناب دکتر، [نام]، تقاضای تمدید نسخه [نام دارو] را دارم. ممنونم.\n\n" +
+          "ب — توصیف علائم:\n" +
+          "سلام دکتر، چند روزه [علائم] دارم. آیا می‌توانم دارو بخورم یا ویزیت لازم است؟\n\n" +
+          "ج — درخواست وقت:\n" +
+          "دکتر عزیز، می‌خواهم وقت بگیرم. مشکلی در [قسمت بدن] دارم که چند روزه ادامه دارد.\n\n" +
+          "نکته مهم: همیشه از 'Lei' (ضمیر احترامی) استفاده کنید.",
+        keywords: ["messaggio", "WhatsApp", "ricetta", "rinnovo", "codice fiscale", "appuntamento", "Lei", "cortesia"],
+      },
+      {
+        heading: "Risorse — Ascoltare e Guardare",
+        headingFa: "منابع — گوش دادن و تماشا کردن",
+        body:
+          "Video consigliati su YouTube:\n\n" +
+          "1. 'Dal dottore in italiano: sintomi e parti del corpo | Learn Italian'\n" +
+          "   Canale: ItalianQui Valeria | Link: https://youtu.be/jzPexjaQhv0\n\n" +
+          "2. 'Andare dal medico | Italiano in pratica'\n" +
+          "   Canale: ALMA Edizioni | Link: https://youtu.be/1DKFNvzkyco\n\n" +
+          "3. '50 Frasi Utili Chiamare il DOTTORE / Prenotare una Visita / Italiano B1'\n" +
+          "   Canale: Colibrì Corsi di lingua italiana | Link: https://youtu.be/czF4e6k3JNc\n\n" +
+          "4. 'Impara l'italiano: Prendere un Appuntamento dal Dottore | Frasi utili e Dialoghi'\n" +
+          "   Canale: WowPodcast Italian | YouTube\n\n" +
+          "5. '94. LA SALUTE 1 PARTE — Italiano per stranieri. Grammatica.'\n" +
+          "   Link: https://youtu.be/EF9SlGOJro?\n\n" +
+          "Podcast consigliato:\n" +
+          "   'Frasi utili per andare dal medico | Useful Phrases to go to the doctor'\n" +
+          "   Italian Everyday Podcast\n" +
+          "   https://podcasts.apple.com/tn/podcast/frasi-utili-per-andare-dal-medico\n\n" +
+          "Gioco interattivo:\n" +
+          "   'Ruota della fortuna — Disturbi e consigli'\n" +
+          "   https://wordwall.net/it/resource/18116026\n" +
+          "   Gira la ruota per praticare i sintomi e i consigli medici in modo ludico!",
+        bodyFa:
+          "ویدیوهای پیشنهادی یوتیوب:\n" +
+          "۱. علائم و اعضای بدن — ItalianQui Valeria\n" +
+          "۲. رفتن پیش دکتر — ALMA Edizioni\n" +
+          "۳. ۵۰ جمله مفید برای تماس با دکتر — سطح B1\n" +
+          "۴. گرفتن وقت از دکتر — WowPodcast Italian\n\n" +
+          "پادکست:\n" +
+          "Italian Everyday — جملات مفید برای رفتن پیش دکتر\n\n" +
+          "بازی آنلاین:\n" +
+          "wordwall.net — چرخ شانس برای تمرین علائم و توصیه‌های پزشکی",
+        keywords: ["YouTube", "podcast", "wordwall", "video", "risorse", "ascolto", "pratica"],
+      },
     ],
   },
 };
+
 
 
