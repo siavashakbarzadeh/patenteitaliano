@@ -36,6 +36,35 @@ export const dalMedicoContent: ItalianoTopic = {
     { italian: "il mal di testa", persian: "سردرد", phonetic: "mal di testa", example: "Ho un forte mal di testa.", examplePersian: "سردرد شدیدی دارم." },
     { italian: "la nausea", persian: "حالت تهوع", phonetic: "nausea", example: "Mi sento male, ho la nausea.", examplePersian: "حالم خوب نیست، حالت تهوع دارم." },
     { italian: "il medico di base", persian: "پزشک عمومی", phonetic: "medico di base", example: "Il mio medico di base si chiama Rossi.", examplePersian: "پزشک عمومی‌ام دکتر روسی نام دارد." },
+
+    // ── Corpo Umano ──
+    { italian: "la testa", persian: "سر", phonetic: "testa", example: "Ho mal di testa.", examplePersian: "سردرد دارم." },
+    { italian: "il viso / la faccia", persian: "صورت", phonetic: "viso / faccia", example: "Ha un bel viso.", examplePersian: "صورت زیبایی دارد." },
+    { italian: "l'occhio — gli occhi", persian: "چشم — چشم‌ها", phonetic: "occhio", example: "Ho gli occhi azzurri.", examplePersian: "چشمانم آبی است." },
+    { italian: "il naso", persian: "بینی", phonetic: "naso", example: "Ho il naso chiuso.", examplePersian: "بینی‌ام گرفته." },
+    { italian: "la bocca", persian: "دهان", phonetic: "bocca", example: "Apra la bocca, per favore.", examplePersian: "لطفاً دهانتان را باز کنید." },
+    { italian: "l'orecchio — le orecchie", persian: "گوش — گوش‌ها", phonetic: "orecchio", example: "Ho mal d'orecchio.", examplePersian: "گوش‌درد دارم." },
+    { italian: "il collo", persian: "گردن", phonetic: "collo", example: "Ho mal di gola e dolore al collo.", examplePersian: "گلودرد و گردن‌درد دارم." },
+    { italian: "la gola", persian: "گلو", phonetic: "gola", example: "Ho mal di gola.", examplePersian: "گلو درد دارم." },
+    { italian: "la spalla", persian: "شانه", phonetic: "spalla", example: "Mi fa male la spalla destra.", examplePersian: "شانه راستم درد می‌کند." },
+    { italian: "il braccio — le braccia", persian: "بازو — بازوها", phonetic: "braccio", example: "Mi sono rotto il braccio.", examplePersian: "بازویم را شکستم." },
+    { italian: "il gomito", persian: "آرنج", phonetic: "gomito", example: "Ho il gomito gonfio.", examplePersian: "آرنجم متورم است." },
+    { italian: "il polso", persian: "مچ دست", phonetic: "polso", example: "Mi misura il polso?", examplePersian: "مچ دستم را اندازه می‌گیرید؟" },
+    { italian: "la mano — le mani", persian: "دست — دست‌ها", phonetic: "mano", example: "Mi fanno male le mani.", examplePersian: "دست‌هایم درد می‌کنند." },
+    { italian: "il dito — le dita", persian: "انگشت — انگشتان", phonetic: "dito", example: "Mi sono tagliato un dito.", examplePersian: "انگشتم را بریدم." },
+    { italian: "il torace / il petto", persian: "قفسه سینه", phonetic: "torace", example: "Ho un dolore al petto.", examplePersian: "درد قفسه سینه دارم." },
+    { italian: "la schiena", persian: "کمر/پشت", phonetic: "schiena", example: "Ho mal di schiena.", examplePersian: "کمردرد دارم." },
+    { italian: "l'addome / la pancia", persian: "شکم", phonetic: "addome", example: "Ho mal di stomaco.", examplePersian: "معده‌ام درد می‌کند." },
+    { italian: "il ginocchio — le ginocchia", persian: "زانو — زانوها", phonetic: "ginocchio", example: "Mi fa male il ginocchio.", examplePersian: "زانویم درد می‌کند." },
+    { italian: "la gamba", persian: "پا (ساق)", phonetic: "gamba", example: "Ho la gamba rotta.", examplePersian: "پایم شکسته." },
+    { italian: "il piede — i piedi", persian: "پا (کف) — پاها", phonetic: "piede", example: "Mi fanno male i piedi.", examplePersian: "کف پاهایم درد می‌کند." },
+    // Organi interni
+    { italian: "il cuore", persian: "قلب", phonetic: "cuore", example: "Ho un problema al cuore.", examplePersian: "مشکل قلبی دارم." },
+    { italian: "i polmoni", persian: "ریه‌ها", phonetic: "polmoni", example: "Fumare fa male ai polmoni.", examplePersian: "سیگار کشیدن به ریه‌ها آسیب می‌زند." },
+    { italian: "lo stomaco", persian: "معده", phonetic: "stomaco", example: "Ho lo stomaco a disagio.", examplePersian: "معده‌ام ناراحت است." },
+    { italian: "il fegato", persian: "کبد", phonetic: "fegato", example: "Il fegato filtra il sangue.", examplePersian: "کبد خون را فیلتر می‌کند." },
+    { italian: "i reni", persian: "کلیه‌ها", phonetic: "reni", example: "Ho un calcolo ai reni.", examplePersian: "سنگ کلیه دارم." },
+    { italian: "l'encefalo / il cervello", persian: "مغز", phonetic: "cervello", example: "Ha avuto un trauma cerebrale.", examplePersian: "ضربه مغزی خورده." },
   ],
 
   phrases: [
@@ -100,6 +129,27 @@ export const dalMedicoContent: ItalianoTopic = {
         "• Ho la febbre da tre giorni. = سه روز است تب دارم.\n" +
         "• Mi fa male da stamattina. = از صبح امروز دردم می‌آید.",
     },
+    {
+      title: "Plurali Irregolari — جمع نامنظم اعضای بدن",
+      body:
+        "برخی اعضای بدن جمع نامنظم دارند:\n" +
+        "• il braccio  → le braccia  (بازو) | un braccio, due braccia\n" +
+        "• la mano    → le mani     (دست) | una mano, due mani\n" +
+        "• il dito    → le dita     (انگشت) | un dito, due dita\n" +
+        "• il ginocchio → le ginocchia (زانو)\n" +
+        "• l'orecchio  → le orecchie  (گوش)\n" +
+        "• il labbro  → le labbra    (لب)",
+    },
+    {
+      title: "Verbi di azione con parti del corpo",
+      body:
+        "فعل‌های مرتبط با اعضای بدن:\n" +
+        "• Vedere → con gli occhi (دیدن با چشم)\n" +
+        "• Sentire / Ascoltare → con le orecchie (شنیدن با گوش)\n" +
+        "• Mangiare / Parlare → con la bocca (خوردن/صحبت با دهان)\n" +
+        "• Toccare / Prendere → con le mani (لمس/گرفتن با دست)\n" +
+        "• Camminare / Correre → con le gambe (راه رفتن/دویدن با پا)",
+    },
   ],
 
   reading: {
@@ -107,6 +157,82 @@ export const dalMedicoContent: ItalianoTopic = {
     titleFa: "رفتن پیش دکتر",
     sections: [
       {
+        heading: "Il Corpo Umano — Capo",
+        headingFa: "بدن انسان — سر و صورت",
+        body:
+          "La testa è composta da molte parti importanti.\n\n" +
+          "Il viso (la faccia): fronte, occhi, sopracciglia, ciglia, palpebre, naso, narici, guance, zigomi, bocca, labbra, denti, mento.\n" +
+          "Il collo: la gola (parte interna), la nuca (parte posteriore).\n\n" +
+          "Le parti principali della testa:\n" +
+          "• La Testa: gli occhi, il naso, la bocca, le orecchie, i capelli.\n" +
+          "• Il Collo: la parte che sostiene la testa.\n\n" +
+          "Denti e bocca: Labbra · Denti · Palato duro · Palato molle · Lingua · Gengiva · Tonsille · Ugola.\n\n" +
+          "Le sopracciglia e le ciglia: Fondamentali per le espressioni e la protezione.\n" +
+          "Le palpebre: La pelle che copre l'occhio.\n" +
+          "Le tempie: Le zone ai lati della fronte.\n" +
+          "Le guance e gli zigomi: La parte carnosa e l'osso sporgente del viso.\n" +
+          "La mascella e la mandibola: Le ossa che permettono di masticare.\n" +
+          "Le narici: I due fori del naso.",
+        bodyFa:
+          "سر از بخش‌های زیادی تشکیل شده:\n\n" +
+          "صورت: پیشانی، چشم‌ها، ابروها، مژه‌ها، پلک‌ها، بینی، سوراخ‌های بینی، گونه‌ها، گوشه‌های استخوانی صورت، دهان، لب‌ها، دندان‌ها، چانه.\n" +
+          "گردن: گلو (قسمت داخلی)، نوک گردن (قسمت پشتی).\n\n" +
+          "اعضای اصلی داخل دهان: لب‌ها، دندان‌ها، کام سخت، کام نرم، زبان، لثه، لوزه‌ها، زبان کوچک.",
+        keywords: ["fronte", "occhi", "sopracciglio", "naso", "bocca", "orecchio", "collo", "guance", "gola", "denti", "labbra", "lingua"],
+      },
+      {
+        heading: "Il Corpo Umano — Tronco e Arti",
+        headingFa: "بدن انسان — تنه و اندام‌ها",
+        body:
+          "Il Tronco: la schiena, la pancia (addome), il petto.\n\n" +
+          "Parti del tronco:\n" +
+          "• Il petto / Il torace.\n" +
+          "• L'addome / La pancia.\n" +
+          "• Il girovita (o vita): Dove si mette la cintura.\n" +
+          "• I fianchi.\n\n" +
+          "Arti superiori (Le Braccia):\n" +
+          "La spalla: Collega il braccio al tronco.\n" +
+          "Il gomito: Parte centrale dell'arto superiore.\n" +
+          "Il polso: Articolazione tra mano e braccio.\n" +
+          "La mano (le mani) · il dito (le dita).\n\n" +
+          "Le dita della mano: Pollice, Indice, Medio, Anulare, Mignolo.\n" +
+          "Parti della mano: Il palmo, il dorso, le nocche e le unghie.\n\n" +
+          "Arti inferiori (Le Gambe):\n" +
+          "L'anca: Collega la gamba al bacino.\n" +
+          "Il ginocchio: Articolazione dell'arto inferiore.\n" +
+          "La caviglia: Collega il piede alla gamba.\n" +
+          "Il piede: Il tallone, la pianta del piede, il collo del piede e le dita (l'alluce è il più grande).\n\n" +
+          "Anatomia Interna:\n" +
+          "Ossa e Scheletro: la colonna vertebrale (composta da vertebre), il cranio, le costole.\n" +
+          "Organi: il cervello, il cuore, i polmoni, il fegato, lo stomaco, i reni.\n" +
+          "Tessuti: i muscoli, i tendini, i vasi sanguigni (arterie e vene).",
+        bodyFa:
+          "تنه: کمر/پشت، شکم، قفسه سینه.\n\n" +
+          "اندام‌های فوقانی (دست‌ها):\n" +
+          "شانه: بازو را به تنه وصل می‌کند.\n" +
+          "آرنج: وسط اندام فوقانی.\n" +
+          "مچ دست: مفصل بین دست و بازو.\n" +
+          "انگشتان: شست، اشاره، میانی، انگشت حلقه، کوچک.\n\n" +
+          "اندام‌های تحتانی (پاها):\n" +
+          "لگن: پا را به کمر وصل می‌کند.\n" +
+          "زانو: مفصل اندام تحتانی.\n" +
+          "مچ پا: پا را به ساق وصل می‌کند.\n" +
+          "کف پا: پاشنه، کف پا، انگشتان پا (شست بزرگ‌ترین است).\n\n" +
+          "اندام‌های داخلی: مغز، قلب، ریه‌ها، کبد، معده، کلیه‌ها، ماهیچه‌ها، رگ‌ها.",
+        keywords: ["torace", "addome", "schiena", "braccio", "gomito", "polso", "mano", "dita", "ginocchio", "caviglia", "piede", "colonna vertebrale", "cuore", "polmoni"],
+        callout: {
+          title: "Plurali irregolari importanti:",
+          items: [
+            "il braccio → le braccia",
+            "la mano → le mani",
+            "il dito → le dita",
+            "il ginocchio → le ginocchia",
+            "l'orecchio → le orecchie",
+          ],
+        },
+      },
+      {
+
         heading: "Visite per un disturbo",
         headingFa: "ویزیت برای بیماری",
         body:
