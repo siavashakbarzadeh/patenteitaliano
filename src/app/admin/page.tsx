@@ -2,14 +2,19 @@
 
 import { useState, useEffect } from "react";
 import { questions, chapters } from "@/lib/questions";
-import { getProgress, resetProgress, getAccuracy, type UserProgress } from "@/lib/store";
+import { getProgress, resetProgress, getAccuracy, type UserProgress,
+  getHardQuestionIds, setHardQuestion,
+  getRaisedHands, resolveRaisedHand,
+  getTagConfigs, saveTagConfigs,
+  type QueryPreset } from "@/lib/store";
 import type { Question } from "@/lib/types";
-import { loadVideos, saveVideos, addVideo, deleteVideo, type VideoItem } from "@/lib/videos";
+import { DEFAULT_TAG_CONFIGS } from "@/lib/types";
+import { loadVideos, addVideo, deleteVideo, type VideoItem } from "@/lib/videos";
 import { getAllSubscriptions, setPlan, getSubscription, planLabel, type Plan } from "@/lib/subscription";
 import { getSession } from "@/lib/auth";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions";
+type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function StatCard({ icon, label, value, color }: { icon: string; label: string; value: string | number; color: string }) {
@@ -487,6 +492,168 @@ function SubscriptionsTab() {
   );
 }
 
+// ─── Hard Questions Tab ───────────────────────────────────────────────────────
+function HardQuestionsTab() {
+  const [hardIds, setHardIds] = useState<number[]>([]);
+  const [search, setSearch] = useState("");
+  const [filterChapter, setFilterChapter] = useState<number | "all">("all");
+
+  useEffect(() => { setHardIds(getHardQuestionIds()); }, []);
+
+  const toggle = (id: number) => {
+    const isNowHard = !hardIds.includes(id);
+    setHardQuestion(id, isNowHard);
+    setHardIds(getHardQuestionIds());
+  };
+
+  const selStyle = { background: "rgba(255,255,255,0.04)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13 };
+
+  const filtered = questions.filter(q => {
+    if (filterChapter !== "all" && q.chapter !== filterChapter) return false;
+    if (search && !q.question.toLowerCase().includes(search.toLowerCase())) return false;
+    return true;
+  });
+
+  const chapterNums = [...new Set(questions.map(q => q.chapter))].sort((a, b) => a - b);
+
+  return (
+    <div>
+      <p style={{ fontSize: 13, color: "#888", marginBottom: 16 }}>
+        🔥 سوالات زیر را به عنوان «سخت» علامت‌گذاری کنید. دانش‌آموز می‌تواند با فیلتر «تست هوشمند» فقط این‌ها را تست بزند.
+        <strong style={{ color: "#ef4444", marginRight: 8 }}>{hardIds.length} سوال سخت</strong>
+      </p>
+      <div style={{ display: "flex", gap: 10, marginBottom: 16, flexWrap: "wrap" }}>
+        <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="جستجو..." style={{ ...selStyle, flex: 1, minWidth: 160 }} />
+        <select value={filterChapter} onChange={e => setFilterChapter(e.target.value === "all" ? "all" : Number(e.target.value))} style={selStyle}>
+          <option value="all">همه فصل‌ها</option>
+          {chapterNums.map(n => <option key={n} value={n}>فصل {n}</option>)}
+        </select>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 6, maxHeight: "65vh", overflowY: "auto" }}>
+        {filtered.map(q => {
+          const isHard = hardIds.includes(q.id);
+          return (
+            <div key={q.id} style={{
+              background: isHard ? "rgba(239,68,68,0.06)" : "rgba(255,255,255,0.02)",
+              border: `1px solid ${isHard ? "rgba(239,68,68,0.3)" : "rgba(147,51,234,0.1)"}`,
+              borderRadius: 10, padding: "10px 14px",
+              display: "flex", alignItems: "center", gap: 12,
+            }}>
+              <button onClick={() => toggle(q.id)} style={{
+                width: 32, height: 32, borderRadius: 8, border: "none", cursor: "pointer",
+                background: isHard ? "rgba(239,68,68,0.8)" : "rgba(255,255,255,0.06)",
+                fontSize: 14, flexShrink: 0,
+              }}>{isHard ? "🔥" : "○"}</button>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: 10, color: "#9333ea", marginBottom: 2 }}>#{q.id} · ف{q.chapter}</div>
+                <div style={{ fontSize: 12, color: "white", direction: "rtl", textAlign: "right",
+                  overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{q.question}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ─── Support / Raised Hand Tab ────────────────────────────────────────────────
+function SupportTab() {
+  const [hands, setHands] = useState(getRaisedHands());
+
+  const resolve = (questionId: number) => {
+    resolveRaisedHand(questionId);
+    setHands(getRaisedHands());
+  };
+
+  const pending = hands.filter(h => !h.resolved);
+  const resolved = hands.filter(h => h.resolved);
+
+  return (
+    <div>
+      <p style={{ fontSize: 13, color: "#888", marginBottom: 16 }}>
+        ✋ سوالاتی که دانش‌آموزان «ابهام دارم» زدند. پس از رفع ابهام، آن را «حل شده» کنید.
+        <strong style={{ color: "#a78bfa", marginRight: 8 }}>{pending.length} در انتظار</strong>
+      </p>
+      <h3 style={{ fontSize: 13, fontWeight: 700, color: "#a78bfa", marginBottom: 10 }}>در انتظار بررسی</h3>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 24 }}>
+        {pending.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>ابهامی در انتظار ندارید ✓</p>}
+        {pending.map(h => (
+          <div key={h.questionId} style={{ background: "rgba(167,139,250,0.06)", border: "1px solid rgba(167,139,250,0.2)", borderRadius: 12, padding: "14px 16px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 10, color: "#a78bfa", marginBottom: 4 }}>#{h.questionId} · ف{h.chapter} · {new Date(h.sentAt).toLocaleDateString("fa-IR")}</div>
+                <div style={{ fontSize: 13, direction: "rtl", textAlign: "right", lineHeight: 1.6, color: "white" }}>{h.question}</div>
+              </div>
+              <button onClick={() => resolve(h.questionId)} style={{ padding: "6px 14px", borderRadius: 8, background: "rgba(34,211,165,0.1)", border: "1px solid rgba(34,211,165,0.3)", color: "#22d3a5", cursor: "pointer", fontSize: 12, flexShrink: 0 }}>حل شد ✓</button>
+            </div>
+          </div>
+        ))}
+      </div>
+      {resolved.length > 0 && (
+        <>
+          <h3 style={{ fontSize: 13, fontWeight: 700, color: "#555", marginBottom: 10 }}>حل شده‌ها ({resolved.length})</h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6, opacity: 0.5, maxHeight: "30vh", overflowY: "auto" }}>
+            {resolved.map(h => (
+              <div key={h.questionId} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10, padding: "10px 14px" }}>
+                <div style={{ fontSize: 10, color: "#666", marginBottom: 2 }}>#{h.questionId}</div>
+                <div style={{ fontSize: 12, direction: "rtl", textAlign: "right", color: "#666" }}>{h.question}</div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+// ─── Tag Config Tab ───────────────────────────────────────────────────────────
+function TagConfigTab() {
+  const [configs, setConfigs] = useState(() => getTagConfigs());
+
+  const update = (idx: number, key: "label" | "color", value: string) => {
+    setConfigs(prev => prev.map((c, i) => i === idx ? { ...c, [key]: value } : c));
+  };
+
+  const handleSave = () => {
+    saveTagConfigs(configs);
+    alert("تنظیمات تگ ذخیره شد");
+  };
+
+  return (
+    <div>
+      <p style={{ fontSize: 13, color: "#888", marginBottom: 20 }}>
+        🏷️ سه رنگ تگ را که دانش‌آموزان می‌توانند به سوالات اختصاص دهند سفارشی کنید.
+      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 24 }}>
+        {configs.map((cfg, idx) => (
+          <div key={idx} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(147,51,234,0.15)", borderRadius: 14, padding: "16px 20px", display: "flex", alignItems: "center", gap: 14 }}>
+            <div style={{ width: 36, height: 36, borderRadius: "50%", background: cfg.color, flexShrink: 0 }} />
+            <div style={{ flex: 1, display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <div>
+                <label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>برچسب (فارسی)</label>
+                <input value={cfg.label} onChange={e => update(idx, "label", e.target.value)}
+                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "7px 12px", color: "white", fontSize: 13, outline: "none" }} />
+              </div>
+              <div>
+                <label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>رنگ</label>
+                <input type="color" value={cfg.color} onChange={e => update(idx, "color", e.target.value)}
+                  style={{ width: 50, height: 36, borderRadius: 8, border: "none", cursor: "pointer", background: "none" }} />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <button onClick={handleSave} style={{ padding: "10px 24px", borderRadius: 12, background: "linear-gradient(135deg,#9333ea,#f97316)", border: "none", color: "white", fontWeight: 700, fontSize: 14, cursor: "pointer" }}>
+        ذخیره تنظیمات
+      </button>
+      <div style={{ marginTop: 16, padding: "12px 16px", borderRadius: 10, background: "rgba(99,102,241,0.06)", border: "1px solid rgba(99,102,241,0.15)", fontSize: 12, color: "#888" }}>
+        💡 این تگ‌ها در صفحه آزمون با دایره‌های رنگی نشان داده می‌شوند. دانش‌آموز می‌تواند هر سوال را با یکی از این رنگ‌ها علامت‌گذاری کند.
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Admin Page ──────────────────────────────────────────────────────────
 export default function AdminPage() {
   const [tab, setTab] = useState<AdminTab>("dashboard");
@@ -514,6 +681,9 @@ export default function AdminPage() {
     { id: "analytics",     label: "تحلیل",      icon: "📊" },
     { id: "videos",        label: "ویدیوها",    icon: "🎬" },
     { id: "subscriptions", label: "اشتراک‌ها",  icon: "🌟" },
+    { id: "hard",          label: "سخت‌ها",    icon: "🔥" },
+    { id: "support",       label: "پشتیبانی",  icon: "✋" },
+    { id: "tags",          label: "تگ‌رنگ‌ها",  icon: "🏷️" },
   ];
 
   return (
@@ -619,6 +789,9 @@ export default function AdminPage() {
           {tab === "analytics"       && <AnalyticsTab progress={progress} />}
           {tab === "videos"          && <VideosTab />}
           {tab === "subscriptions"   && <SubscriptionsTab />}
+          {tab === "hard"            && <HardQuestionsTab />}
+          {tab === "support"         && <SupportTab />}
+          {tab === "tags"            && <TagConfigTab />}
         </main>
       </div>
     </div>

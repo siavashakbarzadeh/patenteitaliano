@@ -6,6 +6,7 @@ import { getSession, logout } from "@/lib/auth";
 import {
   getProgress,
   recordAnswer,
+  recordAttemptHistory,
   recordQuizComplete,
   getAccuracy,
   resetProgress,
@@ -13,8 +14,17 @@ import {
   isFlagged,
   getWrongQuestionIds,
   getFlaggedQuestionIds,
+  setQuestionTag,
+  getQuestionTag,
+  getTagConfigs,
+  getTaggedQuestionIds,
+  getHardQuestionIds,
+  raiseHand,
+  getAttemptHistory,
+  QUERY_PRESETS,
   type UserProgress,
 } from "@/lib/store";
+import { DEFAULT_TAG_CONFIGS } from "@/lib/types";
 import { chapter20Content } from "@/lib/chapters/20/content";
 import { chapter19Content } from "@/lib/chapters/19/content";
 import { chapter18Content } from "@/lib/chapters/18/content";
@@ -53,12 +63,14 @@ import {
   Underline,
   StickyNote,
   Image as ImageIcon,
+  Timer,
 } from "lucide-react";
 import VideoPanel from "@/components/VideoPanel";
+import BrowsePage from "@/components/BrowsePage";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type Page = "home" | "chapters" | "quiz" | "results" | "stats" | "study" | "review";
-type QuizMode = "chapter" | "wrong" | "flagged" | "mixed";
+type Page = "home" | "chapters" | "quiz" | "results" | "stats" | "study" | "review" | "browse";
+type QuizMode = "chapter" | "wrong" | "flagged" | "mixed" | "standard" | "hard" | "tagged0" | "tagged1" | "tagged2" | "hardWrong";
 
 interface QuizState {
   questions: Question[];
@@ -95,6 +107,15 @@ function buildQuiz(chapterNum: number, mode: QuizMode = "chapter", extraIds: num
   }
   if (mode === "mixed") {
     return shuffle(questions.filter(q => chapters.find(c => c.number === q.chapter)?.available));
+  }
+  if (mode === "standard") {
+    const pool = shuffle(questions.filter(q => chapters.find(c => c.number === q.chapter)?.available));
+    return pool.slice(0, 30);
+  }
+  // Query preset modes — extraIds carries the question ids
+  if (["hard", "tagged0", "tagged1", "tagged2", "hardWrong"].includes(mode)) {
+    if (extraIds.length === 0) return [];
+    return shuffle(questions.filter(q => extraIds.includes(q.id)));
   }
   return shuffle(questions.filter((q) => q.chapter === chapterNum));
 }
@@ -672,12 +693,30 @@ function HomePage({ progress, onNavigate }: {
   );
 }
 
+// ── presetCount helper — how many questions match each preset ─────────────────
+function presetCount(mode: string, progress: UserProgress): number {
+  if (mode === "hard") return getHardQuestionIds().length;
+  if (mode === "flagged") return getFlaggedQuestionIds(progress).length;
+  if (mode === "wrong") return getWrongQuestionIds(progress).length;
+  if (mode === "tagged0") return getTaggedQuestionIds(progress, 0).length;
+  if (mode === "tagged1") return getTaggedQuestionIds(progress, 1).length;
+  if (mode === "tagged2") return getTaggedQuestionIds(progress, 2).length;
+  if (mode === "hardWrong") {
+    const hard = new Set(getHardQuestionIds());
+    return getWrongQuestionIds(progress).filter((id) => hard.has(id)).length;
+  }
+  return 0;
+}
+
 // ─── Chapters Page ────────────────────────────────────────────────────────────
-function ChaptersPage({ progress, onSelectChapter, onStudyChapter, onMixedQuiz }: {
+function ChaptersPage({ progress, onSelectChapter, onStudyChapter, onMixedQuiz, onStandardQuiz, onBrowse, onPresetQuiz }: {
   progress: UserProgress;
   onSelectChapter: (ch: number) => void;
   onStudyChapter: (ch: number) => void;
   onMixedQuiz?: () => void;
+  onStandardQuiz?: () => void;
+  onBrowse?: () => void;
+  onPresetQuiz?: (mode: string) => void;
 }) {
   const [search, setSearch] = useState("");
   const filtered = chapters.filter(ch =>
@@ -697,9 +736,9 @@ function ChaptersPage({ progress, onSelectChapter, onStudyChapter, onMixedQuiz }
         </p>
       </div>
 
-      {/* Search + Mixed Quiz bar */}
-      <div style={{ display: "flex", gap: 10, marginBottom: 18 }}>
-        <div style={{ flex: 1, position: "relative" }}>
+      {/* Search + Action bar */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 18, flexWrap: "wrap" }}>
+        <div style={{ flex: 1, minWidth: 160, position: "relative" }}>
           <input
             type="text" value={search} onChange={e => setSearch(e.target.value)}
             placeholder="جستجو فصل..."
@@ -711,18 +750,72 @@ function ChaptersPage({ progress, onSelectChapter, onStudyChapter, onMixedQuiz }
             }}
           />
         </div>
+        {onBrowse && (
+          <button id="btn-browse" onClick={onBrowse}
+            style={{
+              flexShrink: 0, padding: "10px 13px", borderRadius: 12, fontSize: 12,
+              fontWeight: 700, border: "1px solid rgba(96,165,250,0.3)",
+              background: "rgba(96,165,250,0.08)", color: "#60a5fa", cursor: "pointer",
+              display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap",
+            }}>
+            <BookOpen size={13} /> مرور جواب‌دار
+          </button>
+        )}
+        {onStandardQuiz && (
+          <button id="btn-standard-quiz" onClick={onStandardQuiz}
+            style={{
+              flexShrink: 0, padding: "10px 13px", borderRadius: 12, fontSize: 12,
+              fontWeight: 700, border: "1px solid rgba(34,211,165,0.3)",
+              background: "rgba(34,211,165,0.08)", color: "#22d3a5", cursor: "pointer",
+              display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap",
+            }}>
+            <Timer size={13} /> استاندارد ۳۰ت
+          </button>
+        )}
         {onMixedQuiz && (
           <button id="btn-mixed-quiz" onClick={onMixedQuiz}
             style={{
-              flexShrink: 0, padding: "10px 14px", borderRadius: 12, fontSize: 12,
+              flexShrink: 0, padding: "10px 13px", borderRadius: 12, fontSize: 12,
               fontWeight: 700, border: "1px solid rgba(249,115,22,0.3)",
               background: "rgba(249,115,22,0.08)", color: "#f97316", cursor: "pointer",
-              display: "flex", alignItems: "center", gap: 6, whiteSpace: "nowrap",
+              display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap",
             }}>
-            <Zap size={14} /> تست ترکیبی
+            <Zap size={13} /> ترکیبی
           </button>
         )}
       </div>
+
+      {/* ── Query Presets ── */}
+      {onPresetQuiz && (
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "var(--text-muted)", marginBottom: 8, letterSpacing: "0.07em" }}>
+            🎲 تست هوشمند
+          </div>
+          <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4 }}>
+            {QUERY_PRESETS.map(preset => {
+              const count = presetCount(preset.mode, progress);
+              return (
+                <button key={preset.id}
+                  onClick={() => count > 0 && onPresetQuiz(preset.mode)}
+                  disabled={count === 0}
+                  title={preset.description}
+                  style={{
+                    flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 3,
+                    padding: "9px 12px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)",
+                    background: count > 0 ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)",
+                    cursor: count > 0 ? "pointer" : "not-allowed",
+                    opacity: count > 0 ? 1 : 0.4, transition: "all 0.15s",
+                    minWidth: 72,
+                  }}>
+                  <span style={{ fontSize: 18 }}>{preset.icon}</span>
+                  <span style={{ fontSize: 10, fontWeight: 700, color: "var(--text-secondary)" }}>{preset.label}</span>
+                  <span style={{ fontSize: 10, color: "var(--text-muted)" }}>{count} سوال</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         {filtered.map((ch, i) => {
@@ -827,10 +920,13 @@ function QuizPage({ chapterNum, onFinish, onBack, mode = "chapter", extraIds = [
   const progressPct = ((quiz.current + (quiz.answered ? 1 : 0)) / quiz.questions.length) * 100;
   const flagged = q ? isFlagged(progress, q.id) : false;
 
-  // 30s countdown timer — auto-submits wrong on expiry
+  const isStandardMode = mode === "standard";
+  const questionTimeLimit = isStandardMode ? 20 : 30;
+
+  // Per-question countdown timer — auto-submits wrong on expiry
   useEffect(() => {
     timerActiveRef.current = true;
-    setTimeLeft(30);
+    setTimeLeft(questionTimeLimit);
     questionStartRef.current = Date.now();
     const interval = setInterval(() => {
       if (!timerActiveRef.current) { clearInterval(interval); return; }
@@ -860,6 +956,7 @@ function QuizPage({ chapterNum, onFinish, onBack, mode = "chapter", extraIds = [
     const isCorrect = idx === q.correct;
     const spent = Math.round((Date.now() - questionStartRef.current) / 1000);
     const newProg = recordAnswer(q.chapter, q.id, isCorrect, spent);
+    recordAttemptHistory(q.id, q.chapter, isCorrect);
     setProgress(newProg);
     setQuiz((prev) => ({
       ...prev, selected: idx, answered: true,
@@ -893,8 +990,26 @@ function QuizPage({ chapterNum, onFinish, onBack, mode = "chapter", extraIds = [
     setProgress(newProg);
   };
 
+  const handleColorTag = (slot: 0 | 1 | 2) => {
+    if (!q) return;
+    const current = getQuestionTag(progress, q.id);
+    const newProg = setQuestionTag(q.id, current === slot ? null : slot);
+    setProgress(newProg);
+  };
+
+  const handleRaiseHand = () => {
+    if (!q) return;
+    raiseHand(q.id, q.chapter, q.question);
+    alert('✋ ابهام شما ثبت شد. تیم پشتیبانی بررسی خواهد کرد.');
+  };
+
+  const tagConfigs = getTagConfigs();
+  const currentTag = getQuestionTag(progress, q?.id ?? -1);
+  const hardIds = getHardQuestionIds();
+  const isHard = q ? hardIds.includes(q.id) : false;
+
   const timerColor = timeLeft > 15 ? "var(--success)" : timeLeft > 7 ? "var(--warning)" : "var(--error)";
-  const timerPct = (timeLeft / 30) * 100;
+  const timerPct = (timeLeft / questionTimeLimit) * 100;
 
   return (
     <div style={{ padding: "20px 20px 40px", maxWidth: 600, margin: "0 auto" }}>
@@ -910,14 +1025,30 @@ function QuizPage({ chapterNum, onFinish, onBack, mode = "chapter", extraIds = [
             {quiz.current + 1} از {quiz.questions.length}
           </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <div style={{ fontSize: 16, fontWeight: 800, color: "var(--accent-primary)" }}>✓ {quiz.score}</div>
+          {/* Flag button */}
           <button id={`btn-flag-${q.id}`} onClick={handleFlag}
             style={{ background: "none", border: "none", cursor: "pointer", padding: 4,
               color: flagged ? "#f97316" : "var(--text-muted)", transition: "color 0.2s" }}
-            title={flagged ? "حذف علامت" : "علامت‌گذاری سخت"}>
+            title={flagged ? "حذف علامت" : "علامت‌گذاری"}
+          >
             <Flag size={18} fill={flagged ? "#f97316" : "none"} />
           </button>
+          {/* Color tag buttons */}
+          {tagConfigs.map((cfg, slot) => (
+            <button key={slot}
+              onClick={() => handleColorTag(slot as 0 | 1 | 2)}
+              title={cfg.label}
+              style={{
+                width: 18, height: 18, borderRadius: "50%", border: "2px solid",
+                borderColor: currentTag === slot ? cfg.color : "rgba(255,255,255,0.2)",
+                background: currentTag === slot ? cfg.color : "transparent",
+                cursor: "pointer", flexShrink: 0,
+                transition: "all 0.15s",
+              }}
+            />
+          ))}
         </div>
       </div>
 
@@ -940,15 +1071,39 @@ function QuizPage({ chapterNum, onFinish, onBack, mode = "chapter", extraIds = [
         <div className="progress-fill" style={{ width: `${progressPct}%` }} />
       </div>
 
-      {/* Chapter chip + page ref */}
-      <div style={{ marginBottom: 14, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-        <span className="category-chip">{ch?.icon} {ch?.title}</span>
-        {q.pageRef && (
-          <span style={{ fontSize: 11, color: "var(--text-muted)", background: "rgba(255,255,255,0.05)",
-            padding: "3px 9px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)" }}>
-            ص {q.pageRef}
-          </span>
-        )}
+      {/* Chapter chip + page ref + badges */}
+      <div style={{ marginBottom: 14, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          <span className="category-chip">{ch?.icon} {ch?.title}</span>
+          {q.pageRef && (
+            <span style={{ fontSize: 11, color: "var(--text-muted)", background: "rgba(255,255,255,0.05)",
+              padding: "3px 9px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)" }}>
+              ص {q.pageRef}
+            </span>
+          )}
+          {isHard && (
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#ef4444",
+              background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.25)",
+              padding: "2px 8px", borderRadius: 8 }}>
+              🔥 سخت
+            </span>
+          )}
+          {/* Attempt history badge */}
+          {(progress.attemptHistory?.[q.id]?.wrongCount ?? 0) > 0 && (
+            <span style={{ fontSize: 10, color: "#f59e0b",
+              background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.2)",
+              padding: "2px 8px", borderRadius: 8 }}>
+              ❌×{progress.attemptHistory![q.id].wrongCount}
+            </span>
+          )}
+        </div>
+        {/* Raised hand button */}
+        <button onClick={handleRaiseHand}
+          style={{ fontSize: 10, color: "rgba(167,139,250,0.8)",
+            background: "rgba(167,139,250,0.08)", border: "1px solid rgba(167,139,250,0.2)",
+            borderRadius: 8, padding: "4px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>
+          ✋ ابهام دارم
+        </button>
       </div>
 
       {/* Question */}
@@ -1405,14 +1560,42 @@ export default function App() {
         <HomePage progress={progress} onNavigate={(p) => {
           if (p === "quiz") handleSelectChapter(20);
           else if (p === "study") handleStudyChapter(20);
-          else setPage(p);
+          else setPage(p as Page);
         }} />
       )}
       {page === "chapters" && (
         <ChaptersPage progress={progress}
           onSelectChapter={handleSelectChapter}
           onStudyChapter={handleStudyChapter}
-          onMixedQuiz={() => { setQuizMode("mixed"); setQuizKey(k => k + 1); setPage("quiz"); }} />
+          onBrowse={() => setPage("browse")}
+          onStandardQuiz={() => { setQuizMode("standard"); setQuizKey(k => k + 1); setPage("quiz"); }}
+          onMixedQuiz={() => { setQuizMode("mixed"); setQuizKey(k => k + 1); setPage("quiz"); }}
+          onPresetQuiz={(mode) => {
+            // Compute extra IDs for preset modes
+            const hardIds = getHardQuestionIds();
+            const wrongIds = getWrongQuestionIds(progress);
+            let extraIds: number[] = [];
+            if (mode === "hard") extraIds = hardIds;
+            else if (mode === "wrong") extraIds = wrongIds;
+            else if (mode === "flagged") extraIds = getFlaggedQuestionIds(progress);
+            else if (mode === "tagged0") extraIds = getTaggedQuestionIds(progress, 0);
+            else if (mode === "tagged1") extraIds = getTaggedQuestionIds(progress, 1);
+            else if (mode === "tagged2") extraIds = getTaggedQuestionIds(progress, 2);
+            else if (mode === "hardWrong") {
+              const hardSet = new Set(hardIds);
+              extraIds = wrongIds.filter(id => hardSet.has(id));
+            }
+            if (extraIds.length === 0) return;
+            setQuizMode(mode as QuizMode);
+            setQuizKey(k => k + 1);
+            // store extraIds temporarily — pass via state
+            (window as Window & { __quizExtraIds?: number[] }).__quizExtraIds = extraIds;
+            setPage("quiz");
+          }}
+        />
+      )}
+      {page === "browse" && (
+        <BrowsePage onBack={() => setPage("chapters")} />
       )}
       {page === "study" && (
         <StudyPage chapterNum={activeChapter}
@@ -1428,9 +1611,15 @@ export default function App() {
       {page === "quiz" && (
         <QuizPage key={quizKey} chapterNum={activeChapter}
           mode={quizMode}
-          extraIds={quizMode === "wrong" ? getWrongQuestionIds(progress) : quizMode === "flagged" ? getFlaggedQuestionIds(progress) : []}
+          extraIds={
+            quizMode === "wrong" ? getWrongQuestionIds(progress) :
+            quizMode === "flagged" ? getFlaggedQuestionIds(progress) :
+            ["hard","tagged0","tagged1","tagged2","hardWrong"].includes(quizMode)
+              ? ((window as Window & { __quizExtraIds?: number[] }).__quizExtraIds ?? [])
+              : []
+          }
           onFinish={handleQuizFinish}
-          onBack={() => setPage(quizMode === "chapter" ? "chapters" : "review")} />
+          onBack={() => setPage(["chapter","standard","mixed"].includes(quizMode) ? "chapters" : "review")} />
       )}
       {page === "results" && lastResult && (
         <ResultsPage score={lastResult.score} total={lastResult.total} chapterNum={activeChapter}
