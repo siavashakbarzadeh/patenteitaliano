@@ -8,7 +8,7 @@ import { submitSupportRequest } from "@/lib/gamification";
 
 type SupportTab = "contact" | "class_test" | "online_course" | "collaboration" | "suggestion" | "share" | "exam_tips";
 
-export default function SupportHubPage({ onBack }: { onBack: () => void }) {
+export default function SupportHubPage({ onBack, onNav }: { onBack: () => void; onNav?: (page: string) => void }) {
   const [activeTab, setActiveTab] = useState<SupportTab>("contact");
 
   const tabs: { id: SupportTab; label: string; icon: string }[] = [
@@ -34,7 +34,13 @@ export default function SupportHubPage({ onBack }: { onBack: () => void }) {
           </div>
           <div style={{ fontSize: 11, color: "var(--text-muted)" }}>Support Hub</div>
         </div>
-        <div style={{ width: 70 }} />
+        {onNav ? (
+          <button onClick={() => onNav("dictionary")}
+            style={{ padding: "7px 12px", borderRadius: 10, fontSize: 11, cursor: "pointer",
+              background: "rgba(96,165,250,0.15)", color: "#60a5fa", border: "1px solid rgba(96,165,250,0.3)", fontWeight: 700 }}>
+            📖 دیکشنری
+          </button>
+        ) : <div style={{ width: 70 }} />}
       </div>
 
       {/* Tabs */}

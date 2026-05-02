@@ -77,11 +77,14 @@ import RatingModal from "@/components/RatingModal";
 import ProgressChartsPage from "@/components/ProgressChartsPage";
 import SupportHubPage from "@/components/SupportHubPage";
 import GamificationPage from "@/components/GamificationPage";
+import OnboardingFlow, { getOnboardingData } from "@/components/OnboardingFlow";
+import DictionaryPage from "@/components/DictionaryPage";
 import { getUserSettings, applySettings, checkExamClearance } from "@/lib/userSettings";
 import { claimDailyLogin, awardQuizXP, getGamification, getBadge } from "@/lib/gamification";
+import { validateCode, applyCode, getAppliedCode } from "@/lib/discountCodes";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type Page = "home" | "chapters" | "quiz" | "results" | "stats" | "study" | "review" | "browse" | "settings" | "faq" | "charts" | "support" | "gamification";
+type Page = "home" | "chapters" | "quiz" | "results" | "stats" | "study" | "review" | "browse" | "settings" | "faq" | "charts" | "support" | "gamification" | "dictionary";
 type QuizMode = "chapter" | "wrong" | "flagged" | "mixed" | "standard" | "hard" | "tagged0" | "tagged1" | "tagged2" | "hardWrong";
 
 interface QuizState {
@@ -1514,14 +1517,22 @@ export default function App() {
   const [showRating, setShowRating] = useState(false);
   const [ratingChapter, setRatingChapter] = useState(0);
   const [dailyToast, setDailyToast] = useState<{ message: string } | null>(null);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
-  // Apply user settings on start + claim daily login bonus
+  // Apply user settings on start + check onboarding + claim daily login bonus
   useEffect(() => {
     applySettings(getUserSettings());
-    const bonus = claimDailyLogin();
-    if (bonus.granted) {
-      setDailyToast({ message: bonus.message + ` (+${bonus.xpEarned} XP)` });
-      setTimeout(() => setDailyToast(null), 5000);
+    // Show onboarding if first time
+    const onb = getOnboardingData();
+    if (!onb || !onb.accepted) {
+      setShowOnboarding(true);
+    } else {
+      // Only show daily bonus if onboarding already done
+      const bonus = claimDailyLogin();
+      if (bonus.granted) {
+        setDailyToast({ message: bonus.message + ` (+${bonus.xpEarned} XP)` });
+        setTimeout(() => setDailyToast(null), 5000);
+      }
     }
   }, []);
 
@@ -1686,7 +1697,7 @@ export default function App() {
         <FAQPage onBack={() => setPage("home")} />
       )}
       {page === "support" && (
-        <SupportHubPage onBack={() => setPage("home")} />
+        <SupportHubPage onBack={() => setPage("home")} onNav={p => setPage(p as Page)} />
       )}
       {page === "gamification" && (
         <GamificationPage progress={progress} onBack={() => setPage("home")} />
@@ -1743,6 +1754,24 @@ export default function App() {
             ✕
           </button>
         </div>
+      )}
+
+      {/* ── Dictionary Page ── */}
+      {page === "dictionary" && (
+        <DictionaryPage onBack={() => setPage("support")} />
+      )}
+
+      {/* ── Onboarding Flow (First Launch) ── */}
+      {showOnboarding && (
+        <OnboardingFlow onComplete={() => {
+          setShowOnboarding(false);
+          // Claim daily bonus after onboarding
+          const bonus = claimDailyLogin();
+          if (bonus.granted) {
+            setDailyToast({ message: bonus.message + ` (+${bonus.xpEarned} XP)` });
+            setTimeout(() => setDailyToast(null), 5000);
+          }
+        }} />
       )}
 
       <NavBar page={page} onNav={setPage} />

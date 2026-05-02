@@ -15,7 +15,7 @@ import { getFeedbackHistory } from "@/lib/userSettings";
 import { getSupportRequests, resolveSupportRequest, getGamification } from "@/lib/gamification";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification";
+type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification" | "discounts";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function StatCard({ icon, label, value, color }: { icon: string; label: string; value: string | number; color: string }) {
@@ -815,6 +815,105 @@ function GamificationAdminTab() {
   );
 }
 
+// ─── Discount Codes Tab ───────────────────────────────────────────────────────
+function DiscountCodesTab() {
+  const { getAllDiscountCodes, createDiscountCode, deleteDiscountCode, toggleCodeActive } = require("@/lib/discountCodes");
+  const [codes, setCodes] = useState(() => getAllDiscountCodes());
+  const [form, setForm] = useState({ code: "", discountPercent: 20, description: "", expiresAt: "", maxUses: "" });
+  const [showForm, setShowForm] = useState(false);
+
+  const refresh = () => setCodes(getAllDiscountCodes());
+
+  const handleCreate = () => {
+    if (!form.code.trim()) return;
+    createDiscountCode({
+      code: form.code.toUpperCase().trim(),
+      discountPercent: form.discountPercent,
+      description: form.description,
+      expiresAt: form.expiresAt || null,
+      maxUses: form.maxUses ? parseInt(form.maxUses) : null,
+      type: "admin",
+      active: true,
+    });
+    setForm({ code: "", discountPercent: 20, description: "", expiresAt: "", maxUses: "" });
+    setShowForm(false);
+    refresh();
+  };
+
+  const inputStyle = {
+    width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)",
+    borderRadius: 8, padding: "8px 12px", color: "var(--text-primary)", fontSize: 12,
+    outline: "none", direction: "rtl" as const, fontFamily: "inherit", marginBottom: 8,
+  };
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, direction: "rtl" }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text-primary)" }}>{codes.length} کد تخفیف</div>
+        <button onClick={() => setShowForm(!showForm)}
+          style={{ padding: "8px 16px", borderRadius: 10, fontSize: 12, cursor: "pointer", fontWeight: 700,
+            background: "linear-gradient(135deg,#9333ea,#f97316)", color: "white", border: "none" }}>
+          + کد جدید
+        </button>
+      </div>
+
+      {showForm && (
+        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(147,51,234,0.2)",
+          borderRadius: 14, padding: "16px", marginBottom: 16 }}>
+          <input style={inputStyle} placeholder="کد تخفیف (مثل: NOROUZ30)" value={form.code}
+            onChange={e => setForm(p => ({ ...p, code: e.target.value.toUpperCase() }))} />
+          <input style={inputStyle} type="number" placeholder="درصد تخفیف" value={form.discountPercent}
+            onChange={e => setForm(p => ({ ...p, discountPercent: parseInt(e.target.value) }))} />
+          <input style={inputStyle} placeholder="توضیح (مثل: کد مناسبتی نوروز)" value={form.description}
+            onChange={e => setForm(p => ({ ...p, description: e.target.value }))} />
+          <input style={inputStyle} type="date" placeholder="تاریخ انقضا (اختیاری)" value={form.expiresAt}
+            onChange={e => setForm(p => ({ ...p, expiresAt: e.target.value }))} />
+          <input style={inputStyle} type="number" placeholder="حداکثر استفاده (خالی = نامحدود)" value={form.maxUses}
+            onChange={e => setForm(p => ({ ...p, maxUses: e.target.value }))} />
+          <button onClick={handleCreate} disabled={!form.code.trim()}
+            style={{ width: "100%", padding: "10px 0", borderRadius: 10, fontSize: 13, fontWeight: 700,
+              background: "linear-gradient(135deg,#9333ea,#f97316)", color: "white", border: "none", cursor: "pointer" }}>
+            ایجاد کد
+          </button>
+        </div>
+      )}
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, maxHeight: "55vh", overflowY: "auto" }}>
+        {codes.map((c: { code: string; discountPercent: number; description: string; type: string; usedCount: number; maxUses: number|null; expiresAt: string|null; active: boolean }, i: number) => (
+          <div key={i} style={{
+            background: "rgba(255,255,255,0.03)", border: `1px solid ${c.active ? "rgba(147,51,234,0.2)" : "rgba(255,255,255,0.05)"}`,
+            borderRadius: 12, padding: "12px 16px", opacity: c.active ? 1 : 0.5,
+          }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+              <div style={{ display: "flex", gap: 6 }}>
+                <button onClick={() => { toggleCodeActive(c.code); refresh(); }}
+                  style={{ padding: "3px 8px", borderRadius: 6, fontSize: 9, cursor: "pointer",
+                    background: c.active ? "rgba(34,211,165,0.15)" : "rgba(239,68,68,0.15)",
+                    color: c.active ? "#22d3a5" : "#ef4444", border: "none" }}>
+                  {c.active ? "فعال" : "غیرفعال"}
+                </button>
+                <button onClick={() => { deleteDiscountCode(c.code); refresh(); }}
+                  style={{ padding: "3px 8px", borderRadius: 6, fontSize: 9, cursor: "pointer",
+                    background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "none" }}>
+                  حذف
+                </button>
+              </div>
+              <div style={{ display: "flex", gap: 8, alignItems: "center", direction: "rtl" }}>
+                <code style={{ fontSize: 14, fontWeight: 800, color: "#fbbf24", letterSpacing: "0.1em" }}>{c.code}</code>
+                <span style={{ fontSize: 12, color: "#22d3a5" }}>{c.discountPercent}٪</span>
+              </div>
+            </div>
+            <div style={{ direction: "rtl", fontSize: 11, color: "var(--text-muted)" }}>
+              {c.description} · استفاده: {c.usedCount}{c.maxUses ? `/${c.maxUses}` : ""} 
+              {c.expiresAt && ` · انقضا: ${new Date(c.expiresAt).toLocaleDateString("fa-IR")}`}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Admin Page ──────────────────────────────────────────────────────────
 export default function AdminPage() {
   const [tab, setTab] = useState<AdminTab>("dashboard");
@@ -846,6 +945,9 @@ export default function AdminPage() {
     { id: "support",       label: "پشتیبانی",  icon: "✋" },
     { id: "tags",          label: "تگ‌رنگ‌ها",  icon: "🏷️" },
     { id: "feedback",      label: "ارزشیابی",  icon: "⭐" },
+    { id: "requests",      label: "درخواست‌ها", icon: "📨" },
+    { id: "gamification",  label: "انگیزش",     icon: "🏆" },
+    { id: "discounts",     label: "کد تخفیف",  icon: "🏷" },
   ];
 
   return (
@@ -955,6 +1057,9 @@ export default function AdminPage() {
           {tab === "support"         && <SupportTab />}
           {tab === "tags"            && <TagConfigTab />}
           {tab === "feedback"        && <FeedbackTab />}
+          {tab === "requests"        && <RequestsTab />}
+          {tab === "gamification"    && <GamificationAdminTab />}
+          {tab === "discounts"       && <DiscountCodesTab />}
         </main>
       </div>
     </div>
