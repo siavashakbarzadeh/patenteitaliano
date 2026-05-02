@@ -102,7 +102,7 @@ export default function DictionaryPage({ onBack }: { onBack: () => void }) {
   });
 
   return (
-    <div style={{ padding: "20px 20px 100px", maxWidth: 600, margin: "0 auto" }}>
+    <div className="page-wrap">
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
         <button className="btn-secondary" style={{ padding: "8px 16px", fontSize: 13 }} onClick={onBack}>← بازگشت</button>

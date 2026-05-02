@@ -191,7 +191,7 @@ export default function OnboardingFlow({ onComplete }: { onComplete: (data: Onbo
                     <select value={lang} onChange={e => setLang(e.target.value)}
                       style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)",
                         borderRadius: 10, padding: "10px 14px", color: "var(--text-primary)", fontSize: 14, outline: "none" }}>
-                      {["فارسی","عربی","انگلیسی","ترکی","روسی","سایر"].map(l => <option key={l} value={l}>{l}</option>)}
+                      {["فارسی","ایتالیایی","عربی","انگلیسی","ترکی","روسی","سایر"].map(l => <option key={l} value={l}>{l}</option>)}
                     </select>
                   </div>
                 </div>

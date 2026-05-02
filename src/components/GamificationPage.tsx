@@ -28,7 +28,7 @@ export default function GamificationPage({ progress, onBack }: GamificationPageP
   const recommendations = useMemo(() => getRecommendations(progress, gm, accuracy), [progress, gm, accuracy]);
 
   return (
-    <div style={{ padding: "20px 20px 100px", maxWidth: 600, margin: "0 auto" }}>
+    <div className="page-wrap">
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
         <button className="btn-secondary" style={{ padding: "8px 16px", fontSize: 13 }} onClick={onBack}>

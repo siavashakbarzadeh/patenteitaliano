@@ -260,7 +260,7 @@ function StudyPage({ chapterNum, onBack, onGoToQuiz }: {
   }
 
   return (
-    <div style={{ padding: "20px 20px 40px", maxWidth: 640, margin: "0 auto" }}>
+    <div className="page-wrap-slim">
       {/* Top bar */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
         <button id="btn-study-back" className="btn-secondary"
@@ -608,7 +608,7 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter }: {
   const availableCount = chapters.filter((c) => c.available).length;
 
   return (
-    <div style={{ padding: "28px 20px 100px", maxWidth: 600, margin: "0 auto" }}>
+    <div className="page-wrap">
       {/* Header */}
       <div className="animate-fade-in-up" style={{ marginBottom: 32 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
@@ -780,7 +780,7 @@ function ChaptersPage({ progress, onSelectChapter, onStudyChapter, onMixedQuiz, 
   );
 
   return (
-    <div style={{ padding: "24px 20px 100px", maxWidth: 600, margin: "0 auto" }}>
+    <div className="page-wrap">
       <div className="animate-fade-in-up" style={{ marginBottom: 20 }}>
         <h1 style={{ fontSize: 26, fontWeight: 800, marginBottom: 6, direction: "rtl" }}>۲۵ فصل آیین‌نامه</h1>
         <p style={{ color: "var(--text-secondary)", fontSize: 14, direction: "rtl", textAlign: "right" }}>
@@ -1066,7 +1066,7 @@ function QuizPage({ chapterNum, onFinish, onBack, mode = "chapter", extraIds = [
   const timerPct = (timeLeft / questionTimeLimit) * 100;
 
   return (
-    <div style={{ padding: "20px 20px 40px", maxWidth: 600, margin: "0 auto" }}>
+    <div className="page-wrap-slim">
       {/* Top bar */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
         <button id="btn-quiz-back" className="btn-secondary"
@@ -1279,9 +1279,8 @@ function ResultsPage({ score, total, chapterNum, onRestart, onHome, onStudy }: {
   const hasContent = !!contentRegistry[chapterNum];
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column",
-      alignItems: "center", justifyContent: "center",
-      padding: "40px 24px", maxWidth: 480, margin: "0 auto" }}>
+    <div className="page-wrap-slim" style={{ minHeight: "100vh", display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center" }}>
       <div className="animate-scale-in" style={{ textAlign: "center", width: "100%" }}>
         <div style={{ fontSize: 64, marginBottom: 16, filter: passed ? "drop-shadow(0 0 20px gold)" : "none" }}>
           {passed ? "🏆" : "📚"}
@@ -1359,7 +1358,7 @@ function StatsPage({ progress, onReset, onReview }: { progress: UserProgress; on
   const availableChapters = chapters.filter(c => c.available);
 
   return (
-    <div style={{ padding: "24px 20px 100px", maxWidth: 600, margin: "0 auto" }}>
+    <div className="page-wrap">
       <h1 style={{ fontSize: 26, fontWeight: 800, marginBottom: 6, direction: "rtl" }} className="animate-fade-in-up">
         آمار و پیشرفت
       </h1>
@@ -1461,7 +1460,7 @@ function ReviewPage({ progress, onBack, onStartWrong, onStartFlagged }: {
   const flaggedQs = questions.filter(q => flaggedIds.includes(q.id));
 
   return (
-    <div style={{ padding: "24px 20px 100px", maxWidth: 600, margin: "0 auto" }}>
+    <div className="page-wrap">
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
         <button className="btn-secondary" style={{ padding: "8px 16px", fontSize: 13 }} onClick={onBack}>← بازگشت</button>
         <h1 style={{ fontSize: 22, fontWeight: 800, direction: "rtl" }}>مرور تست‌ها</h1>
