@@ -20,7 +20,14 @@ export const chapter12Questions: Question[] = [
       "Lo spazio percorso in un secondo e la lunghezza del veicolo"
     ],
     correct: 0,
-    explanation: "Lo spazio totale di arresto è la somma di due tratti: 1) lo spazio percorso durante il tempo di reazione (dal momento in cui si percepisce il pericolo all'inizio della frenata); 2) lo spazio di frenatura (dall'inizio della frenata all'arresto completo del veicolo)."
+    explanation: "Lo spazio totale di arresto è la somma di due tratti: 1) lo spazio percorso durante il tempo di reazione (dal momento in cui si percepisce il pericolo all'inizio della frenata); 2) lo spazio di frenatura (dall'inizio della frenata all'arresto completo del veicolo).",
+    tags: ["spazio-arresto", "reazione", "frenatura"],
+    pageRef: 145,
+    vocab: [
+      { italian: "spazio di arresto", persian: "فاصله توقف" },
+      { italian: "tempo di reazione", persian: "زمان واکنش" },
+      { italian: "spazio di frenatura", persian: "فاصله ترمز" },
+    ],
   },
 
   {
@@ -34,7 +41,14 @@ export const chapter12Questions: Question[] = [
       "5 secondi"
     ],
     correct: 0,
-    explanation: "Il tempo di reazione medio di un conducente in buone condizioni psicofisiche è di circa 1 secondo. Durante questo secondo, il veicolo continua a percorrere strada prima che il conducente abbia iniziato a frenare."
+    explanation: "Il tempo di reazione medio di un conducente in buone condizioni psicofisiche è di circa 1 secondo. Durante questo secondo, il veicolo continua a percorrere strada prima che il conducente abbia iniziato a frenare.",
+    tags: ["reazione", "conducente"],
+    pageRef: 145,
+    vocab: [
+      { italian: "tempo di reazione", persian: "زمان واکنش" },
+      { italian: "conducente", persian: "راننده" },
+      { italian: "condizioni psicofisiche", persian: "وضعیت روانی-جسمی" },
+    ],
   },
 
   {
@@ -48,7 +62,13 @@ export const chapter12Questions: Question[] = [
       "15 metri"
     ],
     correct: 0,
-    explanation: "A 100 km/h, lo spazio percorso durante il tempo di reazione di circa 1 secondo è di circa 28 metri. Formula approssimativa: (velocità/10) × 3 = (100/10) × 3 = 10 × 3 = 30, ridotto di poco ≈ 28 metri."
+    explanation: "A 100 km/h, lo spazio percorso durante il tempo di reazione di circa 1 secondo è di circa 28 metri. Formula approssimativa: (velocità/10) × 3 = (100/10) × 3 = 10 × 3 = 30, ridotto di poco ≈ 28 metri.",
+    tags: ["reazione", "formula", "velocità"],
+    pageRef: 145,
+    vocab: [
+      { italian: "spazio percorso", persian: "مسافت پیموده شده" },
+      { italian: "tempo di reazione", persian: "زمان واکنش" },
+    ],
   },
 
   {
@@ -62,7 +82,13 @@ export const chapter12Questions: Question[] = [
       "50 metri"
     ],
     correct: 0,
-    explanation: "A 50 km/h, lo spazio percorso durante il tempo di reazione è di circa 14 metri. Formula: (50/10) × 3 = 5 × 3 = 15, ridotto di poco ≈ 14 metri."
+    explanation: "A 50 km/h, lo spazio percorso durante il tempo di reazione è di circa 14 metri. Formula: (50/10) × 3 = 5 × 3 = 15, ridotto di poco ≈ 14 metri.",
+    tags: ["reazione", "formula", "velocità"],
+    pageRef: 145,
+    vocab: [
+      { italian: "spazio di reazione", persian: "فضای واکنش" },
+      { italian: "circa", persian: "تقریباً" },
+    ],
   },
 
   {
@@ -76,7 +102,13 @@ export const chapter12Questions: Question[] = [
       "13 metri"
     ],
     correct: 0,
-    explanation: "A 130 km/h, lo spazio percorso durante il tempo di reazione è di circa 36 metri. Formula: (130/10) × 3 = 13 × 3 = 39, ridotto di poco ≈ 36 metri."
+    explanation: "A 130 km/h, lo spazio percorso durante il tempo di reazione è di circa 36 metri. Formula: (130/10) × 3 = 13 × 3 = 39, ridotto di poco ≈ 36 metri.",
+    tags: ["reazione", "formula", "autostrada"],
+    pageRef: 145,
+    vocab: [
+      { italian: "autostrada", persian: "آزادراه" },
+      { italian: "velocità", persian: "سرعت" },
+    ],
   },
 
   {
@@ -90,7 +122,14 @@ export const chapter12Questions: Question[] = [
       "Dal tipo di pneumatici montati sul veicolo"
     ],
     correct: 0,
-    explanation: "Lo spazio percorso durante il tempo di reazione dipende dalla velocità del veicolo e dalle condizioni psicofisiche del conducente (prontezza di riflessi). Non dipende invece dalle caratteristiche meccaniche del veicolo come freni o pneumatici."
+    explanation: "Lo spazio percorso durante il tempo di reazione dipende dalla velocità del veicolo e dalle condizioni psicofisiche del conducente (prontezza di riflessi). Non dipende invece dalle caratteristiche meccaniche del veicolo come freni o pneumatici.",
+    tags: ["reazione", "conducente", "fattori"],
+    pageRef: 145,
+    vocab: [
+      { italian: "prontezza di riflessi", persian: "سرعت واکنش" },
+      { italian: "condizioni psicofisiche", persian: "وضعیت روانی-جسمی" },
+      { italian: "freni", persian: "ترمزها" },
+    ],
   },
 
   // ── Spazio di Frenatura ───────────────────────────────────────────────────
@@ -106,7 +145,15 @@ export const chapter12Questions: Question[] = [
       "Condizioni di fango con pneumatici nuovi"
     ],
     correct: 0,
-    explanation: "Lo spazio di frenatura minimo si verifica nelle migliori condizioni di aderenza tra pneumatici e strada, ovvero su strada asciutta con pneumatici in buone condizioni. Qualsiasi riduzione dell'aderenza (bagnato, ghiaccio, usura dei pneumatici) aumenta lo spazio di frenatura."
+    explanation: "Lo spazio di frenatura minimo si verifica nelle migliori condizioni di aderenza tra pneumatici e strada, ovvero su strada asciutta con pneumatici in buone condizioni. Qualsiasi riduzione dell'aderenza (bagnato, ghiaccio, usura dei pneumatici) aumenta lo spazio di frenatura.",
+    tags: ["frenatura", "aderenza", "pneumatici"],
+    pageRef: 146,
+    vocab: [
+      { italian: "aderenza", persian: "چسبندگی" },
+      { italian: "pneumatici", persian: "لاستیک‌ها" },
+      { italian: "strada asciutta", persian: "جاده خشک" },
+      { italian: "usurati", persian: "فرسوده" },
+    ],
   },
 
   {
@@ -120,7 +167,14 @@ export const chapter12Questions: Question[] = [
       "Rimane uguale se si frena progressivamente"
     ],
     correct: 0,
-    explanation: "Lo spazio di frenatura dipende dal quadrato della velocità. Se la velocità raddoppia, lo spazio di frenatura diventa 4 volte maggiore (2² = 4). Se la velocità triplica, diventa 9 volte (3² = 9); se quadruplica, 16 volte (4² = 16)."
+    explanation: "Lo spazio di frenatura dipende dal quadrato della velocità. Se la velocità raddoppia, lo spazio di frenatura diventa 4 volte maggiore (2² = 4). Se la velocità triplica, diventa 9 volte (3² = 9); se quadruplica, 16 volte (4² = 16).",
+    tags: ["frenatura", "velocità", "formula"],
+    pageRef: 146,
+    vocab: [
+      { italian: "raddoppiare", persian: "دو برابر کردن" },
+      { italian: "quadrato della velocità", persian: "توان دوم سرعت" },
+      { italian: "quadruplo", persian: "چهار برابر" },
+    ],
   },
 
   {
@@ -134,7 +188,13 @@ export const chapter12Questions: Question[] = [
       "12 volte maggiore"
     ],
     correct: 0,
-    explanation: "Lo spazio di frenatura è proporzionale al quadrato della velocità. Se la velocità triplica (×3), lo spazio di frenatura diventa 3² = 9 volte maggiore."
+    explanation: "Lo spazio di frenatura è proporzionale al quadrato della velocità. Se la velocità triplica (×3), lo spazio di frenatura diventa 3² = 9 volte maggiore.",
+    tags: ["frenatura", "formula", "velocità"],
+    pageRef: 146,
+    vocab: [
+      { italian: "triplicare", persian: "سه برابر کردن" },
+      { italian: "proporzionale", persian: "متناسب" },
+    ],
   },
 
   {
@@ -148,7 +208,14 @@ export const chapter12Questions: Question[] = [
       "È sempre preferibile per fermare il veicolo più rapidamente"
     ],
     correct: 0,
-    explanation: "Il bloccaggio delle ruote allunga in ogni caso lo spazio di frenatura rispetto a una frenata con ruote rotolanti. Bisogna frenare gradualmente per evitare il bloccaggio. I sistemi ABS evitano automaticamente il bloccaggio e consentono anche di mantenere la direzionalità del veicolo."
+    explanation: "Il bloccaggio delle ruote allunga in ogni caso lo spazio di frenatura rispetto a una frenata con ruote rotolanti. Bisogna frenare gradualmente per evitare il bloccaggio. I sistemi ABS evitano automaticamente il bloccaggio e consentono anche di mantenere la direzionalità del veicolo.",
+    tags: ["frenatura", "ABS", "bloccaggio"],
+    pageRef: 146,
+    vocab: [
+      { italian: "bloccaggio delle ruote", persian: "قفل شدن چرخ‌ها" },
+      { italian: "gradualmente", persian: "تدریجی" },
+      { italian: "ABS", persian: "سیستم ضدقفل ترمز" },
+    ],
   },
 
   {
@@ -162,7 +229,15 @@ export const chapter12Questions: Question[] = [
       "Ghiaccio con pneumatici invernali"
     ],
     correct: 0,
-    explanation: "L'aderenza tra pneumatici e asfalto è massima su strada asciutta con pneumatici nuovi o quasi nuovi. L'aderenza si riduce su strada bagnata, e diventa molto ridotta su strade sdrucciolevoli a causa di ghiaccio, neve, fango, sabbia o ghiaietto."
+    explanation: "L'aderenza tra pneumatici e asfalto è massima su strada asciutta con pneumatici nuovi o quasi nuovi. L'aderenza si riduce su strada bagnata, e diventa molto ridotta su strade sdrucciolevoli a causa di ghiaccio, neve, fango, sabbia o ghiaietto.",
+    tags: ["aderenza", "pneumatici", "condizioni-strada"],
+    pageRef: 146,
+    vocab: [
+      { italian: "asfalto", persian: "آسفالت" },
+      { italian: "sdrucciolevole", persian: "لغزنده" },
+      { italian: "ghiaccio", persian: "یخ" },
+      { italian: "fango", persian: "گل‌ولای" },
+    ],
   },
 
   {
@@ -176,7 +251,15 @@ export const chapter12Questions: Question[] = [
       "Influisce solo per i veicoli pesanti"
     ],
     correct: 0,
-    explanation: "La pendenza della strada influisce sullo spazio di frenatura: in discesa, la forza di gravità si oppone alla frenata, rendendo la frenatura più difficile e aumentando lo spazio; in salita, la gravità aiuta la frenata, diminuendo lo spazio di frenatura."
+    explanation: "La pendenza della strada influisce sullo spazio di frenatura: in discesa, la forza di gravità si oppone alla frenata, rendendo la frenatura più difficile e aumentando lo spazio; in salita, la gravità aiuta la frenata, diminuendo lo spazio di frenatura.",
+    tags: ["frenatura", "pendenza", "discesa-salita"],
+    pageRef: 146,
+    vocab: [
+      { italian: "pendenza", persian: "شیب" },
+      { italian: "discesa", persian: "سرازیری" },
+      { italian: "salita", persian: "سربالایی" },
+      { italian: "forza di gravità", persian: "نیروی جاذبه" },
+    ],
   },
 
   {
@@ -190,7 +273,13 @@ export const chapter12Questions: Question[] = [
       "Sì, perché chi ha riflessi pronti frena più forte"
     ],
     correct: 0,
-    explanation: "Lo spazio di frenatura NON viene influenzato dalla prontezza di riflessi del conducente. La prontezza di riflessi influisce solo sullo spazio percorso durante il tempo di reazione. Lo spazio di frenatura dipende invece dalla velocità, dall'aderenza pneumatico-strada e dalle caratteristiche meccaniche dei freni."
+    explanation: "Lo spazio di frenatura NON viene influenzato dalla prontezza di riflessi del conducente. La prontezza di riflessi influisce solo sullo spazio percorso durante il tempo di reazione. Lo spazio di frenatura dipende invece dalla velocità, dall'aderenza pneumatico-strada e dalle caratteristiche meccaniche dei freni.",
+    tags: ["frenatura", "reazione", "distinzione"],
+    pageRef: 146,
+    vocab: [
+      { italian: "influenzato", persian: "تحت تأثیر" },
+      { italian: "caratteristiche meccaniche", persian: "مشخصات مکانیکی" },
+    ],
   },
 
   // ── Spazio Totale di Arresto ──────────────────────────────────────────────
@@ -206,7 +295,14 @@ export const chapter12Questions: Question[] = [
       "Il conducente ha riflessi pronti"
     ],
     correct: 0,
-    explanation: "Lo spazio totale di arresto aumenta se: aumenta la velocità; la strada è innevata o coperta di fango; i pneumatici sono usurati. Diminuisce se migliora la prontezza di riflessi del conducente (riduce solo la parte di reazione)."
+    explanation: "Lo spazio totale di arresto aumenta se: aumenta la velocità; la strada è innevata o coperta di fango; i pneumatici sono usurati. Diminuisce se migliora la prontezza di riflessi del conducente (riduce solo la parte di reazione).",
+    tags: ["spazio-arresto", "fattori", "neve"],
+    pageRef: 146,
+    vocab: [
+      { italian: "innevata", persian: "برفگیر" },
+      { italian: "usurati", persian: "فرسوده" },
+      { italian: "diminuisce", persian: "کاهش مییابد" },
+    ],
   },
 
   {
@@ -220,7 +316,14 @@ export const chapter12Questions: Question[] = [
       "Almeno pari alla lunghezza del veicolo moltiplicata per la velocità"
     ],
     correct: 0,
-    explanation: "Per non costituire pericolo per gli altri utenti della strada, la distanza di visibilità deve essere sempre superiore allo spazio totale di arresto. Se non si vede abbastanza lontano da riuscire ad arrestarsi, si deve ridurre la velocità."
+    explanation: "Per non costituire pericolo per gli altri utenti della strada, la distanza di visibilità deve essere sempre superiore allo spazio totale di arresto. Se non si vede abbastanza lontano da riuscire ad arrestarsi, si deve ridurre la velocità.",
+    tags: ["spazio-arresto", "visibilità", "sicurezza"],
+    pageRef: 146,
+    vocab: [
+      { italian: "distanza di visibilità", persian: "فاصله دید" },
+      { italian: "costituire pericolo", persian: "خطر ایجاد کردن" },
+      { italian: "superiore", persian: "بیشتر" },
+    ],
   },
 
   // ── 12.2 Distanza di Sicurezza ────────────────────────────────────────────
@@ -236,7 +339,14 @@ export const chapter12Questions: Question[] = [
       "Essere uguale alla lunghezza del proprio veicolo"
     ],
     correct: 0,
-    explanation: "La distanza di sicurezza deve essere tale da riuscire a fermare il veicolo in caso di pericolo, evitando collisioni (tamponamenti) con il veicolo che precede. Il suo valore minimo deve essere almeno uguale alla distanza percorsa durante il tempo di reazione."
+    explanation: "La distanza di sicurezza deve essere tale da riuscire a fermare il veicolo in caso di pericolo, evitando collisioni (tamponamenti) con il veicolo che precede. Il suo valore minimo deve essere almeno uguale alla distanza percorsa durante il tempo di reazione.",
+    tags: ["distanza-sicurezza", "tamponamento", "articolo-149"],
+    pageRef: 147,
+    vocab: [
+      { italian: "distanza di sicurezza", persian: "فاصله ایمنی" },
+      { italian: "tamponamento", persian: "تصادف پشتی" },
+      { italian: "veicolo che precede", persian: "وسیله جلویی" },
+    ],
   },
 
   {
@@ -250,7 +360,13 @@ export const chapter12Questions: Question[] = [
       "50 metri"
     ],
     correct: 0,
-    explanation: "La distanza minima di sicurezza a 30 km/h è di circa 9 metri, corrispondente approssimativamente allo spazio percorso durante il tempo di reazione di 1 secondo a quella velocità."
+    explanation: "La distanza minima di sicurezza a 30 km/h è di circa 9 metri, corrispondente approssimativamente allo spazio percorso durante il tempo di reazione di 1 secondo a quella velocità.",
+    tags: ["distanza-sicurezza", "formula", "velocità"],
+    pageRef: 147,
+    vocab: [
+      { italian: "distanza minima", persian: "حداقل فاصله" },
+      { italian: "mantenere", persian: "حفظ کردن" },
+    ],
   },
 
   {
@@ -264,7 +380,13 @@ export const chapter12Questions: Question[] = [
       "150 metri"
     ],
     correct: 0,
-    explanation: "La distanza minima di sicurezza a 150 km/h è di circa 42 metri, corrispondente allo spazio percorso durante il tempo di reazione (circa 1 secondo) a tale velocità. Nella pratica la distanza reale dovrebbe essere maggiore per includere anche lo spazio di frenatura."
+    explanation: "La distanza minima di sicurezza a 150 km/h è di circa 42 metri, corrispondente allo spazio percorso durante il tempo di reazione (circa 1 secondo) a tale velocità. Nella pratica la distanza reale dovrebbe essere maggiore per includere anche lo spazio di frenatura.",
+    tags: ["distanza-sicurezza", "formula", "autostrada"],
+    pageRef: 147,
+    vocab: [
+      { italian: "nella pratica", persian: "در عمل" },
+      { italian: "corrispondente", persian: "معادل" },
+    ],
   },
 
   {
@@ -278,7 +400,14 @@ export const chapter12Questions: Question[] = [
       "Il veicolo davanti è più piccolo del proprio"
     ],
     correct: 0,
-    explanation: "La distanza di sicurezza va aumentata quando: il veicolo che precede trasporta un carico sporgente poco stabile; si marcia in colonna con scarsa visibilità; non si può escludere che un veicolo davanti si arresti improvvisamente. Questo per evitare tamponamenti a catena."
+    explanation: "La distanza di sicurezza va aumentata quando: il veicolo che precede trasporta un carico sporgente poco stabile; si marcia in colonna con scarsa visibilità; non si può escludere che un veicolo davanti si arresti improvvisamente. Questo per evitare tamponamenti a catena.",
+    tags: ["distanza-sicurezza", "carico", "colonna"],
+    pageRef: 147,
+    vocab: [
+      { italian: "carico sporgente", persian: "بار بیرون‌زده" },
+      { italian: "in colonna", persian: "در صف" },
+      { italian: "tamponamento a catena", persian: "تصادف زنجیره‌ای" },
+    ],
   },
 
   {
@@ -292,7 +421,14 @@ export const chapter12Questions: Question[] = [
       "Solo dallo stato dei freni"
     ],
     correct: 0,
-    explanation: "La distanza di sicurezza è commisurata a molti fattori: la velocità; le condizioni del traffico e del fondo stradale; il tipo e stato di efficienza del veicolo (soprattutto i freni); l'aderenza dei pneumatici; l'entità del carico; la prontezza di riflessi del conducente; le condizioni planoaltimetriche; le condizioni atmosferiche."
+    explanation: "La distanza di sicurezza è commisurata a molti fattori: la velocità; le condizioni del traffico e del fondo stradale; il tipo e stato di efficienza del veicolo (soprattutto i freni); l'aderenza dei pneumatici; l'entità del carico; la prontezza di riflessi del conducente; le condizioni planoaltimetriche; le condizioni atmosferiche.",
+    tags: ["distanza-sicurezza", "fattori", "atmosfera"],
+    pageRef: 147,
+    vocab: [
+      { italian: "fondo stradale", persian: "سطح جاده" },
+      { italian: "condizioni atmosferiche", persian: "شرایط جوی" },
+      { italian: "entità del carico", persian: "میزان بار" },
+    ],
   },
 
   {
@@ -306,7 +442,15 @@ export const chapter12Questions: Question[] = [
       "Sì — i motori benzina consentono una distanza minore"
     ],
     correct: 0,
-    explanation: "Il tipo di alimentazione del motore (benzina, gasolio, GPL) NON influenza la distanza di sicurezza. Non influiscono nemmeno: la potenza o cilindrata del motore; la presenza del servosterzo; il numero di marce del cambio; la lunghezza o larghezza dei veicoli; l'ampiezza della carreggiata."
+    explanation: "Il tipo di alimentazione del motore (benzina, gasolio, GPL) NON influenza la distanza di sicurezza. Non influiscono nemmeno: la potenza o cilindrata del motore; la presenza del servosterzo; il numero di marce del cambio; la lunghezza o larghezza dei veicoli; l'ampiezza della carreggiata.",
+    tags: ["distanza-sicurezza", "non-fattori", "motore"],
+    pageRef: 147,
+    vocab: [
+      { italian: "alimentazione", persian: "سوخت" },
+      { italian: "benzina", persian: "بنزین" },
+      { italian: "gasolio", persian: "گازوئیل" },
+      { italian: "GPL", persian: "گاز مایع فشار" },
+    ],
   },
 
   {
@@ -320,7 +464,13 @@ export const chapter12Questions: Question[] = [
       "Sì — ma solo in curva"
     ],
     correct: 0,
-    explanation: "La presenza del servosterzo NON influisce sulla distanza di sicurezza. Non influiscono nemmeno: tipo di alimentazione, potenza, cilindrata, numero di marce, lunghezza/larghezza dei veicoli, ampiezza della carreggiata."
+    explanation: "La presenza del servosterzo NON influisce sulla distanza di sicurezza. Non influiscono nemmeno: tipo di alimentazione, potenza, cilindrata, numero di marce, lunghezza/larghezza dei veicoli, ampiezza della carreggiata.",
+    tags: ["distanza-sicurezza", "non-fattori", "sterzo"],
+    pageRef: 147,
+    vocab: [
+      { italian: "servosterzo", persian: "فرمان هیدرولیک" },
+      { italian: "cilindrata", persian: "حجم موتور" },
+    ],
   },
 
   {
@@ -334,7 +484,13 @@ export const chapter12Questions: Question[] = [
       "Sì, ma solo in discesa"
     ],
     correct: 0,
-    explanation: "Il numero di marce del cambio non influisce sulla distanza di sicurezza. La distanza di sicurezza non è influenzata nemmeno dal tipo di alimentazione, dalla potenza del motore, dalla cilindrata, dalla presenza del servosterzo o dalle dimensioni dei veicoli."
+    explanation: "Il numero di marce del cambio non influisce sulla distanza di sicurezza. La distanza di sicurezza non è influenzata nemmeno dal tipo di alimentazione, dalla potenza del motore, dalla cilindrata, dalla presenza del servosterzo o dalle dimensioni dei veicoli.",
+    tags: ["distanza-sicurezza", "non-fattori", "cambio"],
+    pageRef: 147,
+    vocab: [
+      { italian: "numero di marce", persian: "تعداد دنده‌ها" },
+      { italian: "cambio", persian: "گیربکس" },
+    ],
   },
 
   {
@@ -348,7 +504,14 @@ export const chapter12Questions: Question[] = [
       "Solo in autostrada"
     ],
     correct: 0,
-    explanation: "La distrazione del conducente (es. uso del cellulare, ricerca di comandi radio, ecc.) aumenta il tempo di reazione e quindi aumenta lo spazio percorso prima di iniziare la frenata. Anche una distrazione di pochi secondi può essere causa di incidenti, rendendo necessaria una maggiore distanza di sicurezza."
+    explanation: "La distrazione del conducente (es. uso del cellulare, ricerca di comandi radio, ecc.) aumenta il tempo di reazione e quindi aumenta lo spazio percorso prima di iniziare la frenata. Anche una distrazione di pochi secondi può essere causa di incidenti, rendendo necessaria una maggiore distanza di sicurezza.",
+    tags: ["distanza-sicurezza", "distrazione", "cellulare"],
+    pageRef: 147,
+    vocab: [
+      { italian: "distrazione", persian: "حواس‌پرتی" },
+      { italian: "cellulare", persian: "تلفن همراه" },
+      { italian: "incidente", persian: "تصادف" },
+    ],
   },
 
   // ── Distanze Speciali ─────────────────────────────────────────────────────
@@ -364,7 +527,14 @@ export const chapter12Questions: Question[] = [
       "100 metri"
     ],
     correct: 0,
-    explanation: "Quando sono in azione macchine sgombraneve o spanditrici di sale (ghiaietto), i veicoli che le seguono devono procedere con la massima cautela e mantenere una distanza di sicurezza di almeno 20 metri rispetto a tali macchine."
+    explanation: "Quando sono in azione macchine sgombraneve o spanditrici di sale (ghiaietto), i veicoli che le seguono devono procedere con la massima cautela e mantenere una distanza di sicurezza di almeno 20 metri rispetto a tali macchine.",
+    tags: ["distanza-sicurezza", "neve", "distanze-speciali"],
+    pageRef: 148,
+    vocab: [
+      { italian: "sgombraneve", persian: "برف‌روب" },
+      { italian: "spanditrice di sale", persian: "نمک‌پاش" },
+      { italian: "cautela", persian: "احتیاط" },
+    ],
   },
 
   {
@@ -378,7 +548,14 @@ export const chapter12Questions: Question[] = [
       "200 metri"
     ],
     correct: 0,
-    explanation: "Fuori dei centri abitati, su strade a una corsia per senso di marcia, la distanza di sicurezza fra veicoli merci di oltre 3,5 t a cui sia stato imposto il divieto di sorpasso è pari ad almeno 100 metri."
+    explanation: "Fuori dei centri abitati, su strade a una corsia per senso di marcia, la distanza di sicurezza fra veicoli merci di oltre 3,5 t a cui sia stato imposto il divieto di sorpasso è pari ad almeno 100 metri.",
+    tags: ["distanza-sicurezza", "distanze-speciali", "camion"],
+    pageRef: 148,
+    vocab: [
+      { italian: "veicoli merci", persian: "وسایل بار سنگین" },
+      { italian: "divieto di sorpasso", persian: "ممنوعیت سبقت" },
+      { italian: "fuori dei centri abitati", persian: "خارج شهر" },
+    ],
   },
 
   {
@@ -392,7 +569,13 @@ export const chapter12Questions: Question[] = [
       "Sì — solo sulle autostrade"
     ],
     correct: 0,
-    explanation: "La marcia innestata NON influisce sulla distanza di sicurezza. La distanza di sicurezza dipende dalla velocità del veicolo (non dalla marcia usata), dalle condizioni di guida e dalle caratteristiche del conducente."
+    explanation: "La marcia innestata NON influisce sulla distanza di sicurezza. La distanza di sicurezza dipende dalla velocità del veicolo (non dalla marcia usata), dalle condizioni di guida e dalle caratteristiche del conducente.",
+    tags: ["distanza-sicurezza", "non-fattori", "marcia"],
+    pageRef: 148,
+    vocab: [
+      { italian: "marcia innestata", persian: "دنده درگیر" },
+      { italian: "dipende da", persian: "بستگی دارد به" },
+    ],
   },
 
   // ── Aderenza e Condizioni Speciali ───────────────────────────────────────
@@ -408,7 +591,15 @@ export const chapter12Questions: Question[] = [
       "Strade in salita con fondo asciutto"
     ],
     correct: 0,
-    explanation: "L'aderenza è notevolmente ridotta su strade sdrucciolevoli a causa di ghiaccio, neve, fango, sabbia o ghiaietto, specialmente quando si usano pneumatici lisci. In queste condizioni, lo spazio di frenatura aumenta drammaticamente."
+    explanation: "L'aderenza è notevolmente ridotta su strade sdrucciolevoli a causa di ghiaccio, neve, fango, sabbia o ghiaietto, specialmente quando si usano pneumatici lisci. In queste condizioni, lo spazio di frenatura aumenta drammaticamente.",
+    tags: ["aderenza", "condizioni-strada", "neve"],
+    pageRef: 148,
+    vocab: [
+      { italian: "notevolmente", persian: "به طور مشخص" },
+      { italian: "sabbia", persian: "ماسه" },
+      { italian: "ghiaietto", persian: "شن" },
+      { italian: "pneumatici lisci", persian: "لاستیک کار کرده" },
+    ],
   },
 
   {
@@ -422,7 +613,14 @@ export const chapter12Questions: Question[] = [
       "Usare solo il freno motore"
     ],
     correct: 0,
-    explanation: "Per mantenere lo spazio di frenatura minimo, il conducente deve: evitare di sovraccaricare il veicolo oltre il limite di massa consentita; curare la manutenzione dei pneumatici, verificando lo spessore degli intagli del battistrada. Deve poi frenare gradualmente senza bloccare le ruote."
+    explanation: "Per mantenere lo spazio di frenatura minimo, il conducente deve: evitare di sovraccaricare il veicolo oltre il limite di massa consentita; curare la manutenzione dei pneumatici, verificando lo spessore degli intagli del battistrada. Deve poi frenare gradualmente senza bloccare le ruote.",
+    tags: ["frenatura", "manutenzione", "pneumatici"],
+    pageRef: 148,
+    vocab: [
+      { italian: "sovraccaricare", persian: "بیش از حد بار کردن" },
+      { italian: "battistrada", persian: "آج لاستیک" },
+      { italian: "manutenzione", persian: "نگهداری" },
+    ],
   },
 
   {
@@ -436,7 +634,14 @@ export const chapter12Questions: Question[] = [
       "La pendenza non ha effetto — è solo un fattore psicologico"
     ],
     correct: 0,
-    explanation: "In discesa, la forza di gravità si oppone alla frenata perché tende a mantenere il veicolo in movimento verso il basso, aumentando lo spazio necessario per fermarsi. In salita invece la gravità aiuta la frenata opponendosi al moto del veicolo, riducendo lo spazio di frenatura."
+    explanation: "In discesa, la forza di gravità si oppone alla frenata perché tende a mantenere il veicolo in movimento verso il basso, aumentando lo spazio necessario per fermarsi. In salita invece la gravità aiuta la frenata opponendosi al moto del veicolo, riducendo lo spazio di frenatura.",
+    tags: ["frenatura", "pendenza", "gravità"],
+    pageRef: 148,
+    vocab: [
+      { italian: "a parità di", persian: "با ثابت بودن" },
+      { italian: "si oppone", persian: "مقابله میکند" },
+      { italian: "moto", persian: "حرکت" },
+    ],
   },
 
 ];

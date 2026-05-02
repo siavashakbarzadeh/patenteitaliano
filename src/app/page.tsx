@@ -1,13 +1,18 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { questions, chapters, type Question } from "@/lib/questions";
+import { getSession, logout } from "@/lib/auth";
 import {
   getProgress,
   recordAnswer,
   recordQuizComplete,
   getAccuracy,
   resetProgress,
+  toggleFlagQuestion,
+  isFlagged,
+  getWrongQuestionIds,
+  getFlaggedQuestionIds,
   type UserProgress,
 } from "@/lib/store";
 import { chapter20Content } from "@/lib/chapters/20/content";
@@ -37,10 +42,23 @@ import {
   Languages,
   ChevronDown,
   ChevronUp,
+  Flag,
+  Clock,
+  ListFilter,
+  RefreshCw,
+  BookMarked,
+  Sparkles,
+  Star,
+  Highlighter,
+  Underline,
+  StickyNote,
+  Image as ImageIcon,
 } from "lucide-react";
+import VideoPanel from "@/components/VideoPanel";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type Page = "home" | "chapters" | "quiz" | "results" | "stats" | "study";
+type Page = "home" | "chapters" | "quiz" | "results" | "stats" | "study" | "review";
+type QuizMode = "chapter" | "wrong" | "flagged" | "mixed";
 
 interface QuizState {
   questions: Question[];
@@ -49,6 +67,9 @@ interface QuizState {
   answered: boolean;
   score: number;
   wrongIds: number[];
+  timePerQuestion: number; // seconds spent on current question
+  mode: QuizMode;
+  chapterNum: number;
 }
 
 const contentRegistry: Record<number, ChapterContent> = {
@@ -67,7 +88,14 @@ const contentRegistry: Record<number, ChapterContent> = {
 function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
 }
-function buildQuiz(chapterNum: number): Question[] {
+function buildQuiz(chapterNum: number, mode: QuizMode = "chapter", extraIds: number[] = []): Question[] {
+  if (mode === "wrong" || mode === "flagged") {
+    const pool = questions.filter(q => extraIds.includes(q.id));
+    return shuffle(pool);
+  }
+  if (mode === "mixed") {
+    return shuffle(questions.filter(q => chapters.find(c => c.number === q.chapter)?.available));
+  }
   return shuffle(questions.filter((q) => q.chapter === chapterNum));
 }
 
@@ -123,6 +151,31 @@ function StudyPage({ chapterNum, onBack, onGoToQuiz }: {
   const [openSection, setOpenSection] = useState<string | null>(
     content?.sections[0]?.id ?? null
   );
+  // ── Underline state: { sectionId: Set of para indices underlined }
+  const [underlines, setUnderlines] = useState<Record<string, number[]>>(() => {
+    try { return JSON.parse(localStorage.getItem(`ul-${chapterNum}`) || "{}"); } catch { return {}; }
+  });
+  // ── Note state: { sectionId: note text }
+  const [userNotes, setUserNotes] = useState<Record<string, string>>(() => {
+    try { return JSON.parse(localStorage.getItem(`notes-${chapterNum}`) || "{}"); } catch { return {}; }
+  });
+  // ── UI mode per section
+  const [underlineMode, setUnderlineMode] = useState<string | null>(null);
+  const [noteOpen, setNoteOpen] = useState<string | null>(null);
+
+  const toggleUnderline = (sectionId: string, paraIdx: number) => {
+    const cur = underlines[sectionId] || [];
+    const next = cur.includes(paraIdx) ? cur.filter(i => i !== paraIdx) : [...cur, paraIdx];
+    const upd = { ...underlines, [sectionId]: next };
+    setUnderlines(upd);
+    localStorage.setItem(`ul-${chapterNum}`, JSON.stringify(upd));
+  };
+
+  const saveNote = (sectionId: string, text: string) => {
+    const upd = { ...userNotes, [sectionId]: text };
+    setUserNotes(upd);
+    localStorage.setItem(`notes-${chapterNum}`, JSON.stringify(upd));
+  };
 
   if (!content) {
     return (
@@ -136,7 +189,7 @@ function StudyPage({ chapterNum, onBack, onGoToQuiz }: {
   return (
     <div style={{ padding: "20px 20px 40px", maxWidth: 640, margin: "0 auto" }}>
       {/* Top bar */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
         <button id="btn-study-back" className="btn-secondary"
           style={{ padding: "8px 16px", fontSize: 13 }} onClick={onBack}>
           ← خروج
@@ -155,7 +208,7 @@ function StudyPage({ chapterNum, onBack, onGoToQuiz }: {
 
       {/* Chapter header */}
       <div className="glass-card animate-fade-in-up" style={{
-        padding: "20px 22px", marginBottom: 20,
+        padding: "20px 22px", marginBottom: 16,
         background: "linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.08))",
         border: "1px solid rgba(99,102,241,0.3)",
       }}>
@@ -172,6 +225,22 @@ function StudyPage({ chapterNum, onBack, onGoToQuiz }: {
           {content.titleIt}
         </p>
       </div>
+
+      {/* Summary card */}
+      {content.summary && (
+        <div className="animate-fade-in-up" style={{
+          background: "rgba(251,191,36,0.07)", border: "1px solid rgba(251,191,36,0.2)",
+          borderRadius: 14, padding: "14px 18px", marginBottom: 16,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+            <Sparkles size={14} color="#fbbf24" />
+            <span style={{ fontSize: 11, fontWeight: 700, color: "#fbbf24", letterSpacing: "0.06em" }}>خلاصه فصل</span>
+          </div>
+          <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8, direction: "rtl", textAlign: "right", margin: 0 }}>
+            {content.summary}
+          </p>
+        </div>
+      )}
 
       {/* Sections */}
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -197,22 +266,184 @@ function StudyPage({ chapterNum, onBack, onGoToQuiz }: {
 
               {isOpen && (
                 <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "4px 0 16px" }}>
-                  <div style={{ padding: "0 20px", display: "flex", flexDirection: "column", gap: 12, marginBottom: 16 }}>
-                    {section.body.map((para, pIdx) => (
-                      <p key={pIdx} style={{
-                        fontSize: 14, lineHeight: 1.8, direction: "rtl", textAlign: "right",
-                        color: "var(--text-secondary)",
-                        background: para.startsWith("⚠️") || para.startsWith("🚫") ? "rgba(239,68,68,0.06)"
-                          : para.startsWith("✅") ? "rgba(16,185,129,0.06)" : "transparent",
-                        borderRadius: (para.startsWith("⚠️") || para.startsWith("🚫") || para.startsWith("✅")) ? 10 : 0,
-                        padding: (para.startsWith("⚠️") || para.startsWith("🚫") || para.startsWith("✅")) ? "10px 14px" : 0,
-                        borderRight: para.startsWith("📌") ? "3px solid var(--accent-primary)" : "none",
-                        paddingRight: para.startsWith("📌") ? 12 : undefined,
-                        whiteSpace: "pre-line",
-                      }}>{para}</p>
-                    ))}
+
+                  {/* 🛠 Section Toolbar */}
+                  <div style={{ display: "flex", gap: 6, padding: "8px 20px 4px", justifyContent: "flex-end" }}>
+                    {/* Underline toggle */}
+                    <button
+                      onClick={() => setUnderlineMode(underlineMode === section.id ? null : section.id)}
+                      style={{
+                        display: "flex", alignItems: "center", gap: 4,
+                        padding: "4px 10px", borderRadius: 8, border: "1px solid",
+                        fontSize: 11, fontWeight: 600, cursor: "pointer",
+                        borderColor: underlineMode === section.id ? "#a78bfa" : "rgba(255,255,255,0.1)",
+                        background: underlineMode === section.id ? "rgba(167,139,250,0.15)" : "rgba(255,255,255,0.04)",
+                        color: underlineMode === section.id ? "#a78bfa" : "var(--text-muted)",
+                      }}
+                      title="حالت زیرخط‌کشی — روی هر پاراگراف کلیک کنید"
+                    >
+                      <Underline size={12} />
+                      {underlineMode === section.id ? "خروج underline" : "underline"}
+                    </button>
+                    {/* Note toggle */}
+                    <button
+                      onClick={() => setNoteOpen(noteOpen === section.id ? null : section.id)}
+                      style={{
+                        display: "flex", alignItems: "center", gap: 4,
+                        padding: "4px 10px", borderRadius: 8, border: "1px solid",
+                        fontSize: 11, fontWeight: 600, cursor: "pointer",
+                        borderColor: (userNotes[section.id] || noteOpen === section.id) ? "#fbbf24" : "rgba(255,255,255,0.1)",
+                        background: (userNotes[section.id] || noteOpen === section.id) ? "rgba(251,191,36,0.12)" : "rgba(255,255,255,0.04)",
+                        color: (userNotes[section.id] || noteOpen === section.id) ? "#fbbf24" : "var(--text-muted)",
+                      }}
+                    >
+                      <StickyNote size={12} />
+                      نت گذاری
+                    </button>
                   </div>
 
+                  {/* 🗒 User Note (post-it) */}
+                  {noteOpen === section.id && (
+                    <div style={{ padding: "0 20px 12px" }}>
+                      <div style={{
+                        background: "rgba(251,191,36,0.08)", border: "1px solid rgba(251,191,36,0.25)",
+                        borderRadius: 12, padding: "12px",
+                      }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+                          <StickyNote size={13} color="#fbbf24" />
+                          <span style={{ fontSize: 11, fontWeight: 700, color: "#fbbf24" }}>یادداشت شخصی</span>
+                          {userNotes[section.id] && (
+                            <button onClick={() => saveNote(section.id, "")}
+                              style={{ marginRight: "auto", fontSize: 10, color: "rgba(239,68,68,0.7)",
+                                background: "none", border: "none", cursor: "pointer" }}>
+                              حذف یادداشت
+                            </button>
+                          )}
+                        </div>
+                        <textarea
+                          value={userNotes[section.id] || ""}
+                          onChange={e => saveNote(section.id, e.target.value)}
+                          placeholder="یادداشت خود را اینجا بنویسید..."
+                          style={{
+                            width: "100%", minHeight: 90, resize: "vertical",
+                            background: "rgba(251,191,36,0.06)", border: "1px solid rgba(251,191,36,0.2)",
+                            borderRadius: 8, padding: "8px 10px",
+                            fontSize: 13, color: "#fde68a", lineHeight: 1.7,
+                            direction: "rtl", textAlign: "right",
+                            fontFamily: "inherit", outline: "none",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Body paragraphs */}
+                  <div style={{ padding: "0 20px", display: "flex", flexDirection: "column", gap: 12, marginBottom: 16 }}>
+                    {underlineMode === section.id && (
+                      <div style={{ fontSize: 11, color: "#a78bfa", direction: "rtl", textAlign: "right",
+                        padding: "4px 8px", background: "rgba(167,139,250,0.08)", borderRadius: 6 }}>
+                        💡 روی هر پاراگراف کلیک کنید تا زیرخط بگیرد / برداشته شود
+                      </div>
+                    )}
+                    {section.body.map((para, pIdx) => {
+                      const isUnderlined = (underlines[section.id] || []).includes(pIdx);
+                      const inUlMode = underlineMode === section.id;
+                      return (
+                        <p key={pIdx}
+                          onClick={() => inUlMode && toggleUnderline(section.id, pIdx)}
+                          style={{
+                            fontSize: 14, lineHeight: 1.8, direction: "rtl", textAlign: "right",
+                            color: "var(--text-secondary)",
+                            background: isUnderlined ? "rgba(167,139,250,0.08)"
+                              : para.startsWith("⚠️") || para.startsWith("🚫") ? "rgba(239,68,68,0.06)"
+                              : para.startsWith("✅") ? "rgba(16,185,129,0.06)" : "transparent",
+                            borderRadius: (isUnderlined || para.startsWith("⚠️") || para.startsWith("🚫") || para.startsWith("✅")) ? 10 : 0,
+                            padding: (isUnderlined || para.startsWith("⚠️") || para.startsWith("🚫") || para.startsWith("✅")) ? "10px 14px" : 0,
+                            borderRight: isUnderlined ? "3px solid #a78bfa"
+                              : para.startsWith("📌") ? "3px solid var(--accent-primary)" : "none",
+                            paddingRight: (isUnderlined || para.startsWith("📌")) ? 12 : undefined,
+                            whiteSpace: "pre-line",
+                            cursor: inUlMode ? "pointer" : "default",
+                            transition: "all 0.15s ease",
+                            textDecoration: isUnderlined ? "underline dotted rgba(167,139,250,0.6)" : "none",
+                            textUnderlineOffset: "4px",
+                          }}
+                        >{para}</p>
+                      );
+                    })}
+                  </div>
+
+                  {/* ★ Starred Notes */}
+                  {section.notes && section.notes.length > 0 && (
+                    <div style={{ padding: "0 16px", marginBottom: 14 }}>
+                      <div style={{ background: "rgba(251,191,36,0.07)", border: "1px solid rgba(251,191,36,0.2)", borderRadius: 12, padding: "12px 16px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+                          <Star size={13} color="#fbbf24" fill="#fbbf24" />
+                          <span style={{ fontSize: 11, fontWeight: 700, color: "#fbbf24" }}>نکات مهم</span>
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                          {section.notes.map((note, nIdx) => (
+                            <p key={nIdx} style={{ fontSize: 13, color: "#fde68a", lineHeight: 1.7, direction: "rtl", textAlign: "right", margin: 0 }}>
+                              {note}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 🔴 Highlights — test-referenced phrases */}
+                  {section.highlights && section.highlights.length > 0 && (
+                    <div style={{ padding: "0 16px", marginBottom: 14 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8, padding: "0 2px" }}>
+                        <Highlighter size={13} color="#f97316" />
+                        <span style={{ fontSize: 11, fontWeight: 700, color: "#f97316" }}>جمله‌های مرجع آزمون</span>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                        {section.highlights.map((hl, hIdx) => (
+                          <p key={hIdx} style={{
+                            fontSize: 12, lineHeight: 1.7, fontStyle: "italic",
+                            color: "var(--text-secondary)", margin: 0,
+                            padding: "8px 14px",
+                            background: "rgba(249,115,22,0.06)",
+                            borderLeft: "3px solid rgba(249,115,22,0.5)",
+                            borderRadius: "0 8px 8px 0",
+                          }}>
+                            &ldquo;{hl}&rdquo;
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 🇮🇹 → 🇬🇧 English Equivalents */}
+                  {section.englishEquivalents && section.englishEquivalents.length > 0 && (
+                    <div style={{ padding: "0 16px", marginBottom: 14 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8, padding: "0 2px" }}>
+                        <BookOpen size={13} color="#34d399" />
+                        <span style={{ fontSize: 11, fontWeight: 700, color: "#34d399" }}>معادل‌های انگلیسی (حفظ آسان‌تر)</span>
+                      </div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                        {section.englishEquivalents.map((eq, eIdx) => (
+                          <div key={eIdx} style={{
+                            background: "rgba(52,211,153,0.07)", border: "1px solid rgba(52,211,153,0.2)",
+                            borderRadius: 10, padding: "6px 12px",
+                          }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                              <span style={{ fontSize: 12, fontWeight: 700, color: "#34d399", fontStyle: "italic" }}>{eq.italian}</span>
+                              <span style={{ fontSize: 10, color: "#666" }}>≈</span>
+                              <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>{eq.english}</span>
+                            </div>
+                            {eq.note && (
+                              <p style={{ fontSize: 10, color: "var(--text-muted)", margin: "2px 0 0", direction: "rtl", textAlign: "right" }}>{eq.note}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 🗝️ Key Verbs */}
                   {section.keyVerbs && section.keyVerbs.length > 0 && (
                     <div style={{ padding: "0 16px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10, padding: "0 4px" }}>
@@ -246,6 +477,33 @@ function StudyPage({ chapterNum, onBack, onGoToQuiz }: {
                       </div>
                     </div>
                   )}
+
+                  {/* 🖼 Supplementary Images */}
+                  {section.images && section.images.length > 0 && (
+                    <div style={{ padding: "0 16px", marginTop: 6 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+                        <ImageIcon size={13} color="#60a5fa" />
+                        <span style={{ fontSize: 11, fontWeight: 700, color: "#60a5fa" }}>عکس‌های تکمیلی</span>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                        {section.images.map((img, iIdx) => (
+                          <div key={iIdx} style={{ borderRadius: 10, overflow: "hidden", border: "1px solid rgba(96,165,250,0.2)" }}>
+                            <img src={img.src} alt={img.caption || ""} style={{ width: "100%", display: "block" }} />
+                            {img.caption && (
+                              <p style={{ fontSize: 11, color: "var(--text-muted)", textAlign: "center",
+                                padding: "6px 10px", margin: 0, direction: "rtl" }}>{img.caption}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 🎬 Video Panel */}
+                  <div style={{ padding: "10px 16px 0" }}>
+                    <VideoPanel chapterNum={chapterNum} />
+                  </div>
+
                 </div>
               )}
             </div>
@@ -264,6 +522,7 @@ function StudyPage({ chapterNum, onBack, onGoToQuiz }: {
     </div>
   );
 }
+
 
 // ─── Home Page ────────────────────────────────────────────────────────────────
 function HomePage({ progress, onNavigate }: {
@@ -414,25 +673,59 @@ function HomePage({ progress, onNavigate }: {
 }
 
 // ─── Chapters Page ────────────────────────────────────────────────────────────
-function ChaptersPage({ progress, onSelectChapter, onStudyChapter }: {
+function ChaptersPage({ progress, onSelectChapter, onStudyChapter, onMixedQuiz }: {
   progress: UserProgress;
   onSelectChapter: (ch: number) => void;
   onStudyChapter: (ch: number) => void;
+  onMixedQuiz?: () => void;
 }) {
+  const [search, setSearch] = useState("");
+  const filtered = chapters.filter(ch =>
+    !search ||
+    ch.title.toLowerCase().includes(search.toLowerCase()) ||
+    String(ch.number).includes(search)
+  );
+
   return (
     <div style={{ padding: "24px 20px 100px", maxWidth: 600, margin: "0 auto" }}>
-      <div className="animate-fade-in-up" style={{ marginBottom: 24 }}>
+      <div className="animate-fade-in-up" style={{ marginBottom: 20 }}>
         <h1 style={{ fontSize: 26, fontWeight: 800, marginBottom: 6, direction: "rtl" }}>۲۵ فصل آیین‌نامه</h1>
         <p style={{ color: "var(--text-secondary)", fontSize: 14, direction: "rtl", textAlign: "right" }}>
           هر فصل دو بخش دارد:{" "}
-          <strong style={{ color: "var(--text-primary)" }}>📖 مطالعه</strong> (ترجمه فارسی) و{" "}
-          <strong style={{ color: "var(--text-primary)" }}>🎯 آزمون</strong> (سوالات).
-          فصل‌های قفل‌شده با ارسال عکس کتاب باز می‌شوند.
+          <strong style={{ color: "var(--text-primary)" }}>📖 مطالعه</strong> و{" "}
+          <strong style={{ color: "var(--text-primary)" }}>🎯 آزمون</strong>.
         </p>
       </div>
 
+      {/* Search + Mixed Quiz bar */}
+      <div style={{ display: "flex", gap: 10, marginBottom: 18 }}>
+        <div style={{ flex: 1, position: "relative" }}>
+          <input
+            type="text" value={search} onChange={e => setSearch(e.target.value)}
+            placeholder="جستجو فصل..."
+            style={{
+              width: "100%", boxSizing: "border-box",
+              background: "rgba(255,255,255,0.04)", border: "1px solid rgba(147,51,234,0.2)",
+              borderRadius: 12, padding: "10px 14px", color: "white", fontSize: 13,
+              outline: "none", direction: "rtl",
+            }}
+          />
+        </div>
+        {onMixedQuiz && (
+          <button id="btn-mixed-quiz" onClick={onMixedQuiz}
+            style={{
+              flexShrink: 0, padding: "10px 14px", borderRadius: 12, fontSize: 12,
+              fontWeight: 700, border: "1px solid rgba(249,115,22,0.3)",
+              background: "rgba(249,115,22,0.08)", color: "#f97316", cursor: "pointer",
+              display: "flex", alignItems: "center", gap: 6, whiteSpace: "nowrap",
+            }}>
+            <Zap size={14} /> تست ترکیبی
+          </button>
+        )}
+      </div>
+
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        {chapters.map((ch, i) => {
+        {filtered.map((ch, i) => {
           const stats = progress.chapterStats[String(ch.number)];
           const acc = stats && stats.answered > 0
             ? Math.round((stats.correct / stats.answered) * 100) : null;
@@ -461,6 +754,22 @@ function ChaptersPage({ progress, onSelectChapter, onStudyChapter }: {
                   <div style={{ fontSize: 11, color: "var(--text-muted)" }}>
                     {ch.available ? `${total} سوال` : "برای باز کردن عکس‌های فصل را بفرست"}
                   </div>
+                  {/* Topic tags from questions */}
+                  {ch.available && (() => {
+                    const chTags = [...new Set(questions.filter(q => q.chapter === ch.number && q.tags).flatMap(q => q.tags!))];
+                    return chTags.length > 0 ? (
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 5 }}>
+                        {chTags.slice(0, 4).map(tag => (
+                          <span key={tag} style={{
+                            fontSize: 9, padding: "1px 7px", borderRadius: 8, fontWeight: 600,
+                            background: "rgba(147,51,234,0.1)", color: "#a78bfa",
+                            border: "1px solid rgba(147,51,234,0.15)",
+                          }}>{tag}</span>
+                        ))}
+                        {chTags.length > 4 && <span style={{ fontSize: 9, color: "var(--text-muted)" }}>+{chTags.length - 4}</span>}
+                      </div>
+                    ) : null;
+                  })()}
                 </div>
                 {acc !== null && (
                   <span style={{ fontSize: 14, fontWeight: 800, flexShrink: 0,
@@ -496,30 +805,68 @@ function ChaptersPage({ progress, onSelectChapter, onStudyChapter }: {
 }
 
 // ─── Quiz Page ────────────────────────────────────────────────────────────────
-function QuizPage({ chapterNum, onFinish, onBack }: {
+function QuizPage({ chapterNum, onFinish, onBack, mode = "chapter", extraIds = [] }: {
   chapterNum: number;
   onFinish: (score: number, total: number) => void;
   onBack: () => void;
+  mode?: QuizMode;
+  extraIds?: number[];
 }) {
   const ch = chapters.find((c) => c.number === chapterNum);
   const [quiz, setQuiz] = useState<QuizState>(() => ({
-    questions: buildQuiz(chapterNum),
+    questions: buildQuiz(chapterNum, mode, extraIds),
     current: 0, selected: null, answered: false, score: 0, wrongIds: [],
+    timePerQuestion: 0, mode: "chapter", chapterNum,
   }));
+  const [progress, setProgress] = useState(() => getProgress());
+  const [timeLeft, setTimeLeft] = useState(30);
+  const timerActiveRef = useRef(true);
+  const questionStartRef = useRef<number>(Date.now());
 
   const q = quiz.questions[quiz.current];
   const progressPct = ((quiz.current + (quiz.answered ? 1 : 0)) / quiz.questions.length) * 100;
+  const flagged = q ? isFlagged(progress, q.id) : false;
+
+  // 30s countdown timer — auto-submits wrong on expiry
+  useEffect(() => {
+    timerActiveRef.current = true;
+    setTimeLeft(30);
+    questionStartRef.current = Date.now();
+    const interval = setInterval(() => {
+      if (!timerActiveRef.current) { clearInterval(interval); return; }
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          timerActiveRef.current = false;
+          setQuiz(p => {
+            if (p.answered) return p;
+            const spent = Math.round((Date.now() - questionStartRef.current) / 1000);
+            const newProg = recordAnswer(p.questions[p.current].chapter, p.questions[p.current].id, false, spent);
+            setProgress(newProg);
+            return { ...p, answered: true, selected: -1, wrongIds: [...p.wrongIds, p.questions[p.current].id] };
+          });
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quiz.current]);
 
   const handleSelect = useCallback((idx: number) => {
     if (quiz.answered || !q) return;
+    timerActiveRef.current = false;
     const isCorrect = idx === q.correct;
-    recordAnswer(chapterNum, isCorrect);
+    const spent = Math.round((Date.now() - questionStartRef.current) / 1000);
+    const newProg = recordAnswer(q.chapter, q.id, isCorrect, spent);
+    setProgress(newProg);
     setQuiz((prev) => ({
       ...prev, selected: idx, answered: true,
       score: isCorrect ? prev.score + 1 : prev.score,
       wrongIds: isCorrect ? prev.wrongIds : [...prev.wrongIds, q.id],
     }));
-  }, [quiz.answered, q, chapterNum]);
+  }, [quiz.answered, q]);
 
   const handleNext = useCallback(() => {
     const nextIdx = quiz.current + 1;
@@ -540,10 +887,19 @@ function QuizPage({ chapterNum, onFinish, onBack }: {
     return "answer-option";
   };
 
+  const handleFlag = () => {
+    if (!q) return;
+    const newProg = toggleFlagQuestion(q.id, q.chapter);
+    setProgress(newProg);
+  };
+
+  const timerColor = timeLeft > 15 ? "var(--success)" : timeLeft > 7 ? "var(--warning)" : "var(--error)";
+  const timerPct = (timeLeft / 30) * 100;
+
   return (
     <div style={{ padding: "20px 20px 40px", maxWidth: 600, margin: "0 auto" }}>
       {/* Top bar */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
         <button id="btn-quiz-back" className="btn-secondary"
           style={{ padding: "8px 16px", fontSize: 13 }} onClick={onBack}>
           ← خروج
@@ -554,19 +910,45 @@ function QuizPage({ chapterNum, onFinish, onBack }: {
             {quiz.current + 1} از {quiz.questions.length}
           </div>
         </div>
-        <div style={{ fontSize: 16, fontWeight: 800, color: "var(--accent-primary)" }}>
-          ✓ {quiz.score}
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={{ fontSize: 16, fontWeight: 800, color: "var(--accent-primary)" }}>✓ {quiz.score}</div>
+          <button id={`btn-flag-${q.id}`} onClick={handleFlag}
+            style={{ background: "none", border: "none", cursor: "pointer", padding: 4,
+              color: flagged ? "#f97316" : "var(--text-muted)", transition: "color 0.2s" }}
+            title={flagged ? "حذف علامت" : "علامت‌گذاری سخت"}>
+            <Flag size={18} fill={flagged ? "#f97316" : "none"} />
+          </button>
         </div>
       </div>
 
-      {/* Progress bar */}
-      <div className="progress-bar" style={{ marginBottom: 28 }}>
+      {/* Timer bar */}
+      {!quiz.answered && (
+        <div style={{ marginBottom: 8 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 4,
+            color: timerColor, fontSize: 12, fontWeight: 700 }}>
+            <Clock size={13} /> {timeLeft}s
+          </div>
+          <div className="progress-bar">
+            <div className="progress-fill" style={{ width: `${timerPct}%`,
+              background: timerColor, transition: "width 1s linear, background 0.3s" }} />
+          </div>
+        </div>
+      )}
+
+      {/* Quiz progress bar */}
+      <div className="progress-bar" style={{ marginBottom: 20 }}>
         <div className="progress-fill" style={{ width: `${progressPct}%` }} />
       </div>
 
-      {/* Chapter chip */}
-      <div style={{ marginBottom: 16 }}>
+      {/* Chapter chip + page ref */}
+      <div style={{ marginBottom: 14, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
         <span className="category-chip">{ch?.icon} {ch?.title}</span>
+        {q.pageRef && (
+          <span style={{ fontSize: 11, color: "var(--text-muted)", background: "rgba(255,255,255,0.05)",
+            padding: "3px 9px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)" }}>
+            ص {q.pageRef}
+          </span>
+        )}
       </div>
 
       {/* Question */}
@@ -599,12 +981,22 @@ function QuizPage({ chapterNum, onFinish, onBack }: {
         ))}
       </div>
 
+      {/* Time expired notice */}
+      {quiz.answered && quiz.selected === -1 && (
+        <div className="animate-fade-in-up" style={{ background: "rgba(239,68,68,0.08)",
+          border: "1px solid rgba(239,68,68,0.25)", borderRadius: 14, padding: "12px 16px",
+          marginBottom: 14, display: "flex", alignItems: "center", gap: 8, direction: "rtl" }}>
+          <Clock size={16} color="var(--error)" />
+          <span style={{ fontWeight: 700, color: "var(--error)", fontSize: 14 }}>وقت تمام شد! ⏰</span>
+        </div>
+      )}
+
       {/* Explanation */}
       {quiz.answered && (
         <div className="animate-fade-in-up" style={{
           background: quiz.selected === q.correct ? "rgba(16,185,129,0.08)" : "rgba(239,68,68,0.08)",
           border: `1px solid ${quiz.selected === q.correct ? "rgba(16,185,129,0.25)" : "rgba(239,68,68,0.25)"}`,
-          borderRadius: 16, padding: "16px 20px", marginBottom: 24,
+          borderRadius: 16, padding: "16px 20px", marginBottom: 16,
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
             {quiz.selected === q.correct
@@ -619,6 +1011,39 @@ function QuizPage({ chapterNum, onFinish, onBack }: {
             direction: "rtl", textAlign: "right" }}>
             {q.explanation}
           </p>
+        </div>
+      )}
+
+      {/* Vocabulary panel */}
+      {quiz.answered && q.vocab && q.vocab.length > 0 && (
+        <div className="animate-fade-in-up" style={{
+          background: "rgba(99,102,241,0.06)",
+          border: "1px solid rgba(99,102,241,0.2)",
+          borderRadius: 14, padding: "14px 16px", marginBottom: 16,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
+            <Languages size={15} color="#a78bfa" />
+            <span style={{ fontSize: 12, fontWeight: 700, color: "#a78bfa", letterSpacing: "0.06em" }}>
+              لغات کلیدی این سوال
+            </span>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, direction: "rtl" }}>
+            {q.vocab.map((v, i) => (
+              <div key={i} style={{
+                display: "flex", alignItems: "center", gap: 6,
+                background: "rgba(99,102,241,0.1)", borderRadius: 10,
+                padding: "5px 10px", border: "1px solid rgba(99,102,241,0.15)",
+              }}>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#818cf8", fontStyle: "italic" }}>
+                  {v.italian}
+                </span>
+                <span style={{ fontSize: 11, color: "#666" }}>←</span>
+                <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>
+                  {v.persian}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
@@ -720,7 +1145,7 @@ function ResultsPage({ score, total, chapterNum, onRestart, onHome, onStudy }: {
 }
 
 // ─── Stats Page ───────────────────────────────────────────────────────────────
-function StatsPage({ progress, onReset }: { progress: UserProgress; onReset: () => void }) {
+function StatsPage({ progress, onReset, onReview }: { progress: UserProgress; onReset: () => void; onReview: () => void }) {
   const accuracy = getAccuracy(progress);
   const availableChapters = chapters.filter(c => c.available);
 
@@ -794,6 +1219,15 @@ function StatsPage({ progress, onReset }: { progress: UserProgress; onReset: () 
         })}
       </div>
 
+      <button id="btn-review-mode" onClick={onReview} style={{
+        width: "100%", padding: "14px", borderRadius: 14, marginBottom: 12,
+        border: "1px solid rgba(249,115,22,0.3)", background: "rgba(249,115,22,0.06)",
+        color: "#f97316", fontSize: 14, fontWeight: 600, cursor: "pointer",
+        display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+      }}>
+        <Flag size={16} /> مرور تست‌های غلط و علامت‌گذاری شده
+      </button>
+
       <button id="btn-reset-progress" onClick={onReset} style={{
         width: "100%", padding: "14px", borderRadius: 14,
         border: "1px solid rgba(239,68,68,0.3)", background: "rgba(239,68,68,0.06)",
@@ -805,11 +1239,104 @@ function StatsPage({ progress, onReset }: { progress: UserProgress; onReset: () 
   );
 }
 
+// ─── Review Page (مرور تست‌های غلط) ──────────────────────────────────────────
+function ReviewPage({ progress, onBack, onStartWrong, onStartFlagged }: {
+  progress: UserProgress;
+  onBack: () => void;
+  onStartWrong: () => void;
+  onStartFlagged: () => void;
+}) {
+  const wrongIds = getWrongQuestionIds(progress);
+  const flaggedIds = getFlaggedQuestionIds(progress);
+  const wrongQs = questions.filter(q => wrongIds.includes(q.id));
+  const flaggedQs = questions.filter(q => flaggedIds.includes(q.id));
+
+  return (
+    <div style={{ padding: "24px 20px 100px", maxWidth: 600, margin: "0 auto" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
+        <button className="btn-secondary" style={{ padding: "8px 16px", fontSize: 13 }} onClick={onBack}>← بازگشت</button>
+        <h1 style={{ fontSize: 22, fontWeight: 800, direction: "rtl" }}>مرور تست‌ها</h1>
+      </div>
+
+      {/* Wrong answers card */}
+      <div className="glass-card animate-fade-in-up" style={{ padding: "20px", marginBottom: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+          <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(239,68,68,0.15)",
+            display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <XCircle size={22} color="var(--error)" />
+          </div>
+          <div>
+            <div style={{ fontSize: 16, fontWeight: 700, direction: "rtl" }}>تست‌های غلط</div>
+            <div style={{ fontSize: 12, color: "var(--text-muted)" }}>{wrongQs.length} سوال</div>
+          </div>
+        </div>
+        {wrongQs.length === 0 ? (
+          <p style={{ fontSize: 13, color: "var(--text-muted)", direction: "rtl" }}>هنوز هیچ پاسخ غلطی ثبت نشده ✅</p>
+        ) : (
+          <>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 14, maxHeight: 180, overflowY: "auto" }}>
+              {wrongQs.slice(0, 5).map(q => (
+                <div key={q.id} style={{ fontSize: 12, color: "var(--text-secondary)", direction: "rtl",
+                  background: "rgba(239,68,68,0.05)", borderRadius: 8, padding: "8px 12px",
+                  borderRight: "3px solid var(--error)" }}>
+                  فصل {q.chapter} — {q.question.slice(0, 60)}...
+                </div>
+              ))}
+              {wrongQs.length > 5 && (
+                <div style={{ fontSize: 11, color: "var(--text-muted)", textAlign: "center" }}>و {wrongQs.length - 5} سوال دیگر...</div>
+              )}
+            </div>
+            <button id="btn-start-wrong-quiz" className="btn-primary" style={{ width: "100%" }} onClick={onStartWrong}>
+              🎯 آزمون از تست‌های غلط ({wrongQs.length} سوال)
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Flagged questions card */}
+      <div className="glass-card animate-fade-in-up" style={{ padding: "20px", animationDelay: "0.05s" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+          <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(249,115,22,0.15)",
+            display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Flag size={22} color="#f97316" />
+          </div>
+          <div>
+            <div style={{ fontSize: 16, fontWeight: 700, direction: "rtl" }}>علامت‌گذاری شده (سخت)</div>
+            <div style={{ fontSize: 12, color: "var(--text-muted)" }}>{flaggedQs.length} سوال</div>
+          </div>
+        </div>
+        {flaggedQs.length === 0 ? (
+          <p style={{ fontSize: 13, color: "var(--text-muted)", direction: "rtl" }}>هنوز هیچ سوالی علامت‌گذاری نشده 🚩</p>
+        ) : (
+          <>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 14, maxHeight: 180, overflowY: "auto" }}>
+              {flaggedQs.slice(0, 5).map(q => (
+                <div key={q.id} style={{ fontSize: 12, color: "var(--text-secondary)", direction: "rtl",
+                  background: "rgba(249,115,22,0.05)", borderRadius: 8, padding: "8px 12px",
+                  borderRight: "3px solid #f97316" }}>
+                  فصل {q.chapter} — {q.question.slice(0, 60)}...
+                </div>
+              ))}
+              {flaggedQs.length > 5 && (
+                <div style={{ fontSize: 11, color: "var(--text-muted)", textAlign: "center" }}>و {flaggedQs.length - 5} سوال دیگر...</div>
+              )}
+            </div>
+            <button id="btn-start-flagged-quiz" className="btn-primary" style={{ width: "100%" }} onClick={onStartFlagged}>
+              🚩 آزمون از سوالات سخت ({flaggedQs.length} سوال)
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── Main App ─────────────────────────────────────────────────────────────────
 export default function App() {
   const [page, setPage] = useState<Page>("home");
   const [activeChapter, setActiveChapter] = useState<number>(20);
   const [quizKey, setQuizKey] = useState(0);
+  const [quizMode, setQuizMode] = useState<QuizMode>("chapter");
   const [lastResult, setLastResult] = useState<{ score: number; total: number } | null>(null);
   const [progress, setProgress] = useState<UserProgress>(() => getProgress());
 
@@ -817,7 +1344,7 @@ export default function App() {
   useEffect(() => { refreshProgress(); }, [page]);
 
   const handleSelectChapter = (ch: number) => {
-    setActiveChapter(ch); setQuizKey((k) => k + 1); setPage("quiz");
+    setActiveChapter(ch); setQuizMode("chapter"); setQuizKey((k) => k + 1); setPage("quiz");
   };
   const handleStudyChapter = (ch: number) => {
     setActiveChapter(ch); setPage("study");
@@ -830,10 +1357,49 @@ export default function App() {
       resetProgress(); refreshProgress();
     }
   };
+  const handleStartWrongQuiz = () => {
+    const wrongIds = getWrongQuestionIds(getProgress());
+    if (wrongIds.length === 0) return;
+    setQuizMode("wrong"); setQuizKey((k) => k + 1); setPage("quiz");
+  };
+  const handleStartFlaggedQuiz = () => {
+    const flaggedIds = getFlaggedQuestionIds(getProgress());
+    if (flaggedIds.length === 0) return;
+    setQuizMode("flagged"); setQuizKey((k) => k + 1); setPage("quiz");
+  };
 
   return (
     <>
       <div className="mesh-bg" />
+
+      {/* User bar */}
+      {(() => {
+        const user = getSession();
+        if (!user) return null;
+        return (
+          <div style={{
+            position: "fixed", top: 0, left: 0, right: 0, zIndex: 9999,
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            padding: "6px 16px",
+            background: "rgba(10,10,20,0.85)", backdropFilter: "blur(12px)",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
+          }}>
+            <span style={{ fontSize: 11, color: "var(--text-muted)" }}>
+              👤 <strong style={{ color: "var(--text-secondary)" }}>{user.displayName}</strong>
+            </span>
+            <button
+              onClick={() => { logout(); window.location.reload(); }}
+              style={{
+                fontSize: 11, color: "rgba(239,68,68,0.7)",
+                background: "none", border: "1px solid rgba(239,68,68,0.2)",
+                borderRadius: 6, padding: "3px 10px", cursor: "pointer",
+              }}
+            >
+              خروج
+            </button>
+          </div>
+        );
+      })()}
 
       {page === "home" && (
         <HomePage progress={progress} onNavigate={(p) => {
@@ -845,17 +1411,26 @@ export default function App() {
       {page === "chapters" && (
         <ChaptersPage progress={progress}
           onSelectChapter={handleSelectChapter}
-          onStudyChapter={handleStudyChapter} />
+          onStudyChapter={handleStudyChapter}
+          onMixedQuiz={() => { setQuizMode("mixed"); setQuizKey(k => k + 1); setPage("quiz"); }} />
       )}
       {page === "study" && (
         <StudyPage chapterNum={activeChapter}
           onBack={() => setPage("chapters")}
           onGoToQuiz={() => handleSelectChapter(activeChapter)} />
       )}
+      {page === "review" && (
+        <ReviewPage progress={progress}
+          onBack={() => setPage("stats")}
+          onStartWrong={handleStartWrongQuiz}
+          onStartFlagged={handleStartFlaggedQuiz} />
+      )}
       {page === "quiz" && (
         <QuizPage key={quizKey} chapterNum={activeChapter}
+          mode={quizMode}
+          extraIds={quizMode === "wrong" ? getWrongQuestionIds(progress) : quizMode === "flagged" ? getFlaggedQuestionIds(progress) : []}
           onFinish={handleQuizFinish}
-          onBack={() => setPage("chapters")} />
+          onBack={() => setPage(quizMode === "chapter" ? "chapters" : "review")} />
       )}
       {page === "results" && lastResult && (
         <ResultsPage score={lastResult.score} total={lastResult.total} chapterNum={activeChapter}
@@ -864,7 +1439,7 @@ export default function App() {
           onStudy={() => handleStudyChapter(activeChapter)} />
       )}
       {page === "stats" && (
-        <StatsPage progress={progress} onReset={handleReset} />
+        <StatsPage progress={progress} onReset={handleReset} onReview={() => setPage("review")} />
       )}
 
       <NavBar page={page} onNav={setPage} />

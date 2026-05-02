@@ -9,12 +9,22 @@ export type KeyVerb = {
   example: string;      // مثال از متن کتاب
 };
 
+export type EnglishEquivalent = {
+  italian: string;      // واژه ایتالیایی
+  english: string;      // معادل انگلیسی (برای حفظ بهتر)
+  note?: string;        // توضیح اختیاری
+};
+
 export type ContentSection = {
   id: string;
   titleIt: string;      // عنوان ایتالیایی
   titleFa: string;      // عنوان فارسی
-  body: string[];       // پاراگراف‌های فارسی (هر عنصر یک پاراگراف)
+  body: string[];       // پاراگراف‌های محتوا
   keyVerbs?: KeyVerb[];
+  englishEquivalents?: EnglishEquivalent[];   // معادل‌های انگلیسی
+  highlights?: string[];                       // جمله‌های مرجع تست (هایلایت)
+  notes?: string[];                            // نکات ستاره‌دار مهم
+  images?: { src: string; caption?: string }[]; // عکس‌های تکمیلی
 };
 
 export type ChapterContent = {
@@ -22,6 +32,7 @@ export type ChapterContent = {
   titleIt: string;
   titleFa: string;
   pageRange: string;
+  summary?: string;     // خلاصه فصل (یک پاراگراف کوتاه)
   sections: ContentSection[];
 };
 
