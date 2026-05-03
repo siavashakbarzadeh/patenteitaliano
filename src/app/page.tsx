@@ -197,7 +197,7 @@ function NavBar({ page, onNav }: { page: Page; onNav: (p: Page) => void }) {
       background: "rgba(10,10,15,0.96)",
       borderTop: "1px solid rgba(255,255,255,0.06)",
       backdropFilter: "blur(20px)",
-      display: "flex", justifyContent: "flex-start", gap: 0,
+      display: "flex", justifyContent: "center", gap: 0,
       overflowX: "auto", paddingBottom: 20, zIndex: 100,
     }}>
       {items.map((item) => (
@@ -810,9 +810,6 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter }: {
       </div>
 
       {/* ── Chapter cards ─────────────────────────────────────────────────── */}
-      <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 12, direction: "rtl" }}>
-        📚 فصل‌های در دسترس
-      </div>
       {chapters.filter(c => c.available).map((ch) => {
         const stats = progress.chapterStats[String(ch.number)];
         const answered = stats?.answered ?? 0;
