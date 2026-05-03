@@ -13,9 +13,9 @@ import { getAllSubscriptions, setPlan, getSubscription, planLabel, type Plan } f
 import { getSession, getAllUsers, addUser, updateUser, deleteUser, getUserSections, getSectionAccess, saveSectionAccess, getAllSectionIds, getActivityLog, type UserRecord } from "@/lib/auth";
 import { getFeedbackHistory } from "@/lib/userSettings";
 import { getSupportRequests, resolveSupportRequest, getGamification } from "@/lib/gamification";
+import { getAnnouncements, saveAnnouncement, deleteAnnouncement, getCertificates, issueCertificate, deleteCertificate, getMessages, sendMessage, deleteMessage, getSchedule, saveScheduleEvent, deleteScheduleEvent, type Announcement, type Certificate, type Message, type ScheduleEvent } from "@/lib/lms";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification" | "discounts" | "users" | "access" | "activitylog";
+type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification" | "discounts" | "users" | "access" | "activitylog" | "announcements" | "certificates" | "messages" | "students" | "schedule";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function StatCard({ icon, label, value, color }: { icon: string; label: string; value: string | number; color: string }) {
@@ -1079,7 +1079,7 @@ function SectionAccessTab() {
 
 // ─── Activity Log Tab ─────────────────────────────────────────────────────────
 function ActivityLogTab() {
-  const log = getActivityLog();
+  const [log] = useState(() => getActivityLog());
   const actionLabels: Record<string, string> = { login: "🟢 ورود", logout: "🔴 خروج" };
 
   return (
@@ -1100,6 +1100,271 @@ function ActivityLogTab() {
             </span>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Students Overview Tab ────────────────────────────────────────────────────
+function StudentsTab({ progress }: { progress: UserProgress }) {
+  const users = getAllUsers().filter(u => u.role === "student");
+  const log = getActivityLog();
+  const certs = getCertificates();
+
+  return (
+    <div>
+      <p style={{ fontSize: 13, color: "#888", marginBottom: 20, direction: "rtl" }}>🎓 نمای کلی وضعیت هر دانش‌آموز</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {users.map(u => {
+          const userLog = log.filter(l => l.username === u.username);
+          const lastLogin = userLog.find(l => l.action === "login");
+          const sections = getUserSections(u.username);
+          const userCerts = certs.filter(c => c.username === u.username);
+          return (
+            <div key={u.username} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(147,51,234,0.12)", borderRadius: 16, padding: "20px 22px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
+                <div style={{ width: 48, height: 48, borderRadius: "50%", background: "linear-gradient(135deg,#6366f1,#9333ea)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>👤</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 800, fontSize: 16 }}>{u.displayName} <span style={{ fontSize: 11, color: "#888" }}>@{u.username}</span></div>
+                  <div style={{ fontSize: 11, color: "#888", marginTop: 2 }}>آخرین ورود: {lastLogin ? new Date(lastLogin.timestamp).toLocaleDateString("fa-IR") : "—"}</div>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: 22, fontWeight: 900, color: "#22d3a5" }}>{userCerts.length}</div>
+                  <div style={{ fontSize: 10, color: "#888" }}>گواهی</div>
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
+                {sections.map(s => (
+                  <span key={s} style={{ fontSize: 10, padding: "2px 8px", borderRadius: 6, background: "rgba(147,51,234,0.1)", color: "#c084fc" }}>{s}</span>
+                ))}
+              </div>
+              <div style={{ display: "flex", gap: 10, fontSize: 11, color: "#888" }}>
+                <span>🔑 ورود: {userLog.filter(l => l.action === "login").length} بار</span>
+                <span>🎖️ گواهی: {userCerts.map(c => c.courseName).join(", ") || "—"}</span>
+              </div>
+            </div>
+          );
+        })}
+        {users.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>هنوز دانش‌آموزی ثبت نشده</p>}
+      </div>
+    </div>
+  );
+}
+
+// ─── Announcements Tab ────────────────────────────────────────────────────────
+function AnnouncementsTab() {
+  const [list, setList] = useState(() => getAnnouncements());
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ title: "", body: "", priority: "normal" as Announcement["priority"], pinned: false });
+  const inputStyle = { width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none" };
+  const priColors = { normal: "#888", important: "#f59e0b", urgent: "#ef4444" };
+  const priLabels = { normal: "عادی", important: "مهم", urgent: "فوری" };
+
+  const handleSave = () => {
+    if (!form.title.trim()) return;
+    saveAnnouncement({ id: Date.now().toString(), title: form.title, body: form.body, priority: form.priority, targetUsers: "all", createdAt: new Date().toISOString(), expiresAt: null, pinned: form.pinned });
+    setForm({ title: "", body: "", priority: "normal", pinned: false });
+    setShowForm(false);
+    setList(getAnnouncements());
+  };
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, direction: "rtl" }}>
+        <span style={{ fontSize: 13, color: "#888" }}>{list.length} اطلاعیه</span>
+        <button onClick={() => setShowForm(!showForm)} style={{ padding: "8px 18px", borderRadius: 10, background: "linear-gradient(135deg,#9333ea,#f97316)", border: "none", color: "white", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{showForm ? "انصراف" : "+ اطلاعیه جدید"}</button>
+      </div>
+      {showForm && (
+        <div style={{ background: "rgba(147,51,234,0.06)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 14, padding: 20, marginBottom: 20, display: "flex", flexDirection: "column", gap: 10 }}>
+          <input style={inputStyle} value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="عنوان اطلاعیه *" />
+          <textarea style={{ ...inputStyle, minHeight: 80, resize: "vertical" }} value={form.body} onChange={e => setForm(f => ({ ...f, body: e.target.value }))} placeholder="متن اطلاعیه..." />
+          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            <select style={inputStyle} value={form.priority} onChange={e => setForm(f => ({ ...f, priority: e.target.value as Announcement["priority"] }))}>
+              <option value="normal">عادی</option><option value="important">مهم</option><option value="urgent">فوری</option>
+            </select>
+            <label style={{ fontSize: 12, display: "flex", alignItems: "center", gap: 6, cursor: "pointer" }}><input type="checkbox" checked={form.pinned} onChange={e => setForm(f => ({ ...f, pinned: e.target.checked }))} />📌 سنجاق</label>
+          </div>
+          <button onClick={handleSave} style={{ alignSelf: "flex-start", padding: "9px 20px", borderRadius: 10, background: "#22d3a5", border: "none", color: "#0d0a14", fontWeight: 700, cursor: "pointer" }}>ذخیره</button>
+        </div>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {list.map(a => (
+          <div key={a.id} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${priColors[a.priority]}30`, borderRadius: 12, padding: "14px 18px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                {a.pinned && <span>📌</span>}
+                <span style={{ fontWeight: 700, fontSize: 14 }}>{a.title}</span>
+                <span style={{ fontSize: 9, padding: "1px 6px", borderRadius: 4, background: `${priColors[a.priority]}20`, color: priColors[a.priority] }}>{priLabels[a.priority]}</span>
+              </div>
+              <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                <span style={{ fontSize: 10, color: "#555" }}>{new Date(a.createdAt).toLocaleDateString("fa-IR")}</span>
+                <button onClick={() => { deleteAnnouncement(a.id); setList(getAnnouncements()); }} style={{ padding: "3px 8px", borderRadius: 6, background: "rgba(244,86,106,0.1)", color: "#f4566a", border: "none", cursor: "pointer", fontSize: 10 }}>حذف</button>
+              </div>
+            </div>
+            {a.body && <div style={{ fontSize: 12, color: "var(--text-secondary)", direction: "rtl", lineHeight: 1.7 }}>{a.body}</div>}
+          </div>
+        ))}
+        {list.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>هنوز اطلاعیه‌ای ثبت نشده</p>}
+      </div>
+    </div>
+  );
+}
+
+// ─── Certificates Tab ─────────────────────────────────────────────────────────
+function CertificatesTab() {
+  const [list, setList] = useState(() => getCertificates());
+  const [showForm, setShowForm] = useState(false);
+  const users = getAllUsers().filter(u => u.role === "student");
+  const [form, setForm] = useState({ username: users[0]?.username ?? "", courseName: "Espresso 1", courseLevel: "A1", grade: "عالی", note: "" });
+  const inputStyle = { width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none" };
+
+  const handleIssue = () => {
+    if (!form.username) return;
+    issueCertificate({ id: Date.now().toString(), username: form.username, courseName: form.courseName, courseLevel: form.courseLevel, issuedAt: new Date().toISOString(), grade: form.grade, note: form.note });
+    setShowForm(false);
+    setList(getCertificates());
+  };
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, direction: "rtl" }}>
+        <span style={{ fontSize: 13, color: "#888" }}>{list.length} گواهی صادر شده</span>
+        <button onClick={() => setShowForm(!showForm)} style={{ padding: "8px 18px", borderRadius: 10, background: "linear-gradient(135deg,#9333ea,#f97316)", border: "none", color: "white", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{showForm ? "انصراف" : "🎖️ صدور گواهی"}</button>
+      </div>
+      {showForm && (
+        <div style={{ background: "rgba(147,51,234,0.06)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 14, padding: 20, marginBottom: 20, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>دانش‌آموز</label><select style={inputStyle} value={form.username} onChange={e => setForm(f => ({ ...f, username: e.target.value }))}>{users.map(u => <option key={u.username} value={u.username}>{u.displayName}</option>)}</select></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>دوره</label><input style={inputStyle} value={form.courseName} onChange={e => setForm(f => ({ ...f, courseName: e.target.value }))} /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>سطح</label><input style={inputStyle} value={form.courseLevel} onChange={e => setForm(f => ({ ...f, courseLevel: e.target.value }))} /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>نمره</label><select style={inputStyle} value={form.grade} onChange={e => setForm(f => ({ ...f, grade: e.target.value }))}><option>عالی</option><option>خوب</option><option>قابل قبول</option></select></div>
+          <div style={{ gridColumn: "1/-1" }}><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>یادداشت</label><input style={inputStyle} value={form.note} onChange={e => setForm(f => ({ ...f, note: e.target.value }))} /></div>
+          <button onClick={handleIssue} style={{ gridColumn: "1/-1", padding: "9px 20px", borderRadius: 10, background: "#22d3a5", border: "none", color: "#0d0a14", fontWeight: 700, cursor: "pointer" }}>صدور گواهی</button>
+        </div>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {list.map(c => (
+          <div key={c.id} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(251,191,36,0.15)", borderRadius: 12, padding: "14px 18px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ fontSize: 28 }}>🎖️</div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: 14 }}>{users.find(u => u.username === c.username)?.displayName ?? c.username}</div>
+                <div style={{ fontSize: 12, color: "#fbbf24" }}>{c.courseName} · {c.courseLevel} · {c.grade}</div>
+                {c.note && <div style={{ fontSize: 11, color: "#888" }}>{c.note}</div>}
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4 }}>
+              <span style={{ fontSize: 10, color: "#555" }}>{new Date(c.issuedAt).toLocaleDateString("fa-IR")}</span>
+              <button onClick={() => { deleteCertificate(c.id); setList(getCertificates()); }} style={{ padding: "3px 8px", borderRadius: 6, background: "rgba(244,86,106,0.1)", color: "#f4566a", border: "none", cursor: "pointer", fontSize: 10 }}>حذف</button>
+            </div>
+          </div>
+        ))}
+        {list.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>هنوز گواهی‌ای صادر نشده</p>}
+      </div>
+    </div>
+  );
+}
+
+// ─── Messages Tab ─────────────────────────────────────────────────────────────
+function MessagesTab() {
+  const [list, setList] = useState(() => getMessages());
+  const [showForm, setShowForm] = useState(false);
+  const users = getAllUsers().filter(u => u.role === "student");
+  const [form, setForm] = useState({ to: users[0]?.username ?? "", subject: "", body: "" });
+  const inputStyle = { width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none" };
+
+  const handleSend = () => {
+    if (!form.subject.trim() || !form.to) return;
+    sendMessage({ id: Date.now().toString(), from: "admin", to: form.to, subject: form.subject, body: form.body, sentAt: new Date().toISOString(), read: false });
+    setForm({ to: users[0]?.username ?? "", subject: "", body: "" });
+    setShowForm(false);
+    setList(getMessages());
+  };
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, direction: "rtl" }}>
+        <span style={{ fontSize: 13, color: "#888" }}>{list.length} پیام</span>
+        <button onClick={() => setShowForm(!showForm)} style={{ padding: "8px 18px", borderRadius: 10, background: "linear-gradient(135deg,#9333ea,#f97316)", border: "none", color: "white", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{showForm ? "انصراف" : "✉️ پیام جدید"}</button>
+      </div>
+      {showForm && (
+        <div style={{ background: "rgba(147,51,234,0.06)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 14, padding: 20, marginBottom: 20, display: "flex", flexDirection: "column", gap: 10 }}>
+          <select style={inputStyle} value={form.to} onChange={e => setForm(f => ({ ...f, to: e.target.value }))}>{users.map(u => <option key={u.username} value={u.username}>{u.displayName} (@{u.username})</option>)}</select>
+          <input style={inputStyle} value={form.subject} onChange={e => setForm(f => ({ ...f, subject: e.target.value }))} placeholder="موضوع *" />
+          <textarea style={{ ...inputStyle, minHeight: 80, resize: "vertical" }} value={form.body} onChange={e => setForm(f => ({ ...f, body: e.target.value }))} placeholder="متن پیام..." />
+          <button onClick={handleSend} style={{ alignSelf: "flex-start", padding: "9px 20px", borderRadius: 10, background: "#22d3a5", border: "none", color: "#0d0a14", fontWeight: 700, cursor: "pointer" }}>ارسال</button>
+        </div>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        {list.map(m => (
+          <div key={m.id} style={{ background: "rgba(255,255,255,0.02)", border: `1px solid rgba(147,51,234,${m.read ? "0.08" : "0.2"})`, borderRadius: 10, padding: "12px 16px", opacity: m.read ? 0.6 : 1 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                {!m.read && <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#6366f1" }} />}
+                <span style={{ fontWeight: 700, fontSize: 13 }}>{m.subject}</span>
+              </div>
+              <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                <span style={{ fontSize: 10, color: "#888" }}>{m.from} → {m.to}</span>
+                <span style={{ fontSize: 10, color: "#555" }}>{new Date(m.sentAt).toLocaleDateString("fa-IR")}</span>
+                <button onClick={() => { deleteMessage(m.id); setList(getMessages()); }} style={{ padding: "2px 6px", borderRadius: 4, background: "rgba(244,86,106,0.1)", color: "#f4566a", border: "none", cursor: "pointer", fontSize: 9 }}>✕</button>
+              </div>
+            </div>
+            {m.body && <div style={{ fontSize: 12, color: "var(--text-secondary)", direction: "rtl", lineHeight: 1.6 }}>{m.body}</div>}
+          </div>
+        ))}
+        {list.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>هنوز پیامی ارسال نشده</p>}
+      </div>
+    </div>
+  );
+}
+
+// ─── Schedule Tab ─────────────────────────────────────────────────────────────
+function ScheduleTab() {
+  const [list, setList] = useState(() => getSchedule());
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ title: "", description: "", date: "", time: "", type: "class" as ScheduleEvent["type"] });
+  const inputStyle = { width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none" };
+  const typeColors: Record<string, string> = { class: "#6366f1", exam: "#ef4444", event: "#22d3a5", deadline: "#f59e0b" };
+  const typeLabels: Record<string, string> = { class: "کلاس", exam: "آزمون", event: "رویداد", deadline: "ددلاین" };
+
+  const handleSave = () => {
+    if (!form.title.trim() || !form.date) return;
+    saveScheduleEvent({ id: Date.now().toString(), title: form.title, description: form.description, date: form.date, time: form.time, type: form.type, targetUsers: "all" });
+    setForm({ title: "", description: "", date: "", time: "", type: "class" });
+    setShowForm(false);
+    setList(getSchedule());
+  };
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, direction: "rtl" }}>
+        <span style={{ fontSize: 13, color: "#888" }}>{list.length} رویداد</span>
+        <button onClick={() => setShowForm(!showForm)} style={{ padding: "8px 18px", borderRadius: 10, background: "linear-gradient(135deg,#9333ea,#f97316)", border: "none", color: "white", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{showForm ? "انصراف" : "📅 رویداد جدید"}</button>
+      </div>
+      {showForm && (
+        <div style={{ background: "rgba(147,51,234,0.06)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 14, padding: 20, marginBottom: 20, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div style={{ gridColumn: "1/-1" }}><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>عنوان *</label><input style={inputStyle} value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>تاریخ *</label><input type="date" style={inputStyle} value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>ساعت</label><input type="time" style={inputStyle} value={form.time} onChange={e => setForm(f => ({ ...f, time: e.target.value }))} /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>نوع</label><select style={inputStyle} value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value as ScheduleEvent["type"] }))}><option value="class">کلاس</option><option value="exam">آزمون</option><option value="event">رویداد</option><option value="deadline">ددلاین</option></select></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>توضیح</label><input style={inputStyle} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} /></div>
+          <button onClick={handleSave} style={{ gridColumn: "1/-1", padding: "9px 20px", borderRadius: 10, background: "#22d3a5", border: "none", color: "#0d0a14", fontWeight: 700, cursor: "pointer" }}>ذخیره</button>
+        </div>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {list.map(ev => (
+          <div key={ev.id} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${typeColors[ev.type]}30`, borderRadius: 12, padding: "14px 18px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ width: 4, height: 36, borderRadius: 2, background: typeColors[ev.type] }} />
+              <div>
+                <div style={{ fontWeight: 700, fontSize: 14 }}>{ev.title}</div>
+                <div style={{ fontSize: 11, color: "#888" }}>{typeLabels[ev.type]} · {ev.date}{ev.time ? ` · ${ev.time}` : ""}</div>
+                {ev.description && <div style={{ fontSize: 11, color: "#666", marginTop: 2 }}>{ev.description}</div>}
+              </div>
+            </div>
+            <button onClick={() => { deleteScheduleEvent(ev.id); setList(getSchedule()); }} style={{ padding: "3px 8px", borderRadius: 6, background: "rgba(244,86,106,0.1)", color: "#f4566a", border: "none", cursor: "pointer", fontSize: 10 }}>حذف</button>
+          </div>
+        ))}
+        {list.length === 0 && <p style={{ color: "#555", fontSize: 13, direction: "rtl" }}>هنوز رویدادی ثبت نشده</p>}
       </div>
     </div>
   );
@@ -1126,22 +1391,27 @@ export default function AdminPage() {
   };
 
   const tabs: { id: AdminTab; label: string; icon: string }[] = [
-    { id: "dashboard",     label: "داشبورد",   icon: "🏠" },
-    { id: "users",          label: "کاربران",   icon: "👥" },
-    { id: "access",         label: "دسترسی‌ها", icon: "🔐" },
-    { id: "chapters",       label: "فصل‌ها",     icon: "📚" },
-    { id: "questions",      label: "سوالات",     icon: "❓" },
-    { id: "analytics",      label: "تحلیل",      icon: "📊" },
-    { id: "videos",         label: "ویدیوها",    icon: "🎬" },
-    { id: "subscriptions",  label: "اشتراک‌ها",  icon: "🌟" },
-    { id: "hard",           label: "سخت‌ها",    icon: "🔥" },
-    { id: "support",        label: "پشتیبانی",  icon: "✋" },
-    { id: "tags",           label: "تگ‌رنگ‌ها",  icon: "🏷️" },
-    { id: "feedback",       label: "ارزشیابی",  icon: "⭐" },
-    { id: "requests",       label: "درخواست‌ها", icon: "📨" },
-    { id: "gamification",   label: "انگیزش",     icon: "🏆" },
-    { id: "discounts",      label: "کد تخفیف",  icon: "🏷" },
-    { id: "activitylog",    label: "لاگ فعالیت", icon: "📋" },
+    { id: "dashboard",     label: "داشبورد",     icon: "🏠" },
+    { id: "students",      label: "دانش‌آموزان", icon: "🎓" },
+    { id: "users",         label: "کاربران",     icon: "👥" },
+    { id: "access",        label: "دسترسی‌ها",   icon: "🔐" },
+    { id: "announcements", label: "اطلاعیه‌ها",  icon: "📢" },
+    { id: "messages",      label: "پیام‌ها",     icon: "✉️" },
+    { id: "schedule",      label: "تقویم",       icon: "📅" },
+    { id: "certificates",  label: "گواهی‌ها",    icon: "🎖️" },
+    { id: "chapters",      label: "فصل‌ها",      icon: "📚" },
+    { id: "questions",     label: "سوالات",      icon: "❓" },
+    { id: "analytics",     label: "تحلیل",       icon: "📊" },
+    { id: "videos",        label: "ویدیوها",     icon: "🎬" },
+    { id: "subscriptions", label: "اشتراک‌ها",   icon: "🌟" },
+    { id: "hard",          label: "سخت‌ها",     icon: "🔥" },
+    { id: "support",       label: "پشتیبانی",   icon: "✋" },
+    { id: "tags",          label: "تگ‌رنگ‌ها",   icon: "🏷️" },
+    { id: "feedback",      label: "ارزشیابی",   icon: "⭐" },
+    { id: "requests",      label: "درخواست‌ها",  icon: "📨" },
+    { id: "gamification",  label: "انگیزش",      icon: "🏆" },
+    { id: "discounts",     label: "کد تخفیف",   icon: "🏷" },
+    { id: "activitylog",   label: "لاگ فعالیت",  icon: "📋" },
   ];
 
   return (
@@ -1257,6 +1527,11 @@ export default function AdminPage() {
           {tab === "users"           && <UsersTab />}
           {tab === "access"          && <SectionAccessTab />}
           {tab === "activitylog"     && <ActivityLogTab />}
+          {tab === "announcements"   && <AnnouncementsTab />}
+          {tab === "certificates"    && <CertificatesTab />}
+          {tab === "messages"        && <MessagesTab />}
+          {tab === "students"        && <StudentsTab progress={progress} />}
+          {tab === "schedule"        && <ScheduleTab />}
         </main>
       </div>
     </div>
