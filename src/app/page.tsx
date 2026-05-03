@@ -1706,15 +1706,50 @@ function ReviewPage({ progress, onBack, onStartWrong, onStartFlagged }: {
   );
 }
 
-// ─── Espresso 1 Section ───────────────────────────────────────────────────────
-function Espresso1Section({ onBack }: { onBack: () => void }) {
+// ─── Espresso Section (Generic for levels 1–6) ───────────────────────────────
+const ESPRESSO_DATA: Record<number, { level: string; levelFa: string; color: string; colorRgb: string; lessons: { num: number; title: string; sub: string }[] }> = {
+  1: { level: "A1", levelFa: "مبتدی", color: "#f59e0b", colorRgb: "245,158,11", lessons: [
+    { num: 1, title: "Lezione 1", sub: "آشنایی و احوال‌پرسی" }, { num: 2, title: "Lezione 2", sub: "در کافه" },
+    { num: 3, title: "Lezione 3", sub: "ساعت و اعداد" }, { num: 4, title: "Lezione 4", sub: "خانواده" },
+    { num: 5, title: "Lezione 5", sub: "خرید و غذا" },
+  ]},
+  2: { level: "A2", levelFa: "پایه", color: "#f97316", colorRgb: "249,115,22", lessons: [
+    { num: 1, title: "Lezione 1", sub: "تعطیلات و سفر" }, { num: 2, title: "Lezione 2", sub: "زندگی روزمره" },
+    { num: 3, title: "Lezione 3", sub: "خاطرات گذشته" }, { num: 4, title: "Lezione 4", sub: "سلامت و بدن" },
+    { num: 5, title: "Lezione 5", sub: "برنامه‌ریزی آینده" },
+  ]},
+  3: { level: "B1", levelFa: "متوسط", color: "#ef4444", colorRgb: "239,68,68", lessons: [
+    { num: 1, title: "Lezione 1", sub: "بیان نظر و احساسات" }, { num: 2, title: "Lezione 2", sub: "کار و حرفه" },
+    { num: 3, title: "Lezione 3", sub: "فرهنگ و سنت‌ها" }, { num: 4, title: "Lezione 4", sub: "محیط زیست" },
+    { num: 5, title: "Lezione 5", sub: "رسانه و فناوری" },
+  ]},
+  4: { level: "B2", levelFa: "فوق متوسط", color: "#8b5cf6", colorRgb: "139,92,246", lessons: [
+    { num: 1, title: "Lezione 1", sub: "بحث و مناظره" }, { num: 2, title: "Lezione 2", sub: "ادبیات و سینما" },
+    { num: 3, title: "Lezione 3", sub: "اقتصاد و جامعه" }, { num: 4, title: "Lezione 4", sub: "سیاست و قانون" },
+    { num: 5, title: "Lezione 5", sub: "علم و تحقیق" },
+  ]},
+  5: { level: "C1", levelFa: "پیشرفته", color: "#3b82f6", colorRgb: "59,130,246", lessons: [
+    { num: 1, title: "Lezione 1", sub: "تحلیل متون پیچیده" }, { num: 2, title: "Lezione 2", sub: "نگارش آکادمیک" },
+    { num: 3, title: "Lezione 3", sub: "گفتمان رسمی" }, { num: 4, title: "Lezione 4", sub: "اصطلاحات پیشرفته" },
+    { num: 5, title: "Lezione 5", sub: "تفکر انتقادی" },
+  ]},
+  6: { level: "C2", levelFa: "حرفه‌ای", color: "#10b981", colorRgb: "16,185,129", lessons: [
+    { num: 1, title: "Lezione 1", sub: "ظرافت‌های زبانی" }, { num: 2, title: "Lezione 2", sub: "ترجمه و تفسیر" },
+    { num: 3, title: "Lezione 3", sub: "نویسندگی خلاق" }, { num: 4, title: "Lezione 4", sub: "گویش‌های محلی" },
+    { num: 5, title: "Lezione 5", sub: "تسلط کامل" },
+  ]},
+};
+
+function EspressoSection({ level, onBack }: { level: number; onBack: () => void }) {
+  const data = ESPRESSO_DATA[level] ?? ESPRESSO_DATA[1];
+  const { color, colorRgb, levelFa, lessons } = data;
+  const farsiNum = ["۱","۲","۳","۴","۵","۶"][level - 1];
+
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
-      {/* Header */}
       <div style={{
-        background: "linear-gradient(135deg, rgba(180,83,9,0.22), rgba(245,158,11,0.1))",
-        borderBottom: "1px solid rgba(245,158,11,0.25)",
-        padding: "20px 16px 16px",
+        background: `linear-gradient(135deg, rgba(${colorRgb},0.22), rgba(${colorRgb},0.08))`,
+        borderBottom: `1px solid rgba(${colorRgb},0.25)`, padding: "20px 16px 16px",
       }}>
         <div className="page-wrap-slim" style={{ padding: 0 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
@@ -1722,63 +1757,46 @@ function Espresso1Section({ onBack }: { onBack: () => void }) {
               background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)",
               borderRadius: 12, padding: "8px 14px", color: "var(--text-secondary)", fontSize: 13, cursor: "pointer",
             }}>⬅ خانه</button>
-            <div style={{ fontSize: 11, color: "#f59e0b", fontWeight: 700 }}>ESPRESSO 1</div>
+            <div style={{ fontSize: 11, color, fontWeight: 700 }}>ESPRESSO {level} · {data.level}</div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
             <div style={{ fontSize: 36 }}>☕</div>
             <div>
-              <h1 style={{ fontSize: 22, fontWeight: 900, color: "var(--text-primary)", margin: 0 }}>
-                Espresso 1
-              </h1>
-              <div style={{ color: "var(--text-muted)", fontSize: 13, marginTop: 2 }}>
-                آموزش ایتالیایی — سطح مبتدی
-              </div>
+              <h1 style={{ fontSize: 22, fontWeight: 900, color: "var(--text-primary)", margin: 0 }}>Espresso {level}</h1>
+              <div style={{ color: "var(--text-muted)", fontSize: 13, marginTop: 2 }}>آموزش ایتالیایی — {levelFa}</div>
             </div>
           </div>
         </div>
       </div>
 
       <div className="page-wrap" style={{ paddingTop: 24 }}>
-        {/* Welcome message */}
         <div className="glass-card" style={{
           padding: "24px 22px", marginBottom: 20,
-          background: "linear-gradient(135deg, rgba(245,158,11,0.1), rgba(180,83,9,0.06))",
-          border: "1px solid rgba(245,158,11,0.25)",
+          background: `linear-gradient(135deg, rgba(${colorRgb},0.1), rgba(${colorRgb},0.04))`,
+          border: `1px solid rgba(${colorRgb},0.25)`,
         }}>
           <div style={{ fontSize: 32, marginBottom: 12 }}>☕📖</div>
-          <h2 style={{ fontSize: 18, fontWeight: 800, color: "var(--text-primary)", direction: "rtl", marginBottom: 10 }}>
-            به زودی...
-          </h2>
+          <h2 style={{ fontSize: 18, fontWeight: 800, color: "var(--text-primary)", direction: "rtl", marginBottom: 10 }}>به زودی...</h2>
           <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.8, direction: "rtl", margin: 0 }}>
-            محتوای آموزشی کتاب اسپرسو ۱ در حال آماده‌سازی است. این بخش شامل درس‌ها، واژگان، دیالوگ‌ها و تمرین‌های کتاب Espresso 1 خواهد بود.
+            محتوای آموزشی کتاب اسپرسو {farsiNum} ({data.level}) در حال آماده‌سازی است.
           </p>
         </div>
 
-        {/* Placeholder lessons */}
         <div style={{ direction: "rtl", marginBottom: 12 }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 10 }}>درس‌ها</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {[
-            { num: 1, title: "Lezione 1", sub: "آشنایی و احوال‌پرسی", ready: false },
-            { num: 2, title: "Lezione 2", sub: "در کافه", ready: false },
-            { num: 3, title: "Lezione 3", sub: "ساعت و اعداد", ready: false },
-            { num: 4, title: "Lezione 4", sub: "خانواده", ready: false },
-            { num: 5, title: "Lezione 5", sub: "خرید و غذا", ready: false },
-          ].map(lesson => (
+          {lessons.map(lesson => (
             <div key={lesson.num} style={{
-              background: "var(--bg-card)",
-              border: "1px solid rgba(255,255,255,0.06)",
-              borderRadius: 16, padding: "16px 18px",
-              opacity: lesson.ready ? 1 : 0.5,
-              direction: "rtl",
+              background: "var(--bg-card)", border: "1px solid rgba(255,255,255,0.06)",
+              borderRadius: 16, padding: "16px 18px", opacity: 0.5, direction: "rtl",
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{
                   width: 44, height: 44, borderRadius: 12, flexShrink: 0,
-                  background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.3)",
+                  background: `rgba(${colorRgb},0.15)`, border: `1px solid rgba(${colorRgb},0.3)`,
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 16, fontWeight: 900, color: "#f59e0b",
+                  fontSize: 16, fontWeight: 900, color,
                 }}>{lesson.num}</div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: "var(--text-primary)" }}>{lesson.title}</div>
@@ -1798,10 +1816,10 @@ function Espresso1Section({ onBack }: { onBack: () => void }) {
 }
 
 // ─── Landing Page — Section Selector ─────────────────────────────────────────
-function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso1, username }: {
+function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso, username }: {
   onSelectPatente: () => void;
   onSelectItaliano: () => void;
-  onSelectEspresso1: () => void;
+  onSelectEspresso: (level: number) => void;
   username: string;
 }) {
   return (
@@ -1900,47 +1918,35 @@ function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso1, use
           </div>
         </button>
 
-        {/* Espresso 1 Card — only for siavash */}
-        {username === "siavash" && (
-          <button onClick={onSelectEspresso1} style={{
-            background: "linear-gradient(135deg, rgba(180,83,9,0.2), rgba(245,158,11,0.12))",
-            border: "1.5px solid rgba(245,158,11,0.35)",
-            borderRadius: 22, padding: "24px 22px", cursor: "pointer", textAlign: "right",
-            width: "100%", transition: "all 0.3s", direction: "rtl",
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
-              <div style={{
-                width: 60, height: 60, borderRadius: 16, flexShrink: 0,
-                background: "linear-gradient(135deg, rgba(180,83,9,0.25), rgba(245,158,11,0.15))",
-                border: "2px solid rgba(245,158,11,0.4)",
-                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28,
-              }}>☕</div>
-              <div>
-                <div style={{ fontSize: 20, fontWeight: 900, color: "var(--text-primary)" }}>Espresso 1</div>
-                <div style={{ fontSize: 13, color: "rgba(245,158,11,0.9)", fontWeight: 600 }}>اسپرسو ۱ — سطح مبتدی</div>
+        {/* Espresso 1–6 Cards — only for siavash */}
+        {username === "siavash" && [1,2,3,4,5,6].map(lvl => {
+          const d = ESPRESSO_DATA[lvl];
+          const farsi = ["۱","۲","۳","۴","۵","۶"][lvl-1];
+          return (
+            <button key={lvl} onClick={() => onSelectEspresso(lvl)} style={{
+              background: `linear-gradient(135deg, rgba(${d.colorRgb},0.2), rgba(${d.colorRgb},0.08))`,
+              border: `1.5px solid rgba(${d.colorRgb},0.35)`,
+              borderRadius: 22, padding: "20px 22px", cursor: "pointer", textAlign: "right",
+              width: "100%", transition: "all 0.3s", direction: "rtl",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <div style={{
+                  width: 52, height: 52, borderRadius: 14, flexShrink: 0,
+                  background: `rgba(${d.colorRgb},0.2)`, border: `2px solid rgba(${d.colorRgb},0.4)`,
+                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24,
+                }}>☕</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 18, fontWeight: 900, color: "var(--text-primary)" }}>Espresso {lvl}</div>
+                  <div style={{ fontSize: 12, color: `rgba(${d.colorRgb},0.9)`, fontWeight: 600 }}>اسپرسو {farsi} — {d.levelFa} ({d.level})</div>
+                </div>
+                <div style={{
+                  background: `linear-gradient(135deg, ${d.color}cc, ${d.color})`,
+                  borderRadius: 10, padding: "7px 14px", color: "white", fontSize: 12, fontWeight: 700,
+                }}>ورود ←</div>
               </div>
-            </div>
-            <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.7, margin: "0 0 16px" }}>
-              آموزش ایتالیایی با کتاب Espresso 1: درس‌ها، واژگان، دیالوگ و تمرین برای سطح مبتدی.
-            </p>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" as const }}>
-              {["📖 درس‌ها", "📝 واژگان", "🎭 دیالوگ", "✍️ تمرین"].map(b => (
-                <span key={b} style={{
-                  fontSize: 11, padding: "3px 10px", borderRadius: 20,
-                  background: "rgba(245,158,11,0.15)", color: "#f59e0b",
-                  border: "1px solid rgba(245,158,11,0.2)",
-                }}>{b}</span>
-              ))}
-            </div>
-            <div style={{ marginTop: 16, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <span style={{ fontSize: 12, color: "var(--text-muted)" }}></span>
-              <div style={{
-                background: "linear-gradient(135deg, #b45309, #f59e0b)",
-                borderRadius: 12, padding: "9px 20px", color: "white", fontSize: 13, fontWeight: 700,
-              }}>ورود به بخش ← </div>
-            </div>
-          </button>
-        )}
+            </button>
+          );
+        })}
       </div>
 
       <p style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 32, textAlign: "center" }}>
@@ -1953,10 +1959,10 @@ function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso1, use
 // ─── Main App ─────────────────────────────────────────────────────────────────
 export default function App() {
   const [page, setPage] = useState<Page>("home");
-  const [appSection, setAppSection] = useState<"landing" | "patente" | "italiano" | "espresso1">(() => {
+  const [appSection, setAppSection] = useState<string>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("app_section");
-      if (saved === "patente" || saved === "italiano" || saved === "espresso1") return saved;
+      if (saved && saved !== "landing") return saved;
     }
     return "landing";
   });
@@ -2041,7 +2047,7 @@ export default function App() {
           username={getSession()?.username ?? ""}
           onSelectPatente={() => { setAppSection("patente"); localStorage.setItem("app_section", "patente"); }}
           onSelectItaliano={() => { setAppSection("italiano"); localStorage.setItem("app_section", "italiano"); }}
-          onSelectEspresso1={() => { setAppSection("espresso1"); localStorage.setItem("app_section", "espresso1"); }}
+          onSelectEspresso={(lvl: number) => { setAppSection(`espresso${lvl}`); localStorage.setItem("app_section", `espresso${lvl}`); }}
         />
       )}
 
@@ -2050,9 +2056,9 @@ export default function App() {
         <ItalianoSection onBack={() => { setAppSection("landing"); localStorage.setItem("app_section", "landing"); }} />
       )}
 
-      {/* ── Espresso 1 Section (siavash only) ── */}
-      {appSection === "espresso1" && !showOnboarding && (
-        <Espresso1Section onBack={() => { setAppSection("landing"); localStorage.setItem("app_section", "landing"); }} />
+      {/* ── Espresso Sections (siavash only) ── */}
+      {appSection.startsWith("espresso") && !showOnboarding && (
+        <EspressoSection level={parseInt(appSection.replace("espresso", "")) || 1} onBack={() => { setAppSection("landing"); localStorage.setItem("app_section", "landing"); }} />
       )}
 
       {/* ── Patente Section ── */}
