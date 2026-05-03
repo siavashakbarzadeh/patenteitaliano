@@ -599,11 +599,12 @@ function StudyPage({ chapterNum, onBack, onGoToQuiz }: {
 
 
 // ─── Home Page ────────────────────────────────────────────────────────────────
-function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter }: {
+function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter, onBackToLanding }: {
   progress: UserProgress;
   onNavigate: (p: Page) => void;
   onSelectChapter: (ch: number) => void;
   onStudyChapter: (ch: number) => void;
+  onBackToLanding: () => void;
 }) {
   const accuracy   = getAccuracy(progress);
   const availableCount = chapters.filter((c) => c.available).length;
@@ -616,16 +617,24 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter }: {
 
       {/* ── Hero header ───────────────────────────────────────────────────── */}
       <div className="animate-fade-in-up" style={{ marginBottom: 28 }}>
-        {/* Badge */}
-        <div style={{
-          display: "inline-flex", alignItems: "center", gap: 8,
-          background: "rgba(147,51,234,0.12)", border: "1px solid rgba(147,51,234,0.25)",
-          borderRadius: 20, padding: "5px 14px", marginBottom: 14,
-        }}>
-          <ItalianFlag />
-          <span style={{ fontSize: 11, color: "#c084fc", fontWeight: 700, letterSpacing: "0.08em" }}>
-            PATENTE B · CODICE DELLA STRADA
-          </span>
+        {/* Back + Badge row */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+          <button onClick={onBackToLanding} style={{
+            background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: 12, padding: "8px 14px", color: "var(--text-secondary)", fontSize: 13,
+            cursor: "pointer", display: "flex", alignItems: "center", gap: 6,
+            transition: "all 0.2s",
+          }}>⬅ بازگشت</button>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            background: "rgba(147,51,234,0.12)", border: "1px solid rgba(147,51,234,0.25)",
+            borderRadius: 20, padding: "5px 14px",
+          }}>
+            <ItalianFlag />
+            <span style={{ fontSize: 11, color: "#c084fc", fontWeight: 700, letterSpacing: "0.08em" }}>
+              PATENTE B · CODICE DELLA STRADA
+            </span>
+          </div>
         </div>
 
         <h1 style={{ fontSize: "clamp(22px, 6vw, 30px)", fontWeight: 900, lineHeight: 1.25, marginBottom: 6, direction: "rtl" }}>
@@ -1915,6 +1924,7 @@ export default function App() {
           onSelectChapter={handleSelectChapter}
           onStudyChapter={handleStudyChapter}
           onNavigate={(p) => setPage(p as Page)}
+          onBackToLanding={() => { setAppSection("landing"); localStorage.setItem("app_section", "landing"); }}
         />
       )}
       {page === "chapters" && (
