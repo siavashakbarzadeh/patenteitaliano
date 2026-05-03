@@ -12,6 +12,7 @@ export type User = {
 const USERS: Array<{ username: string; password: string; displayName: string; role: "admin" | "student" }> = [
   { username: "admin",  password: "admin123",  displayName: "مدیر سیستم", role: "admin"   },
   { username: "aida",   password: "123456",    displayName: "Aida",        role: "student" },
+  { username: "elnaz",  password: "123456",    displayName: "Elnaz",       role: "student" },
 ];
 
 const SESSION_KEY = "patente_session";

@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl">
+    <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body className={`${inter.variable} ${vazirmatn.variable} font-sans antialiased`}>
         <AuthGuard>
           {children}
