@@ -13,6 +13,7 @@ const USERS: Array<{ username: string; password: string; displayName: string; ro
   { username: "admin",  password: "admin123",  displayName: "مدیر سیستم", role: "admin"   },
   { username: "aida",   password: "123456",    displayName: "Aida",        role: "student" },
   { username: "elnaz",  password: "1234567",   displayName: "Elnaz",       role: "student" },
+  { username: "siavash", password: "12345678",  displayName: "Siavash",     role: "student" },
 ];
 
 const SESSION_KEY = "patente_session";
