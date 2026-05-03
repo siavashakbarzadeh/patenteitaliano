@@ -10,12 +10,12 @@ import type { Question } from "@/lib/types";
 import { DEFAULT_TAG_CONFIGS } from "@/lib/types";
 import { loadVideos, addVideo, deleteVideo, type VideoItem } from "@/lib/videos";
 import { getAllSubscriptions, setPlan, getSubscription, planLabel, type Plan } from "@/lib/subscription";
-import { getSession } from "@/lib/auth";
+import { getSession, getAllUsers, addUser, updateUser, deleteUser, getUserSections, getSectionAccess, saveSectionAccess, getAllSectionIds, getActivityLog, type UserRecord } from "@/lib/auth";
 import { getFeedbackHistory } from "@/lib/userSettings";
 import { getSupportRequests, resolveSupportRequest, getGamification } from "@/lib/gamification";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification" | "discounts";
+type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification" | "discounts" | "users" | "access" | "activitylog";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function StatCard({ icon, label, value, color }: { icon: string; label: string; value: string | number; color: string }) {
@@ -431,7 +431,7 @@ function VideosTab() {
 // ─── Subscriptions Tab ────────────────────────────────────────────────────────
 function SubscriptionsTab() {
   // Known users (from auth.ts) — in production this would come from API
-  const knownUsers = ["admin", "aida"];
+  const knownUsers = getAllUsers().map(u => u.username);
   const [subs, setSubs] = useState<Record<string, { plan: Plan; expiresAt: string }>>({});
 
   useEffect(() => {
@@ -914,6 +914,197 @@ function DiscountCodesTab() {
   );
 }
 
+// ─── Users Tab ────────────────────────────────────────────────────────────────
+function UsersTab() {
+  const [users, setUsers] = useState<UserRecord[]>(() => getAllUsers());
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ username: "", password: "", displayName: "", role: "student" as "admin" | "student" });
+  const [editingUser, setEditingUser] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState({ password: "", displayName: "", role: "student" as "admin" | "student" });
+
+  const refresh = () => setUsers(getAllUsers());
+  const inputStyle = { width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none" };
+
+  const handleAdd = () => {
+    if (!form.username.trim() || !form.password.trim()) return;
+    const ok = addUser({ username: form.username.trim().toLowerCase(), password: form.password, displayName: form.displayName || form.username, role: form.role });
+    if (!ok) { alert("این نام کاربری قبلاً وجود دارد"); return; }
+    setForm({ username: "", password: "", displayName: "", role: "student" });
+    setShowForm(false);
+    refresh();
+  };
+
+  const handleSaveEdit = (username: string) => {
+    const updates: Partial<Omit<UserRecord, "username">> = {};
+    if (editForm.password) updates.password = editForm.password;
+    if (editForm.displayName) updates.displayName = editForm.displayName;
+    updates.role = editForm.role;
+    updateUser(username, updates);
+    setEditingUser(null);
+    refresh();
+  };
+
+  const handleDelete = (username: string) => {
+    if (!confirm(`کاربر ${username} حذف شود؟`)) return;
+    deleteUser(username);
+    refresh();
+  };
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, direction: "rtl" }}>
+        <span style={{ fontSize: 13, color: "#888" }}>{users.length} کاربر</span>
+        <button onClick={() => setShowForm(!showForm)} style={{ padding: "8px 18px", borderRadius: 10, background: "linear-gradient(135deg,#9333ea,#f97316)", border: "none", color: "white", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
+          {showForm ? "انصراف" : "+ کاربر جدید"}
+        </button>
+      </div>
+
+      {showForm && (
+        <div style={{ background: "rgba(147,51,234,0.06)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 14, padding: 20, marginBottom: 20, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>نام کاربری *</label><input style={inputStyle} value={form.username} onChange={e => setForm(f => ({ ...f, username: e.target.value }))} placeholder="username" /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>رمز عبور *</label><input style={inputStyle} type="password" value={form.password} onChange={e => setForm(f => ({ ...f, password: e.target.value }))} placeholder="password" /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>نام نمایشی</label><input style={inputStyle} value={form.displayName} onChange={e => setForm(f => ({ ...f, displayName: e.target.value }))} placeholder="Display Name" /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>نقش</label><select style={inputStyle} value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value as "admin" | "student" }))}><option value="student">دانشجو</option><option value="admin">مدیر</option></select></div>
+          <button onClick={handleAdd} style={{ gridColumn: "1/-1", padding: "9px 20px", borderRadius: 10, background: "#22d3a5", border: "none", color: "#0d0a14", fontWeight: 700, cursor: "pointer" }}>ذخیره کاربر</button>
+        </div>
+      )}
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {users.map(u => (
+          <div key={u.username} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(147,51,234,0.12)", borderRadius: 12, padding: "14px 18px" }}>
+            {editingUser === u.username ? (
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr auto", gap: 8, alignItems: "end" }}>
+                <div><label style={{ fontSize: 10, color: "#888" }}>نام نمایشی</label><input style={inputStyle} value={editForm.displayName} onChange={e => setEditForm(f => ({ ...f, displayName: e.target.value }))} /></div>
+                <div><label style={{ fontSize: 10, color: "#888" }}>رمز جدید (خالی=بدون تغییر)</label><input style={inputStyle} type="password" value={editForm.password} onChange={e => setEditForm(f => ({ ...f, password: e.target.value }))} /></div>
+                <div><label style={{ fontSize: 10, color: "#888" }}>نقش</label><select style={inputStyle} value={editForm.role} onChange={e => setEditForm(f => ({ ...f, role: e.target.value as "admin" | "student" }))}><option value="student">دانشجو</option><option value="admin">مدیر</option></select></div>
+                <div style={{ display: "flex", gap: 6 }}>
+                  <button onClick={() => handleSaveEdit(u.username)} style={{ padding: "6px 12px", borderRadius: 8, background: "rgba(34,211,165,0.15)", border: "1px solid rgba(34,211,165,0.3)", color: "#22d3a5", cursor: "pointer", fontSize: 11 }}>ذخیره</button>
+                  <button onClick={() => setEditingUser(null)} style={{ padding: "6px 12px", borderRadius: 8, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#888", cursor: "pointer", fontSize: 11 }}>لغو</button>
+                </div>
+              </div>
+            ) : (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <div style={{ width: 38, height: 38, borderRadius: "50%", background: u.role === "admin" ? "linear-gradient(135deg,#9333ea,#f97316)" : "rgba(99,102,241,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>{u.role === "admin" ? "👑" : "👤"}</div>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: 14 }}>{u.displayName} <span style={{ fontSize: 11, color: "#888" }}>@{u.username}</span></div>
+                    <div style={{ display: "flex", gap: 6, marginTop: 2 }}>
+                      <span style={{ fontSize: 10, padding: "1px 8px", borderRadius: 6, background: u.role === "admin" ? "rgba(147,51,234,0.15)" : "rgba(99,102,241,0.1)", color: u.role === "admin" ? "#c084fc" : "#818cf8" }}>{u.role === "admin" ? "مدیر" : "دانشجو"}</span>
+                      <span style={{ fontSize: 10, color: "#555" }}>رمز: {'•'.repeat(u.password.length)}</span>
+                    </div>
+                  </div>
+                </div>
+                <div style={{ display: "flex", gap: 6 }}>
+                  <button onClick={() => { setEditingUser(u.username); setEditForm({ password: "", displayName: u.displayName, role: u.role }); }} style={{ padding: "5px 10px", borderRadius: 8, background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.2)", color: "#818cf8", cursor: "pointer", fontSize: 11 }}>ویرایش</button>
+                  {u.username !== "admin" && <button onClick={() => handleDelete(u.username)} style={{ padding: "5px 10px", borderRadius: 8, background: "rgba(244,86,106,0.1)", border: "1px solid rgba(244,86,106,0.2)", color: "#f4566a", cursor: "pointer", fontSize: 11 }}>حذف</button>}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Section Access Tab ───────────────────────────────────────────────────────
+function SectionAccessTab() {
+  const [access, setAccess] = useState(() => getSectionAccess());
+  const users = getAllUsers();
+  const allSections = getAllSectionIds();
+
+  const sectionLabels: Record<string, string> = {
+    patente: "🚗 Patente Italiana",
+    italiano: "💬 Italiano per Argomenti",
+    espresso1: "☕ Espresso 1 (A1)",
+    espresso2: "☕ Espresso 2 (A2)",
+    espresso3: "☕ Espresso 3 (B1)",
+    espresso4: "☕ Espresso 4 (B2)",
+    espresso5: "☕ Espresso 5 (C1)",
+    espresso6: "☕ Espresso 6 (C2)",
+  };
+
+  const toggle = (username: string, section: string) => {
+    setAccess(prev => {
+      const current = prev[username] || ["patente"];
+      const next = current.includes(section)
+        ? current.filter(s => s !== section)
+        : [...current, section];
+      return { ...prev, [username]: next };
+    });
+  };
+
+  const handleSave = () => {
+    saveSectionAccess(access);
+    alert("دسترسی‌ها ذخیره شد");
+  };
+
+  return (
+    <div>
+      <p style={{ fontSize: 13, color: "#888", marginBottom: 20, direction: "rtl" }}>
+        🔐 تعیین کنید هر کاربر به چه بخش‌هایی دسترسی داشته باشد. بخش‌های انتخاب‌نشده در صفحه اصلی نمایش داده نمی‌شوند.
+      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 20 }}>
+        {users.map(u => {
+          const userAccess = access[u.username] || ["patente"];
+          return (
+            <div key={u.username} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(147,51,234,0.12)", borderRadius: 14, padding: "16px 20px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+                <div style={{ width: 32, height: 32, borderRadius: "50%", background: "linear-gradient(135deg,#9333ea,#f97316)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>{u.role === "admin" ? "👑" : "👤"}</div>
+                <div style={{ fontWeight: 700, fontSize: 14 }}>{u.displayName} <span style={{ fontSize: 11, color: "#888" }}>@{u.username}</span></div>
+              </div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                {allSections.map(sec => {
+                  const active = userAccess.includes(sec);
+                  return (
+                    <button key={sec} onClick={() => toggle(u.username, sec)} style={{
+                      padding: "5px 12px", borderRadius: 8, fontSize: 11, cursor: "pointer",
+                      background: active ? "rgba(34,211,165,0.12)" : "rgba(255,255,255,0.03)",
+                      border: `1px solid ${active ? "rgba(34,211,165,0.3)" : "rgba(255,255,255,0.08)"}`,
+                      color: active ? "#22d3a5" : "#555", fontWeight: active ? 700 : 400,
+                    }}>{active ? "✓ " : ""}{sectionLabels[sec] || sec}</button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <button onClick={handleSave} style={{ padding: "10px 28px", borderRadius: 12, background: "linear-gradient(135deg,#9333ea,#f97316)", border: "none", color: "white", fontWeight: 700, fontSize: 14, cursor: "pointer" }}>
+        ذخیره دسترسی‌ها
+      </button>
+    </div>
+  );
+}
+
+// ─── Activity Log Tab ─────────────────────────────────────────────────────────
+function ActivityLogTab() {
+  const log = getActivityLog();
+  const actionLabels: Record<string, string> = { login: "🟢 ورود", logout: "🔴 خروج" };
+
+  return (
+    <div>
+      <p style={{ fontSize: 13, color: "#888", marginBottom: 16, direction: "rtl" }}>
+        📋 آخرین {log.length} فعالیت ورود/خروج کاربران
+      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 6, maxHeight: "70vh", overflowY: "auto" }}>
+        {log.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>هنوز فعالیتی ثبت نشده</p>}
+        {log.map((entry, i) => (
+          <div key={i} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(147,51,234,0.08)", borderRadius: 10, padding: "10px 14px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ fontSize: 13 }}>{actionLabels[entry.action] || entry.action}</span>
+              <span style={{ fontWeight: 700, fontSize: 13 }}>{entry.username}</span>
+            </div>
+            <span style={{ fontSize: 11, color: "#555" }}>
+              {new Date(entry.timestamp).toLocaleDateString("fa-IR")} · {new Date(entry.timestamp).toLocaleTimeString("fa-IR", { hour: "2-digit", minute: "2-digit" })}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Admin Page ──────────────────────────────────────────────────────────
 export default function AdminPage() {
   const [tab, setTab] = useState<AdminTab>("dashboard");
@@ -936,18 +1127,21 @@ export default function AdminPage() {
 
   const tabs: { id: AdminTab; label: string; icon: string }[] = [
     { id: "dashboard",     label: "داشبورد",   icon: "🏠" },
-    { id: "chapters",      label: "فصل‌ها",     icon: "📚" },
-    { id: "questions",     label: "سوالات",     icon: "❓" },
-    { id: "analytics",     label: "تحلیل",      icon: "📊" },
-    { id: "videos",        label: "ویدیوها",    icon: "🎬" },
-    { id: "subscriptions", label: "اشتراک‌ها",  icon: "🌟" },
-    { id: "hard",          label: "سخت‌ها",    icon: "🔥" },
-    { id: "support",       label: "پشتیبانی",  icon: "✋" },
-    { id: "tags",          label: "تگ‌رنگ‌ها",  icon: "🏷️" },
-    { id: "feedback",      label: "ارزشیابی",  icon: "⭐" },
-    { id: "requests",      label: "درخواست‌ها", icon: "📨" },
-    { id: "gamification",  label: "انگیزش",     icon: "🏆" },
-    { id: "discounts",     label: "کد تخفیف",  icon: "🏷" },
+    { id: "users",          label: "کاربران",   icon: "👥" },
+    { id: "access",         label: "دسترسی‌ها", icon: "🔐" },
+    { id: "chapters",       label: "فصل‌ها",     icon: "📚" },
+    { id: "questions",      label: "سوالات",     icon: "❓" },
+    { id: "analytics",      label: "تحلیل",      icon: "📊" },
+    { id: "videos",         label: "ویدیوها",    icon: "🎬" },
+    { id: "subscriptions",  label: "اشتراک‌ها",  icon: "🌟" },
+    { id: "hard",           label: "سخت‌ها",    icon: "🔥" },
+    { id: "support",        label: "پشتیبانی",  icon: "✋" },
+    { id: "tags",           label: "تگ‌رنگ‌ها",  icon: "🏷️" },
+    { id: "feedback",       label: "ارزشیابی",  icon: "⭐" },
+    { id: "requests",       label: "درخواست‌ها", icon: "📨" },
+    { id: "gamification",   label: "انگیزش",     icon: "🏆" },
+    { id: "discounts",      label: "کد تخفیف",  icon: "🏷" },
+    { id: "activitylog",    label: "لاگ فعالیت", icon: "📋" },
   ];
 
   return (
@@ -1060,6 +1254,9 @@ export default function AdminPage() {
           {tab === "requests"        && <RequestsTab />}
           {tab === "gamification"    && <GamificationAdminTab />}
           {tab === "discounts"       && <DiscountCodesTab />}
+          {tab === "users"           && <UsersTab />}
+          {tab === "access"          && <SectionAccessTab />}
+          {tab === "activitylog"     && <ActivityLogTab />}
         </main>
       </div>
     </div>

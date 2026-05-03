@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { questions, chapters, type Question } from "@/lib/questions";
-import { getSession, logout } from "@/lib/auth";
+import { getSession, logout, getUserSections } from "@/lib/auth";
 import {
   getProgress,
   recordAnswer,
@@ -1816,11 +1816,11 @@ function EspressoSection({ level, onBack }: { level: number; onBack: () => void 
 }
 
 // ─── Landing Page — Section Selector ─────────────────────────────────────────
-function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso, username }: {
+function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso, sections }: {
   onSelectPatente: () => void;
   onSelectItaliano: () => void;
   onSelectEspresso: (level: number) => void;
-  username: string;
+  sections: string[];
 }) {
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 16px" }}>
@@ -1878,8 +1878,8 @@ function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso, user
           </div>
         </button>
 
-        {/* Italiano Section Card — only for siavash */}
-        {username === "siavash" && (
+        {/* Italiano Section Card — access controlled */}
+        {sections.includes("italiano") && (
         <button onClick={onSelectItaliano} style={{
           background: "linear-gradient(135deg, rgba(14,165,233,0.18), rgba(16,185,129,0.1))",
           border: "1.5px solid rgba(14,165,233,0.3)",
@@ -1920,8 +1920,8 @@ function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso, user
         </button>
         )}
 
-        {/* Espresso 1–6 Cards — only for siavash */}
-        {username === "siavash" && [1,2,3,4,5,6].map(lvl => {
+        {/* Espresso 1–6 Cards — access controlled */}
+        {[1,2,3,4,5,6].filter(lvl => sections.includes(`espresso${lvl}`)).map(lvl => {
           const d = ESPRESSO_DATA[lvl];
           const farsi = ["۱","۲","۳","۴","۵","۶"][lvl-1];
           return (
@@ -2046,7 +2046,7 @@ export default function App() {
       {/* ── Landing: Section selector ── */}
       {appSection === "landing" && !showOnboarding && (
         <LandingPage
-          username={getSession()?.username ?? ""}
+          sections={getUserSections(getSession()?.username ?? "")}
           onSelectPatente={() => { setAppSection("patente"); localStorage.setItem("app_section", "patente"); }}
           onSelectItaliano={() => { setAppSection("italiano"); localStorage.setItem("app_section", "italiano"); }}
           onSelectEspresso={(lvl: number) => { setAppSection(`espresso${lvl}`); localStorage.setItem("app_section", `espresso${lvl}`); }}
