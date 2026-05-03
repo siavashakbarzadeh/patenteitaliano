@@ -14,8 +14,9 @@ import { getSession, getAllUsers, addUser, updateUser, deleteUser, getUserSectio
 import { getFeedbackHistory } from "@/lib/userSettings";
 import { getSupportRequests, resolveSupportRequest, getGamification } from "@/lib/gamification";
 import { getAnnouncements, saveAnnouncement, deleteAnnouncement, getCertificates, issueCertificate, deleteCertificate, getMessages, sendMessage, deleteMessage, getSchedule, saveScheduleEvent, deleteScheduleEvent, type Announcement, type Certificate, type Message, type ScheduleEvent } from "@/lib/lms";
+import { getCourses, saveCourse, deleteCourse, getEnrollments, saveEnrollment, deleteEnrollment, getAssignments, saveAssignment, deleteAssignment, getAttendance, saveAttendance, getBadges, saveBadges, getUserBadges, awardBadge, getNotifications, saveNotification, deleteNotification, type Course, type Enrollment, type Assignment, type AttendanceRecord, type Badge, type Notification } from "@/lib/lmsExtended";
 
-type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification" | "discounts" | "users" | "access" | "activitylog" | "announcements" | "certificates" | "messages" | "students" | "schedule";
+type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification" | "discounts" | "users" | "access" | "activitylog" | "announcements" | "certificates" | "messages" | "students" | "schedule" | "courses" | "enrollment" | "assignments" | "attendance" | "badges" | "notifications" | "reports";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function StatCard({ icon, label, value, color }: { icon: string; label: string; value: string | number; color: string }) {
@@ -1370,6 +1371,319 @@ function ScheduleTab() {
   );
 }
 
+// ─── Courses Tab ──────────────────────────────────────────────────────────────
+function CoursesTab() {
+  const [list, setList] = useState(() => getCourses());
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ title: "", description: "", level: "A1", status: "active" as Course["status"], lessonsCount: 0, category: "" });
+  const inputStyle = { width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none" };
+  const statusColors = { active: "#22d3a5", draft: "#f59e0b", archived: "#888" };
+  const statusLabels = { active: "فعال", draft: "پیش‌نویس", archived: "آرشیو" };
+  const handleSave = () => {
+    if (!form.title.trim()) return;
+    saveCourse({ id: Date.now().toString(), ...form, createdAt: new Date().toISOString() });
+    setForm({ title: "", description: "", level: "A1", status: "active", lessonsCount: 0, category: "" });
+    setShowForm(false); setList(getCourses());
+  };
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, direction: "rtl" }}>
+        <span style={{ fontSize: 13, color: "#888" }}>{list.length} دوره</span>
+        <button onClick={() => setShowForm(!showForm)} style={{ padding: "8px 18px", borderRadius: 10, background: "linear-gradient(135deg,#9333ea,#f97316)", border: "none", color: "white", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{showForm ? "انصراف" : "📦 دوره جدید"}</button>
+      </div>
+      {showForm && (
+        <div style={{ background: "rgba(147,51,234,0.06)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 14, padding: 20, marginBottom: 20, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>عنوان *</label><input style={inputStyle} value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>سطح</label><select style={inputStyle} value={form.level} onChange={e => setForm(f => ({ ...f, level: e.target.value }))}><option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option><option>C2</option></select></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>دسته‌بندی</label><input style={inputStyle} value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>تعداد درس</label><input type="number" style={inputStyle} value={form.lessonsCount} onChange={e => setForm(f => ({ ...f, lessonsCount: +e.target.value }))} /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>وضعیت</label><select style={inputStyle} value={form.status} onChange={e => setForm(f => ({ ...f, status: e.target.value as Course["status"] }))}><option value="active">فعال</option><option value="draft">پیش‌نویس</option><option value="archived">آرشیو</option></select></div>
+          <div style={{ gridColumn: "1/-1" }}><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>توضیحات</label><input style={inputStyle} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} /></div>
+          <button onClick={handleSave} style={{ gridColumn: "1/-1", padding: "9px 20px", borderRadius: 10, background: "#22d3a5", border: "none", color: "#0d0a14", fontWeight: 700, cursor: "pointer" }}>ذخیره دوره</button>
+        </div>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {list.map(c => (
+          <div key={c.id} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(147,51,234,0.12)", borderRadius: 12, padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 14 }}>{c.title} <span style={{ fontSize: 10, padding: "1px 6px", borderRadius: 4, background: `${statusColors[c.status]}20`, color: statusColors[c.status] }}>{statusLabels[c.status]}</span></div>
+              <div style={{ fontSize: 11, color: "#888" }}>{c.level} · {c.lessonsCount} درس{c.category ? ` · ${c.category}` : ""}</div>
+            </div>
+            <button onClick={() => { deleteCourse(c.id); setList(getCourses()); }} style={{ padding: "3px 8px", borderRadius: 6, background: "rgba(244,86,106,0.1)", color: "#f4566a", border: "none", cursor: "pointer", fontSize: 10 }}>حذف</button>
+          </div>
+        ))}
+        {list.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>هنوز دوره‌ای ثبت نشده</p>}
+      </div>
+    </div>
+  );
+}
+
+// ─── Enrollment Tab ───────────────────────────────────────────────────────────
+function EnrollmentTab() {
+  const [list, setList] = useState(() => getEnrollments());
+  const [showForm, setShowForm] = useState(false);
+  const users = getAllUsers().filter(u => u.role === "student");
+  const courses = getCourses();
+  const [form, setForm] = useState({ username: users[0]?.username ?? "", courseId: courses[0]?.id ?? "", courseTitle: courses[0]?.title ?? "" });
+  const inputStyle = { width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none" };
+  const statusColors = { active: "#22d3a5", completed: "#6366f1", dropped: "#ef4444" };
+  const handleSave = () => {
+    if (!form.username || !form.courseId) return;
+    const ct = courses.find(c => c.id === form.courseId);
+    saveEnrollment({ id: Date.now().toString(), username: form.username, courseId: form.courseId, courseTitle: ct?.title ?? "", status: "active", enrolledAt: new Date().toISOString(), progress: 0 });
+    setShowForm(false); setList(getEnrollments());
+  };
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, direction: "rtl" }}>
+        <span style={{ fontSize: 13, color: "#888" }}>{list.length} ثبت‌نام</span>
+        <button onClick={() => setShowForm(!showForm)} style={{ padding: "8px 18px", borderRadius: 10, background: "linear-gradient(135deg,#9333ea,#f97316)", border: "none", color: "white", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{showForm ? "انصراف" : "📋 ثبت‌نام جدید"}</button>
+      </div>
+      {showForm && (
+        <div style={{ background: "rgba(147,51,234,0.06)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 14, padding: 20, marginBottom: 20, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>دانش‌آموز</label><select style={inputStyle} value={form.username} onChange={e => setForm(f => ({ ...f, username: e.target.value }))}>{users.map(u => <option key={u.username} value={u.username}>{u.displayName}</option>)}</select></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>دوره</label><select style={inputStyle} value={form.courseId} onChange={e => setForm(f => ({ ...f, courseId: e.target.value }))}>{courses.map(c => <option key={c.id} value={c.id}>{c.title}</option>)}</select></div>
+          <button onClick={handleSave} style={{ gridColumn: "1/-1", padding: "9px 20px", borderRadius: 10, background: "#22d3a5", border: "none", color: "#0d0a14", fontWeight: 700, cursor: "pointer" }}>ثبت‌نام</button>
+        </div>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {list.map(e => (
+          <div key={e.id} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(147,51,234,0.12)", borderRadius: 12, padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 14 }}>{users.find(u => u.username === e.username)?.displayName ?? e.username}</div>
+              <div style={{ fontSize: 11, color: "#888" }}>{e.courseTitle} · <span style={{ color: statusColors[e.status] }}>{e.status}</span> · {e.progress}%</div>
+            </div>
+            <button onClick={() => { deleteEnrollment(e.id); setList(getEnrollments()); }} style={{ padding: "3px 8px", borderRadius: 6, background: "rgba(244,86,106,0.1)", color: "#f4566a", border: "none", cursor: "pointer", fontSize: 10 }}>حذف</button>
+          </div>
+        ))}
+        {list.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>هنوز ثبت‌نامی نشده</p>}
+      </div>
+    </div>
+  );
+}
+
+// ─── Assignments Tab ──────────────────────────────────────────────────────────
+function AssignmentsTab() {
+  const [list, setList] = useState(() => getAssignments());
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ title: "", description: "", courseId: "", dueDate: "" });
+  const inputStyle = { width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none" };
+  const handleSave = () => {
+    if (!form.title.trim()) return;
+    saveAssignment({ id: Date.now().toString(), title: form.title, description: form.description, courseId: form.courseId, dueDate: form.dueDate, targetUsers: "all", createdAt: new Date().toISOString() });
+    setForm({ title: "", description: "", courseId: "", dueDate: "" }); setShowForm(false); setList(getAssignments());
+  };
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, direction: "rtl" }}>
+        <span style={{ fontSize: 13, color: "#888" }}>{list.length} تکلیف</span>
+        <button onClick={() => setShowForm(!showForm)} style={{ padding: "8px 18px", borderRadius: 10, background: "linear-gradient(135deg,#9333ea,#f97316)", border: "none", color: "white", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{showForm ? "انصراف" : "📝 تکلیف جدید"}</button>
+      </div>
+      {showForm && (
+        <div style={{ background: "rgba(147,51,234,0.06)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 14, padding: 20, marginBottom: 20, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div style={{ gridColumn: "1/-1" }}><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>عنوان *</label><input style={inputStyle} value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>مهلت</label><input type="date" style={inputStyle} value={form.dueDate} onChange={e => setForm(f => ({ ...f, dueDate: e.target.value }))} /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>توضیح</label><input style={inputStyle} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} /></div>
+          <button onClick={handleSave} style={{ gridColumn: "1/-1", padding: "9px 20px", borderRadius: 10, background: "#22d3a5", border: "none", color: "#0d0a14", fontWeight: 700, cursor: "pointer" }}>ذخیره</button>
+        </div>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {list.map(a => {
+          const overdue = a.dueDate && new Date(a.dueDate) < new Date();
+          return (
+            <div key={a.id} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${overdue ? "rgba(239,68,68,0.2)" : "rgba(147,51,234,0.12)"}`, borderRadius: 12, padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: 14 }}>{a.title} {overdue && <span style={{ fontSize: 9, color: "#ef4444" }}>منقضی</span>}</div>
+                <div style={{ fontSize: 11, color: "#888" }}>{a.dueDate || "بدون مهلت"}{a.description ? ` · ${a.description}` : ""}</div>
+              </div>
+              <button onClick={() => { deleteAssignment(a.id); setList(getAssignments()); }} style={{ padding: "3px 8px", borderRadius: 6, background: "rgba(244,86,106,0.1)", color: "#f4566a", border: "none", cursor: "pointer", fontSize: 10 }}>حذف</button>
+            </div>
+          );
+        })}
+        {list.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>هنوز تکلیفی ثبت نشده</p>}
+      </div>
+    </div>
+  );
+}
+
+// ─── Attendance Tab ───────────────────────────────────────────────────────────
+function AttendanceTab() {
+  const [list, setList] = useState(() => getAttendance());
+  const [showForm, setShowForm] = useState(false);
+  const users = getAllUsers().filter(u => u.role === "student");
+  const [form, setForm] = useState({ username: users[0]?.username ?? "", date: new Date().toISOString().split("T")[0], status: "present" as AttendanceRecord["status"], courseId: "", note: "" });
+  const inputStyle = { width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none" };
+  const statusIcons: Record<string, string> = { present: "✅", absent: "❌", late: "⏰", excused: "📋" };
+  const statusLabels: Record<string, string> = { present: "حاضر", absent: "غایب", late: "تأخیر", excused: "موجه" };
+  const handleSave = () => {
+    saveAttendance({ id: Date.now().toString(), username: form.username, date: form.date, status: form.status, courseId: form.courseId, note: form.note });
+    setShowForm(false); setList(getAttendance());
+  };
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, direction: "rtl" }}>
+        <span style={{ fontSize: 13, color: "#888" }}>{list.length} رکورد</span>
+        <button onClick={() => setShowForm(!showForm)} style={{ padding: "8px 18px", borderRadius: 10, background: "linear-gradient(135deg,#9333ea,#f97316)", border: "none", color: "white", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{showForm ? "انصراف" : "✅ ثبت حضور"}</button>
+      </div>
+      {showForm && (
+        <div style={{ background: "rgba(147,51,234,0.06)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 14, padding: 20, marginBottom: 20, display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>دانش‌آموز</label><select style={inputStyle} value={form.username} onChange={e => setForm(f => ({ ...f, username: e.target.value }))}>{users.map(u => <option key={u.username} value={u.username}>{u.displayName}</option>)}</select></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>تاریخ</label><input type="date" style={inputStyle} value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} /></div>
+          <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>وضعیت</label><select style={inputStyle} value={form.status} onChange={e => setForm(f => ({ ...f, status: e.target.value as AttendanceRecord["status"] }))}><option value="present">حاضر</option><option value="absent">غایب</option><option value="late">تأخیر</option><option value="excused">موجه</option></select></div>
+          <button onClick={handleSave} style={{ gridColumn: "1/-1", padding: "9px 20px", borderRadius: 10, background: "#22d3a5", border: "none", color: "#0d0a14", fontWeight: 700, cursor: "pointer" }}>ثبت</button>
+        </div>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        {list.map(a => (
+          <div key={a.id} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(147,51,234,0.08)", borderRadius: 10, padding: "10px 14px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ fontSize: 16 }}>{statusIcons[a.status]}</span>
+              <span style={{ fontWeight: 700, fontSize: 13 }}>{users.find(u => u.username === a.username)?.displayName ?? a.username}</span>
+              <span style={{ fontSize: 11, color: "#888" }}>{statusLabels[a.status]}</span>
+            </div>
+            <span style={{ fontSize: 11, color: "#555" }}>{a.date}</span>
+          </div>
+        ))}
+        {list.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>هنوز حضوری ثبت نشده</p>}
+      </div>
+    </div>
+  );
+}
+
+// ─── Badges Tab ───────────────────────────────────────────────────────────────
+function BadgesTab() {
+  const [badges] = useState(() => getBadges());
+  const [awarded, setAwarded] = useState(() => getUserBadges());
+  const users = getAllUsers().filter(u => u.role === "student");
+  const [selUser, setSelUser] = useState(users[0]?.username ?? "");
+  const [selBadge, setSelBadge] = useState(badges[0]?.id ?? "");
+  const inputStyle = { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none" };
+
+  const handleAward = () => {
+    if (!selUser || !selBadge) return;
+    awardBadge(selUser, selBadge);
+    setAwarded(getUserBadges());
+  };
+
+  return (
+    <div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 24 }}>
+        {badges.map(b => (
+          <div key={b.id} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(147,51,234,0.12)", borderRadius: 14, padding: "16px 20px", textAlign: "center", width: 130 }}>
+            <div style={{ fontSize: 32, marginBottom: 6 }}>{b.icon}</div>
+            <div style={{ fontWeight: 700, fontSize: 12 }}>{b.title}</div>
+            <div style={{ fontSize: 10, color: "#888", marginTop: 2 }}>{b.description}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{ background: "rgba(147,51,234,0.06)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 14, padding: 16, marginBottom: 20, display: "flex", gap: 10, alignItems: "end" }}>
+        <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>دانش‌آموز</label><select style={inputStyle} value={selUser} onChange={e => setSelUser(e.target.value)}>{users.map(u => <option key={u.username} value={u.username}>{u.displayName}</option>)}</select></div>
+        <div><label style={{ fontSize: 11, color: "#888", display: "block", marginBottom: 4 }}>نشان</label><select style={inputStyle} value={selBadge} onChange={e => setSelBadge(e.target.value)}>{badges.map(b => <option key={b.id} value={b.id}>{b.icon} {b.title}</option>)}</select></div>
+        <button onClick={handleAward} style={{ padding: "8px 16px", borderRadius: 10, background: "#22d3a5", border: "none", color: "#0d0a14", fontWeight: 700, cursor: "pointer", fontSize: 12 }}>اهدا</button>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        {awarded.map(a => {
+          const badge = badges.find(b => b.id === a.badgeId);
+          return (
+            <div key={a.id} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(251,191,36,0.15)", borderRadius: 10, padding: "10px 14px", display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ fontSize: 20 }}>{badge?.icon ?? "🏅"}</span>
+              <span style={{ fontWeight: 700, fontSize: 13 }}>{users.find(u => u.username === a.username)?.displayName ?? a.username}</span>
+              <span style={{ fontSize: 11, color: "#fbbf24" }}>{badge?.title}</span>
+              <span style={{ fontSize: 10, color: "#555", marginLeft: "auto" }}>{new Date(a.awardedAt).toLocaleDateString("fa-IR")}</span>
+            </div>
+          );
+        })}
+        {awarded.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>هنوز نشانی اهدا نشده</p>}
+      </div>
+    </div>
+  );
+}
+
+// ─── Notifications Tab ────────────────────────────────────────────────────────
+function NotificationsTab() {
+  const [list, setList] = useState(() => getNotifications());
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ title: "", body: "", type: "info" as Notification["type"] });
+  const inputStyle = { width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none" };
+  const typeIcons: Record<string, string> = { info: "ℹ️", warning: "⚠️", success: "✅", error: "❌" };
+  const handleSave = () => {
+    if (!form.title.trim()) return;
+    saveNotification({ id: Date.now().toString(), title: form.title, body: form.body, type: form.type, targetUsers: "all", read: [], createdAt: new Date().toISOString() });
+    setForm({ title: "", body: "", type: "info" }); setShowForm(false); setList(getNotifications());
+  };
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, direction: "rtl" }}>
+        <span style={{ fontSize: 13, color: "#888" }}>{list.length} اعلان</span>
+        <button onClick={() => setShowForm(!showForm)} style={{ padding: "8px 18px", borderRadius: 10, background: "linear-gradient(135deg,#9333ea,#f97316)", border: "none", color: "white", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{showForm ? "انصراف" : "🔔 اعلان جدید"}</button>
+      </div>
+      {showForm && (
+        <div style={{ background: "rgba(147,51,234,0.06)", border: "1px solid rgba(147,51,234,0.2)", borderRadius: 14, padding: 20, marginBottom: 20, display: "flex", flexDirection: "column", gap: 10 }}>
+          <input style={inputStyle} value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="عنوان *" />
+          <textarea style={{ ...inputStyle, minHeight: 60, resize: "vertical" }} value={form.body} onChange={e => setForm(f => ({ ...f, body: e.target.value }))} placeholder="متن..." />
+          <select style={inputStyle} value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value as Notification["type"] }))}><option value="info">ℹ️ اطلاع</option><option value="warning">⚠️ هشدار</option><option value="success">✅ موفق</option><option value="error">❌ خطا</option></select>
+          <button onClick={handleSave} style={{ alignSelf: "flex-start", padding: "9px 20px", borderRadius: 10, background: "#22d3a5", border: "none", color: "#0d0a14", fontWeight: 700, cursor: "pointer" }}>ارسال</button>
+        </div>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        {list.map(n => (
+          <div key={n.id} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(147,51,234,0.08)", borderRadius: 10, padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <span>{typeIcons[n.type]}</span>
+              <span style={{ fontWeight: 700, fontSize: 13 }}>{n.title}</span>
+              {n.body && <span style={{ fontSize: 11, color: "#888" }}>— {n.body.slice(0, 50)}</span>}
+            </div>
+            <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+              <span style={{ fontSize: 10, color: "#555" }}>{new Date(n.createdAt).toLocaleDateString("fa-IR")}</span>
+              <button onClick={() => { deleteNotification(n.id); setList(getNotifications()); }} style={{ padding: "2px 6px", borderRadius: 4, background: "rgba(244,86,106,0.1)", color: "#f4566a", border: "none", cursor: "pointer", fontSize: 9 }}>✕</button>
+            </div>
+          </div>
+        ))}
+        {list.length === 0 && <p style={{ color: "#555", fontSize: 13 }}>هنوز اعلانی ثبت نشده</p>}
+      </div>
+    </div>
+  );
+}
+
+// ─── Reports Tab ──────────────────────────────────────────────────────────────
+function ReportsTab({ progress }: { progress: UserProgress }) {
+  const users = getAllUsers();
+  const students = users.filter(u => u.role === "student");
+  const log = getActivityLog();
+  const certs = getCertificates();
+  const enrollments = getEnrollments();
+  const attendance = getAttendance();
+  const courses = getCourses();
+  const totalLogins = log.filter(l => l.action === "login").length;
+  const presentCount = attendance.filter(a => a.status === "present").length;
+  const absentCount = attendance.filter(a => a.status === "absent").length;
+
+  const cardStyle = { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(147,51,234,0.12)", borderRadius: 14, padding: "20px", textAlign: "center" as const };
+  return (
+    <div>
+      <p style={{ fontSize: 13, color: "#888", marginBottom: 20, direction: "rtl" }}>📈 خلاصه گزارش سیستم</p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 24 }}>
+        <div style={cardStyle}><div style={{ fontSize: 28, fontWeight: 900, color: "#9333ea" }}>{users.length}</div><div style={{ fontSize: 11, color: "#888" }}>کل کاربران</div></div>
+        <div style={cardStyle}><div style={{ fontSize: 28, fontWeight: 900, color: "#6366f1" }}>{students.length}</div><div style={{ fontSize: 11, color: "#888" }}>دانش‌آموزان</div></div>
+        <div style={cardStyle}><div style={{ fontSize: 28, fontWeight: 900, color: "#22d3a5" }}>{courses.length}</div><div style={{ fontSize: 11, color: "#888" }}>دوره‌ها</div></div>
+        <div style={cardStyle}><div style={{ fontSize: 28, fontWeight: 900, color: "#fbbf24" }}>{certs.length}</div><div style={{ fontSize: 11, color: "#888" }}>گواهی‌ها</div></div>
+        <div style={cardStyle}><div style={{ fontSize: 28, fontWeight: 900, color: "#f97316" }}>{totalLogins}</div><div style={{ fontSize: 11, color: "#888" }}>کل ورودها</div></div>
+        <div style={cardStyle}><div style={{ fontSize: 28, fontWeight: 900, color: "#22d3a5" }}>{enrollments.length}</div><div style={{ fontSize: 11, color: "#888" }}>ثبت‌نام‌ها</div></div>
+        <div style={cardStyle}><div style={{ fontSize: 28, fontWeight: 900, color: "#22d3a5" }}>{presentCount}</div><div style={{ fontSize: 11, color: "#888" }}>حضور</div></div>
+        <div style={cardStyle}><div style={{ fontSize: 28, fontWeight: 900, color: "#ef4444" }}>{absentCount}</div><div style={{ fontSize: 11, color: "#888" }}>غیبت</div></div>
+      </div>
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(147,51,234,0.12)", borderRadius: 14, padding: "20px" }}>
+        <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 12 }}>📊 آمار آزمون‌ها</h3>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+          <div style={{ textAlign: "center" }}><div style={{ fontSize: 22, fontWeight: 900, color: "#6366f1" }}>{progress.totalAnswered}</div><div style={{ fontSize: 11, color: "#888" }}>کل پاسخ‌ها</div></div>
+          <div style={{ textAlign: "center" }}><div style={{ fontSize: 22, fontWeight: 900, color: "#22d3a5" }}>{progress.totalCorrect}</div><div style={{ fontSize: 11, color: "#888" }}>صحیح</div></div>
+          <div style={{ textAlign: "center" }}><div style={{ fontSize: 22, fontWeight: 900, color: "#f97316" }}>{progress.totalAnswered ? Math.round(progress.totalCorrect / progress.totalAnswered * 100) : 0}%</div><div style={{ fontSize: 11, color: "#888" }}>دقت</div></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Admin Page ──────────────────────────────────────────────────────────
 export default function AdminPage() {
   const [tab, setTab] = useState<AdminTab>("dashboard");
@@ -1390,28 +1704,35 @@ export default function AdminPage() {
     }
   };
 
-  const tabs: { id: AdminTab; label: string; icon: string }[] = [
+  const tabs: { id: AdminTab; label: string; icon: string; group?: string }[] = [
     { id: "dashboard",     label: "داشبورد",     icon: "🏠" },
-    { id: "students",      label: "دانش‌آموزان", icon: "🎓" },
-    { id: "users",         label: "کاربران",     icon: "👥" },
-    { id: "access",        label: "دسترسی‌ها",   icon: "🔐" },
-    { id: "announcements", label: "اطلاعیه‌ها",  icon: "📢" },
-    { id: "messages",      label: "پیام‌ها",     icon: "✉️" },
-    { id: "schedule",      label: "تقویم",       icon: "📅" },
-    { id: "certificates",  label: "گواهی‌ها",    icon: "🎖️" },
+    { id: "reports",       label: "گزارش‌ها",    icon: "📈", group: "EDUCATION" },
+    { id: "courses",       label: "دوره‌ها",     icon: "📦" },
     { id: "chapters",      label: "فصل‌ها",      icon: "📚" },
     { id: "questions",     label: "سوالات",      icon: "❓" },
+    { id: "assignments",   label: "تکالیف",      icon: "📝" },
+    { id: "enrollment",    label: "ثبت‌نام‌ها",  icon: "📋" },
+    { id: "attendance",    label: "حضور/غیاب",  icon: "✅" },
+    { id: "certificates",  label: "گواهی‌ها",    icon: "🎖️" },
+    { id: "schedule",      label: "تقویم",       icon: "📅" },
     { id: "analytics",     label: "تحلیل",       icon: "📊" },
     { id: "videos",        label: "ویدیوها",     icon: "🎬" },
-    { id: "subscriptions", label: "اشتراک‌ها",   icon: "🌟" },
     { id: "hard",          label: "سخت‌ها",     icon: "🔥" },
-    { id: "support",       label: "پشتیبانی",   icon: "✋" },
-    { id: "tags",          label: "تگ‌رنگ‌ها",   icon: "🏷️" },
+    { id: "students",      label: "دانش‌آموزان", icon: "🎓", group: "USERS" },
+    { id: "users",         label: "کاربران",     icon: "👥" },
+    { id: "access",        label: "دسترسی‌ها",   icon: "🔐" },
+    { id: "badges",        label: "نشان‌ها",     icon: "🏅" },
+    { id: "gamification",  label: "انگیزش",      icon: "🏆" },
+    { id: "activitylog",   label: "لاگ فعالیت",  icon: "📋" },
+    { id: "support",       label: "پشتیبانی",   icon: "✋", group: "CRM" },
+    { id: "messages",      label: "پیام‌ها",     icon: "✉️" },
+    { id: "announcements", label: "اطلاعیه‌ها",  icon: "📢" },
+    { id: "notifications", label: "اعلان‌ها",    icon: "🔔" },
     { id: "feedback",      label: "ارزشیابی",   icon: "⭐" },
     { id: "requests",      label: "درخواست‌ها",  icon: "📨" },
-    { id: "gamification",  label: "انگیزش",      icon: "🏆" },
+    { id: "tags",          label: "تگ‌رنگ‌ها",   icon: "🏷️" },
+    { id: "subscriptions", label: "اشتراک‌ها",   icon: "🌟", group: "FINANCIAL" },
     { id: "discounts",     label: "کد تخفیف",   icon: "🏷" },
-    { id: "activitylog",   label: "لاگ فعالیت",  icon: "📋" },
   ];
 
   return (
@@ -1444,21 +1765,24 @@ export default function AdminPage() {
           </div>
 
           {/* Nav items */}
-          <nav style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, padding: "0 12px" }}>
+          <nav style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2, padding: "0 12px", overflowY: "auto" }}>
             {tabs.map(t => (
-              <button key={t.id} onClick={() => setTab(t.id)} style={{
-                display: "flex", alignItems: "center", gap: 10,
-                padding: "10px 14px", borderRadius: 12, border: "none", cursor: "pointer",
-                background: tab === t.id ? "linear-gradient(135deg,rgba(147,51,234,0.25),rgba(249,115,22,0.1))" : "none",
-                color: tab === t.id ? "#d8aaff" : "#888",
-                fontWeight: tab === t.id ? 700 : 500, fontSize: 14,
-                transition: "all 0.2s",
-                borderLeft: tab === t.id ? "3px solid #9333ea" : "3px solid transparent",
-                textAlign: "left",
-              }}>
-                <span style={{ fontSize: 18 }}>{t.icon}</span>
-                {t.label}
-              </button>
+              <div key={t.id}>
+                {t.group && <div style={{ fontSize: 9, fontWeight: 800, color: "#555", letterSpacing: "0.15em", padding: "12px 14px 4px", textTransform: "uppercase" }}>{t.group}</div>}
+                <button onClick={() => setTab(t.id)} style={{
+                  display: "flex", alignItems: "center", gap: 8, width: "100%",
+                  padding: "7px 12px", borderRadius: 10, border: "none", cursor: "pointer",
+                  background: tab === t.id ? "linear-gradient(135deg,rgba(147,51,234,0.25),rgba(249,115,22,0.1))" : "none",
+                  color: tab === t.id ? "#d8aaff" : "#888",
+                  fontWeight: tab === t.id ? 700 : 500, fontSize: 12,
+                  transition: "all 0.2s",
+                  borderLeft: tab === t.id ? "3px solid #9333ea" : "3px solid transparent",
+                  textAlign: "left",
+                }}>
+                  <span style={{ fontSize: 15 }}>{t.icon}</span>
+                  {t.label}
+                </button>
+              </div>
             ))}
           </nav>
 
@@ -1532,6 +1856,13 @@ export default function AdminPage() {
           {tab === "messages"        && <MessagesTab />}
           {tab === "students"        && <StudentsTab progress={progress} />}
           {tab === "schedule"        && <ScheduleTab />}
+          {tab === "courses"         && <CoursesTab />}
+          {tab === "enrollment"      && <EnrollmentTab />}
+          {tab === "assignments"     && <AssignmentsTab />}
+          {tab === "attendance"      && <AttendanceTab />}
+          {tab === "badges"          && <BadgesTab />}
+          {tab === "notifications"   && <NotificationsTab />}
+          {tab === "reports"         && <ReportsTab progress={progress} />}
         </main>
       </div>
     </div>
