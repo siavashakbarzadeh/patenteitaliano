@@ -1878,7 +1878,8 @@ function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso, user
           </div>
         </button>
 
-        {/* Italiano Section Card */}
+        {/* Italiano Section Card — only for siavash */}
+        {username === "siavash" && (
         <button onClick={onSelectItaliano} style={{
           background: "linear-gradient(135deg, rgba(14,165,233,0.18), rgba(16,185,129,0.1))",
           border: "1.5px solid rgba(14,165,233,0.3)",
@@ -1917,6 +1918,7 @@ function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso, user
             }}>ورود به بخش ← </div>
           </div>
         </button>
+        )}
 
         {/* Espresso 1–6 Cards — only for siavash */}
         {username === "siavash" && [1,2,3,4,5,6].map(lvl => {
