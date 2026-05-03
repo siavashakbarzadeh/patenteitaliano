@@ -628,7 +628,7 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter }: {
           </span>
         </div>
 
-        <h1 style={{ fontSize: 30, fontWeight: 900, lineHeight: 1.25, marginBottom: 6, direction: "rtl" }}>
+        <h1 style={{ fontSize: "clamp(22px, 6vw, 30px)", fontWeight: 900, lineHeight: 1.25, marginBottom: 6, direction: "rtl" }}>
           آموزش{" "}
           <span style={{
             background: "linear-gradient(135deg, #9333ea, #f97316)",
@@ -644,8 +644,8 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter }: {
 
       {/* ── Stats cards ───────────────────────────────────────────────────── */}
       <div className="animate-fade-in-up" style={{
-        display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
-        gap: 10, marginBottom: 24, animationDelay: "0.08s",
+        display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+        gap: 10, marginBottom: 24, animationDelay: "0.08s", overflow: "hidden",
       }}>
         {/* Accuracy */}
         <div style={{
@@ -687,7 +687,7 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter }: {
       </div>
 
       {/* ── Progress overview card ─────────────────────────────────────────── */}
-      <div className="animate-fade-in-up glass-card" style={{ padding: "20px", marginBottom: 20, animationDelay: "0.12s" }}>
+      <div className="animate-fade-in-up glass-card" style={{ padding: "20px", marginBottom: 20, animationDelay: "0.12s", overflow: "hidden" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 18 }}>
           {/* SVG ring */}
           <div style={{ position: "relative", width: 64, height: 64, flexShrink: 0 }}>
@@ -724,7 +724,7 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter }: {
         </div>
 
         {/* Chapter dots grid */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16, maxWidth: "100%", justifyContent: "center" }}>
           {chapters.map((ch) => {
             const stats = progress.chapterStats[String(ch.number)];
             const done = stats && stats.answered > 0;
@@ -940,7 +940,7 @@ function ChaptersPage({ progress, onSelectChapter, onStudyChapter, onMixedQuiz, 
   return (
     <div className="page-wrap">
       <div className="animate-fade-in-up" style={{ marginBottom: 20 }}>
-        <h1 style={{ fontSize: 26, fontWeight: 800, marginBottom: 6, direction: "rtl" }}>۲۵ فصل آیین‌نامه</h1>
+        <h1 style={{ fontSize: "clamp(20px, 5.5vw, 26px)", fontWeight: 800, marginBottom: 6, direction: "rtl" }}>۲۵ فصل آیین‌نامه</h1>
         <p style={{ color: "var(--text-secondary)", fontSize: 14, direction: "rtl", textAlign: "right" }}>
           هر فصل دو بخش دارد:{" "}
           <strong style={{ color: "var(--text-primary)" }}>📖 مطالعه</strong> و{" "}
@@ -2038,7 +2038,7 @@ export default function App() {
           padding: "14px 20px", maxWidth: 360, width: "92%",
           display: "flex", alignItems: "flex-start", gap: 10,
           boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-          animation: "fadeInUp 0.4s ease",
+          animation: "toastFadeInUp 0.4s ease",
         }}>
           <span style={{ fontSize: 26, flexShrink: 0 }}>🌟</span>
           <div style={{ direction: "rtl", flex: 1 }}>
