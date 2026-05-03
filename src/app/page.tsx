@@ -1899,7 +1899,6 @@ function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso1, use
             }}>ورود به بخش ← </div>
           </div>
         </button>
-      </div>
 
         {/* Espresso 1 Card — only for siavash */}
         {username === "siavash" && (
