@@ -80,7 +80,7 @@ import {
   StickyNote,
   Image as ImageIcon,
   Timer,
-  Settings, User,
+  Settings,
   HelpCircle,
   Award,
   MessageCircle,
@@ -611,6 +611,8 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter, onBac
   const pct        = availableCount > 0 ? Math.round((doneCount / availableCount) * 100) : 0;
   const circumference = 2 * Math.PI * 26; // r=26
 
+  const session = getSession();
+
   return (
     <div className="page-wrap">
 
@@ -635,30 +637,40 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter, onBac
                 PATENTE B
               </span>
             </div>
-            <button onClick={() => onNavigate("settings")} style={{
-              width: 38, height: 38, borderRadius: "50%", border: "2px solid rgba(147,51,234,0.35)",
-              background: "linear-gradient(135deg, #9333ea, #f97316)", cursor: "pointer",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 16, color: "white", fontWeight: 900, flexShrink: 0,
-              boxShadow: "0 2px 12px rgba(147,51,234,0.35)", transition: "all 0.2s",
-            }}>
-              <User size={18} />
-            </button>
           </div>
         </div>
 
-        <h1 style={{ fontSize: "clamp(22px, 6vw, 30px)", fontWeight: 900, lineHeight: 1.25, marginBottom: 6, direction: "rtl" }}>
-          آموزش{" "}
-          <span style={{
+        {/* ── Profile greeting card ── */}
+        <button onClick={() => onNavigate("settings")} style={{
+          width: "100%", display: "flex", alignItems: "center", gap: 14, direction: "rtl",
+          background: "linear-gradient(135deg, rgba(147,51,234,0.12), rgba(249,115,22,0.08))",
+          border: "1px solid rgba(147,51,234,0.25)", borderRadius: 18,
+          padding: "16px 20px", cursor: "pointer", transition: "all 0.2s",
+          marginBottom: 8, textAlign: "right",
+        }}>
+          {/* Avatar */}
+          <div style={{
+            width: 50, height: 50, borderRadius: "50%", flexShrink: 0,
             background: "linear-gradient(135deg, #9333ea, #f97316)",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            border: "2px solid rgba(255,255,255,0.2)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 22, fontWeight: 900, color: "white",
+            boxShadow: "0 4px 16px rgba(147,51,234,0.4)",
           }}>
-            گواهینامه ایتالیایی
-          </span>
-        </h1>
-        <p style={{ fontSize: 13, color: "var(--text-muted)", direction: "rtl" }}>
-          آزمون تمرینی، مطالعه فارسی، پیگیری پیشرفت
-        </p>
+            {session?.displayName?.[0]?.toUpperCase() ?? "?"}
+          </div>
+          {/* Name + subtitle */}
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 17, fontWeight: 900, color: "var(--text-primary)", marginBottom: 3 }}>
+              سلام، {session?.displayName ?? "کاربر"} 👋
+            </div>
+            <div style={{ fontSize: 12, color: "var(--text-muted)" }}>
+              پروفایل و تنظیمات ←
+            </div>
+          </div>
+          {/* Arrow */}
+          <div style={{ color: "var(--text-muted)", fontSize: 18, flexShrink: 0 }}>‹</div>
+        </button>
       </div>
 
       {/* ── Stats cards ───────────────────────────────────────────────────── */}
