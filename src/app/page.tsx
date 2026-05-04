@@ -99,6 +99,7 @@ import ItalianoSection from "@/components/ItalianoSection";
 import { getUserSettings, applySettings, checkExamClearance } from "@/lib/userSettings";
 import { claimDailyLogin, awardQuizXP, getGamification, getBadge } from "@/lib/gamification";
 import { validateCode, applyCode, getAppliedCode } from "@/lib/discountCodes";
+import { getCourseConfigs, getNavItemsForCourse, getCourseById, type CourseConfig } from "@/lib/courseConfig";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type Page = "home" | "chapters" | "quiz" | "results" | "stats" | "study" | "review" | "browse" | "settings" | "faq" | "charts" | "support" | "gamification" | "dictionary";
@@ -179,22 +180,30 @@ function ItalianFlag() {
   );
 }
 
-// ─── NavBar ───────────────────────────────────────────────────────────────────
-function NavBar({ page, onNav }: { page: Page; onNav: (p: Page) => void }) {
+// ─── NavBar (dynamic per course) ──────────────────────────────────────────────
+const ICON_MAP: Record<string, React.ComponentType<{ size?: number }>> = {
+  Home, BookOpen, BarChart2, Award, MessageCircle, HelpCircle, Settings,
+  Zap, Target, Trophy, Star, Flag, GraduationCap,
+};
+
+function NavBar({ page, onNav, appSection }: { page: Page; onNav: (p: Page) => void; appSection: string }) {
   if (["quiz", "results", "study"].includes(page)) return null;
-  const items: { id: Page; label: string; icon: React.ReactNode }[] = [
-    { id: "home",         label: "خانه",      icon: <Home size={18} /> },
-    { id: "chapters",     label: "فصل‌ها",    icon: <BookOpen size={18} /> },
-    { id: "charts",       label: "آمار",       icon: <BarChart2 size={18} /> },
-    { id: "gamification", label: "امتیاز",    icon: <Award size={18} /> },
-    { id: "support",      label: "پشتیبانی",  icon: <MessageCircle size={18} /> },
-    { id: "faq",          label: "راهنما",    icon: <HelpCircle size={18} /> },
-  ];
+  if (appSection === "landing") return null;
+
+  const navConfigs = getNavItemsForCourse(appSection);
+  const course = getCourseById(appSection);
+  const accentColor = course?.colorPrimary ?? "#6366f1";
+
+  const items = navConfigs.map(n => {
+    const IconComp = ICON_MAP[n.icon] || Home;
+    return { id: n.id as Page, label: n.label, icon: <IconComp size={18} /> };
+  });
+
   return (
     <nav style={{
       position: "fixed", bottom: 0, left: 0, right: 0,
       background: "rgba(10,10,15,0.96)",
-      borderTop: "1px solid rgba(255,255,255,0.06)",
+      borderTop: `1px solid ${accentColor}15`,
       backdropFilter: "blur(20px)",
       display: "flex", justifyContent: "center", gap: 0,
       overflowX: "auto", paddingBottom: 20, zIndex: 100,
@@ -204,7 +213,10 @@ function NavBar({ page, onNav }: { page: Page; onNav: (p: Page) => void }) {
           key={item.id} id={`nav-${item.id}`}
           className={`nav-item ${page === item.id ? "active" : ""}`}
           onClick={() => onNav(item.id)}
-          style={{ flexShrink: 0, padding: "8px 12px", minWidth: 68 }}
+          style={{
+            flexShrink: 0, padding: "8px 12px", minWidth: 68,
+            ...(page === item.id ? { color: accentColor } : {}),
+          }}
         >
           {item.icon}
           <span style={{ fontSize: 9 }}>{item.label}</span>
@@ -1712,10 +1724,8 @@ function EspressoSection({ level, onBack }: { level: number; onBack: () => void 
 }
 
 // ─── Landing Page — Section Selector ─────────────────────────────────────────
-function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso, sections, onNavigate }: {
-  onSelectPatente: () => void;
-  onSelectItaliano: () => void;
-  onSelectEspresso: (level: number) => void;
+function LandingPage({ onSelectCourse, sections, onNavigate }: {
+  onSelectCourse: (courseId: string) => void;
   sections: string[];
   onNavigate: (p: Page) => void;
 }) {
@@ -1757,7 +1767,6 @@ function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso, sect
 
       {/* Hero */}
       <div style={{ textAlign: "center", marginBottom: 40 }}>
-        <div style={{ fontSize: 52, marginBottom: 12 }}>🇮🇹</div>
         <h1 style={{ fontSize: 26, fontWeight: 900, color: "var(--text-primary)", margin: 0, lineHeight: 1.3 }}>
           Italian Learning Hub
         </h1>
@@ -1766,116 +1775,51 @@ function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso, sect
         </p>
       </div>
 
-      {/* Two Section Cards */}
+      {/* Dynamic Course Cards */}
       <div style={{ width: "100%", maxWidth: 540, display: "flex", flexDirection: "column", gap: 16 }}>
+        {getCourseConfigs().filter(c => c.enabled).map(course => {
+          // Access check: patente is always visible, others need section access
+          if (course.id !== "patente" && !sections.includes(course.accessKey)) return null;
 
-        {/* Patente Card */}
-        <button onClick={onSelectPatente} style={{
-          background: "linear-gradient(135deg, rgba(147,51,234,0.2), rgba(249,115,22,0.12))",
-          border: "1.5px solid rgba(147,51,234,0.35)",
-          borderRadius: 22, padding: "24px 22px", cursor: "pointer", textAlign: "right",
-          width: "100%", transition: "all 0.3s", direction: "rtl",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
-            <div style={{
-              width: 60, height: 60, borderRadius: 16, flexShrink: 0,
-              background: "linear-gradient(135deg, rgba(147,51,234,0.25), rgba(249,115,22,0.15))",
-              border: "2px solid rgba(147,51,234,0.4)",
-              display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28,
-            }}>🚗</div>
-            <div>
-              <div style={{ fontSize: 20, fontWeight: 900, color: "var(--text-primary)" }}>Patente Italiana</div>
-              <div style={{ fontSize: 13, color: "rgba(147,51,234,0.8)", fontWeight: 600 }}>گواهینامه رانندگی</div>
-            </div>
-          </div>
-          <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.7, margin: "0 0 16px" }}>
-            ۲۵ فصل آیین‌نامه، سوالات آزمون تمرینی، مطالعه با ترجمه فارسی، آمار پیشرفت و بیشتر...
-          </p>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" as const }}>
-            {["📚 ۲۵ فصل", "✍️ آزمون تمرینی", "📊 آمار", "🏆 امتیاز"].map(b => (
-              <span key={b} style={{
-                fontSize: 11, padding: "3px 10px", borderRadius: 20,
-                background: "rgba(147,51,234,0.15)", color: "#c084fc",
-                border: "1px solid rgba(147,51,234,0.2)",
-              }}>{b}</span>
-            ))}
-          </div>
-          <div style={{ marginTop: 16, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <span style={{ fontSize: 12, color: "var(--text-muted)" }}></span>
-            <div style={{
-              background: "linear-gradient(135deg, #9333ea, #f97316)",
-              borderRadius: 12, padding: "9px 20px", color: "white", fontSize: 13, fontWeight: 700,
-            }}>ورود به بخش ← </div>
-          </div>
-        </button>
-
-        {/* Italiano Section Card — access controlled */}
-        {sections.includes("italiano") && (
-        <button onClick={onSelectItaliano} style={{
-          background: "linear-gradient(135deg, rgba(14,165,233,0.18), rgba(16,185,129,0.1))",
-          border: "1.5px solid rgba(14,165,233,0.3)",
-          borderRadius: 22, padding: "24px 22px", cursor: "pointer", textAlign: "right",
-          width: "100%", transition: "all 0.3s", direction: "rtl",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
-            <div style={{
-              width: 60, height: 60, borderRadius: 16, flexShrink: 0,
-              background: "linear-gradient(135deg, rgba(14,165,233,0.25), rgba(16,185,129,0.15))",
-              border: "2px solid rgba(14,165,233,0.4)",
-              display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28,
-            }}>💬</div>
-            <div>
-              <div style={{ fontSize: 20, fontWeight: 900, color: "var(--text-primary)" }}>Italiano per Argomenti</div>
-              <div style={{ fontSize: 13, color: "rgba(14,165,233,0.9)", fontWeight: 600 }}>آموزش موضوعی زبان</div>
-            </div>
-          </div>
-          <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.7, margin: "0 0 16px" }}>
-            یادگیری ایتالیایی از طریق موضوعات روزانه: پزشک، بانک، خرید، شهرداری، مدرسه و بیشتر...
-          </p>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" as const }}>
-            {["🏥 Dal Medico", "🛒 Supermercato", "🏦 Banca", "🏛️ Comune"].map(b => (
-              <span key={b} style={{
-                fontSize: 11, padding: "3px 10px", borderRadius: 20,
-                background: "rgba(14,165,233,0.15)", color: "#0ea5e9",
-                border: "1px solid rgba(14,165,233,0.2)",
-              }}>{b}</span>
-            ))}
-          </div>
-          <div style={{ marginTop: 16, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <span style={{ fontSize: 12, color: "var(--text-muted)" }}></span>
-            <div style={{
-              background: "linear-gradient(135deg, #0ea5e9, #10b981)",
-              borderRadius: 12, padding: "9px 20px", color: "white", fontSize: 13, fontWeight: 700,
-            }}>ورود به بخش ← </div>
-          </div>
-        </button>
-        )}
-
-        {/* Espresso 1–6 Cards — access controlled */}
-        {[1,2,3,4,5,6].filter(lvl => sections.includes(`espresso${lvl}`)).map(lvl => {
-          const d = ESPRESSO_DATA[lvl];
-          const farsi = ["۱","۲","۳","۴","۵","۶"][lvl-1];
           return (
-            <button key={lvl} onClick={() => onSelectEspresso(lvl)} style={{
-              background: `linear-gradient(135deg, rgba(${d.colorRgb},0.2), rgba(${d.colorRgb},0.08))`,
-              border: `1.5px solid rgba(${d.colorRgb},0.35)`,
-              borderRadius: 22, padding: "20px 22px", cursor: "pointer", textAlign: "right",
+            <button key={course.id} onClick={() => onSelectCourse(course.id)} style={{
+              background: `linear-gradient(135deg, rgba(${course.colorRgb},0.2), rgba(${course.colorRgb},0.08))`,
+              border: `1.5px solid rgba(${course.colorRgb},0.35)`,
+              borderRadius: 22, padding: "24px 22px", cursor: "pointer", textAlign: "right",
               width: "100%", transition: "all 0.3s", direction: "rtl",
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
                 <div style={{
-                  width: 52, height: 52, borderRadius: 14, flexShrink: 0,
-                  background: `rgba(${d.colorRgb},0.2)`, border: `2px solid rgba(${d.colorRgb},0.4)`,
-                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24,
-                }}>☕</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 18, fontWeight: 900, color: "var(--text-primary)" }}>Espresso {lvl}</div>
-                  <div style={{ fontSize: 12, color: `rgba(${d.colorRgb},0.9)`, fontWeight: 600 }}>اسپرسو {farsi} — {d.levelFa} ({d.level})</div>
+                  width: 60, height: 60, borderRadius: 16, flexShrink: 0,
+                  background: `linear-gradient(135deg, rgba(${course.colorRgb},0.25), rgba(${course.colorRgb},0.1))`,
+                  border: `2px solid rgba(${course.colorRgb},0.4)`,
+                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28,
+                }}>{course.icon}</div>
+                <div>
+                  <div style={{ fontSize: 20, fontWeight: 900, color: "var(--text-primary)" }}>{course.title}</div>
+                  <div style={{ fontSize: 13, color: course.colorPrimary, fontWeight: 600 }}>{course.subtitle}</div>
                 </div>
+              </div>
+              <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.7, margin: "0 0 16px" }}>
+                {course.description}
+              </p>
+              {course.badges.length > 0 && (
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" as const }}>
+                  {course.badges.map(b => (
+                    <span key={b} style={{
+                      fontSize: 11, padding: "3px 10px", borderRadius: 20,
+                      background: `rgba(${course.colorRgb},0.15)`, color: course.colorPrimary,
+                      border: `1px solid rgba(${course.colorRgb},0.2)`,
+                    }}>{b}</span>
+                  ))}
+                </div>
+              )}
+              <div style={{ marginTop: 16, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 12, color: "var(--text-muted)" }}></span>
                 <div style={{
-                  background: `linear-gradient(135deg, ${d.color}cc, ${d.color})`,
-                  borderRadius: 10, padding: "7px 14px", color: "white", fontSize: 12, fontWeight: 700,
-                }}>ورود ←</div>
+                  background: `linear-gradient(135deg, ${course.colorPrimary}, ${course.colorSecondary})`,
+                  borderRadius: 12, padding: "9px 20px", color: "white", fontSize: 13, fontWeight: 700,
+                }}>ورود به بخش ← </div>
               </div>
             </button>
           );
@@ -1978,9 +1922,7 @@ export default function App() {
       {appSection === "landing" && !showOnboarding && (
         <LandingPage
           sections={getUserSections(getSession()?.username ?? "")}
-          onSelectPatente={() => { setAppSection("patente"); localStorage.setItem("app_section", "patente"); }}
-          onSelectItaliano={() => { setAppSection("italiano"); localStorage.setItem("app_section", "italiano"); }}
-          onSelectEspresso={(lvl: number) => { setAppSection(`espresso${lvl}`); localStorage.setItem("app_section", `espresso${lvl}`); }}
+          onSelectCourse={(courseId: string) => { setAppSection(courseId); localStorage.setItem("app_section", courseId); }}
           onNavigate={(p: Page) => { setAppSection("patente"); localStorage.setItem("app_section", "patente"); setPage(p); }}
         />
       )}
@@ -2150,7 +2092,7 @@ export default function App() {
         <DictionaryPage onBack={() => setPage("support")} />
       )}
 
-      <NavBar page={page} onNav={setPage} />
+      <NavBar page={page} onNav={setPage} appSection={appSection} />
       </> /* end patente inner */
       )} {/* end appSection patente */}
 

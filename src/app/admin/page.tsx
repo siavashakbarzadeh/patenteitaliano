@@ -19,8 +19,9 @@ import { RolesTab, CategoriesTab, WebinarsTab, QuizzesTab, OrdersTab, SalesTab, 
 import { ForumsTab, ProductsTab, BundlesTab, FormsTab, InstallmentsTab, RewardsTab, NewslettersTab, PagesTab } from "@/components/AdminTabsBatch2";
 import { ContactsTab, GiftsTab, CurrenciesTab, UpcomingTab, InstructorRequestsTab, PromotionsTab, PaymentChannelsTab, CashbackTab } from "@/components/AdminTabsBatch3";
 import { AiTemplatesTab, RegionsTab, FloatingBarsTab, CommentsTab, ReviewsTab, DocumentsTab, DeleteRequestsTab, NotifTemplatesTab, SystemSettingsTab } from "@/components/AdminTabsBatch4";
+import CourseManagerTab from "@/components/CourseManagerTab";
 
-type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification" | "discounts" | "users" | "access" | "activitylog" | "announcements" | "certificates" | "messages" | "students" | "schedule" | "courses" | "enrollment" | "assignments" | "attendance" | "badges" | "notifications" | "reports" | "roles" | "categories" | "webinars" | "lmsquizzes" | "orders" | "sales" | "meetings" | "blogs" | "forums" | "products" | "bundles" | "forms" | "installments" | "rewards" | "newsletters" | "pages" | "contacts" | "gifts" | "currencies" | "upcoming" | "instructorReqs" | "promotions" | "payChannels" | "cashback" | "aiTemplates" | "regions" | "floatingBars" | "comments" | "reviews" | "documents" | "deleteReqs" | "notifTemplates" | "systemSettings";
+type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification" | "discounts" | "users" | "access" | "activitylog" | "announcements" | "certificates" | "messages" | "students" | "schedule" | "courses" | "enrollment" | "assignments" | "attendance" | "badges" | "notifications" | "reports" | "roles" | "categories" | "webinars" | "lmsquizzes" | "orders" | "sales" | "meetings" | "blogs" | "forums" | "products" | "bundles" | "forms" | "installments" | "rewards" | "newsletters" | "pages" | "contacts" | "gifts" | "currencies" | "upcoming" | "instructorReqs" | "promotions" | "payChannels" | "cashback" | "aiTemplates" | "regions" | "floatingBars" | "comments" | "reviews" | "documents" | "deleteReqs" | "notifTemplates" | "systemSettings" | "courseManager";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function StatCard({ icon, label, value, color }: { icon: string; label: string; value: string | number; color: string }) {
@@ -1770,6 +1771,7 @@ export default function AdminPage() {
     { id: "aiTemplates",   label: "قالب‌های AI", icon: "🤖", group: "SYSTEM" },
     { id: "regions",       label: "مناطق",      icon: "🌍" },
     { id: "systemSettings", label: "تنظیمات سیستم", icon: "⚙️" },
+    { id: "courseManager", label: "مدیریت دوره‌ها", icon: "🏛️" },
   ];
 
   return (
@@ -1933,6 +1935,7 @@ export default function AdminPage() {
           {tab === "deleteReqs"      && <DeleteRequestsTab />}
           {tab === "notifTemplates"  && <NotifTemplatesTab />}
           {tab === "systemSettings"  && <SystemSettingsTab />}
+          {tab === "courseManager"    && <CourseManagerTab />}
         </main>
       </div>
     </div>
