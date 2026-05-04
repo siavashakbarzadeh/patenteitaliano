@@ -611,8 +611,6 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter, onBac
   const pct        = availableCount > 0 ? Math.round((doneCount / availableCount) * 100) : 0;
   const circumference = 2 * Math.PI * 26; // r=26
 
-  const session = getSession();
-
   return (
     <div className="page-wrap">
 
@@ -626,51 +624,17 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter, onBac
             cursor: "pointer", display: "flex", alignItems: "center", gap: 6,
             transition: "all 0.2s",
           }}>⬅ بازگشت</button>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <div style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              background: "rgba(147,51,234,0.12)", border: "1px solid rgba(147,51,234,0.25)",
-              borderRadius: 20, padding: "5px 14px",
-            }}>
-              <ItalianFlag />
-              <span style={{ fontSize: 11, color: "#c084fc", fontWeight: 700, letterSpacing: "0.08em" }}>
-                PATENTE B
-              </span>
-            </div>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            background: "rgba(147,51,234,0.12)", border: "1px solid rgba(147,51,234,0.25)",
+            borderRadius: 20, padding: "5px 14px",
+          }}>
+            <ItalianFlag />
+            <span style={{ fontSize: 11, color: "#c084fc", fontWeight: 700, letterSpacing: "0.08em" }}>
+              PATENTE B
+            </span>
           </div>
         </div>
-
-        {/* ── Profile greeting card ── */}
-        <button onClick={() => onNavigate("settings")} style={{
-          width: "100%", display: "flex", alignItems: "center", gap: 14, direction: "rtl",
-          background: "linear-gradient(135deg, rgba(147,51,234,0.12), rgba(249,115,22,0.08))",
-          border: "1px solid rgba(147,51,234,0.25)", borderRadius: 18,
-          padding: "16px 20px", cursor: "pointer", transition: "all 0.2s",
-          marginBottom: 8, textAlign: "right",
-        }}>
-          {/* Avatar */}
-          <div style={{
-            width: 50, height: 50, borderRadius: "50%", flexShrink: 0,
-            background: "linear-gradient(135deg, #9333ea, #f97316)",
-            border: "2px solid rgba(255,255,255,0.2)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 22, fontWeight: 900, color: "white",
-            boxShadow: "0 4px 16px rgba(147,51,234,0.4)",
-          }}>
-            {session?.displayName?.[0]?.toUpperCase() ?? "?"}
-          </div>
-          {/* Name + subtitle */}
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 17, fontWeight: 900, color: "var(--text-primary)", marginBottom: 3 }}>
-              سلام، {session?.displayName ?? "کاربر"} 👋
-            </div>
-            <div style={{ fontSize: 12, color: "var(--text-muted)" }}>
-              پروفایل و تنظیمات ←
-            </div>
-          </div>
-          {/* Arrow */}
-          <div style={{ color: "var(--text-muted)", fontSize: 18, flexShrink: 0 }}>‹</div>
-        </button>
       </div>
 
       {/* ── Stats cards ───────────────────────────────────────────────────── */}
@@ -1748,14 +1712,49 @@ function EspressoSection({ level, onBack }: { level: number; onBack: () => void 
 }
 
 // ─── Landing Page — Section Selector ─────────────────────────────────────────
-function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso, sections }: {
+function LandingPage({ onSelectPatente, onSelectItaliano, onSelectEspresso, sections, onNavigate }: {
   onSelectPatente: () => void;
   onSelectItaliano: () => void;
   onSelectEspresso: (level: number) => void;
   sections: string[];
+  onNavigate: (p: Page) => void;
 }) {
+  const session = getSession();
+
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 16px" }}>
+
+      {/* ── Profile greeting card ── */}
+      {session && (
+        <button onClick={() => onNavigate("settings")} style={{
+          width: "100%", maxWidth: 540, display: "flex", alignItems: "center", gap: 14, direction: "rtl",
+          background: "linear-gradient(135deg, rgba(147,51,234,0.12), rgba(249,115,22,0.08))",
+          border: "1px solid rgba(147,51,234,0.25)", borderRadius: 18,
+          padding: "16px 20px", cursor: "pointer", transition: "all 0.2s",
+          marginBottom: 24, textAlign: "right",
+        }}>
+          <div style={{
+            width: 50, height: 50, borderRadius: "50%", flexShrink: 0,
+            background: "linear-gradient(135deg, #9333ea, #f97316)",
+            border: "2px solid rgba(255,255,255,0.2)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 22, fontWeight: 900, color: "white",
+            boxShadow: "0 4px 16px rgba(147,51,234,0.4)",
+          }}>
+            {session.displayName?.[0]?.toUpperCase() ?? "?"}
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 17, fontWeight: 900, color: "var(--text-primary)", marginBottom: 3 }}>
+              سلام، {session.displayName ?? "کاربر"} 👋
+            </div>
+            <div style={{ fontSize: 12, color: "var(--text-muted)" }}>
+              پروفایل و تنظیمات ←
+            </div>
+          </div>
+          <div style={{ color: "var(--text-muted)", fontSize: 18, flexShrink: 0 }}>‹</div>
+        </button>
+      )}
+
       {/* Hero */}
       <div style={{ textAlign: "center", marginBottom: 40 }}>
         <div style={{ fontSize: 52, marginBottom: 12 }}>🇮🇹</div>
@@ -1982,6 +1981,7 @@ export default function App() {
           onSelectPatente={() => { setAppSection("patente"); localStorage.setItem("app_section", "patente"); }}
           onSelectItaliano={() => { setAppSection("italiano"); localStorage.setItem("app_section", "italiano"); }}
           onSelectEspresso={(lvl: number) => { setAppSection(`espresso${lvl}`); localStorage.setItem("app_section", `espresso${lvl}`); }}
+          onNavigate={(p: Page) => { setAppSection("patente"); localStorage.setItem("app_section", "patente"); setPage(p); }}
         />
       )}
 
