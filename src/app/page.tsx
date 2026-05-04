@@ -80,7 +80,7 @@ import {
   StickyNote,
   Image as ImageIcon,
   Timer,
-  Settings,
+  Settings, User,
   HelpCircle,
   Award,
   MessageCircle,
@@ -189,7 +189,6 @@ function NavBar({ page, onNav }: { page: Page; onNav: (p: Page) => void }) {
     { id: "gamification", label: "امتیاز",    icon: <Award size={18} /> },
     { id: "support",      label: "پشتیبانی",  icon: <MessageCircle size={18} /> },
     { id: "faq",          label: "راهنما",    icon: <HelpCircle size={18} /> },
-    { id: "settings",     label: "تنظیمات",   icon: <Settings size={18} /> },
   ];
   return (
     <nav style={{
@@ -625,15 +624,26 @@ function HomePage({ progress, onNavigate, onSelectChapter, onStudyChapter, onBac
             cursor: "pointer", display: "flex", alignItems: "center", gap: 6,
             transition: "all 0.2s",
           }}>⬅ بازگشت</button>
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            background: "rgba(147,51,234,0.12)", border: "1px solid rgba(147,51,234,0.25)",
-            borderRadius: 20, padding: "5px 14px",
-          }}>
-            <ItalianFlag />
-            <span style={{ fontSize: 11, color: "#c084fc", fontWeight: 700, letterSpacing: "0.08em" }}>
-              PATENTE B · CODICE DELLA STRADA
-            </span>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              background: "rgba(147,51,234,0.12)", border: "1px solid rgba(147,51,234,0.25)",
+              borderRadius: 20, padding: "5px 14px",
+            }}>
+              <ItalianFlag />
+              <span style={{ fontSize: 11, color: "#c084fc", fontWeight: 700, letterSpacing: "0.08em" }}>
+                PATENTE B
+              </span>
+            </div>
+            <button onClick={() => onNavigate("settings")} style={{
+              width: 38, height: 38, borderRadius: "50%", border: "2px solid rgba(147,51,234,0.35)",
+              background: "linear-gradient(135deg, #9333ea, #f97316)", cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 16, color: "white", fontWeight: 900, flexShrink: 0,
+              boxShadow: "0 2px 12px rgba(147,51,234,0.35)", transition: "all 0.2s",
+            }}>
+              <User size={18} />
+            </button>
           </div>
         </div>
 

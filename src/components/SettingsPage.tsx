@@ -62,9 +62,9 @@ export default function SettingsPage({ onBack }: { onBack: () => void }) {
         </button>
         <div style={{ textAlign: "center" }}>
           <div style={{ fontSize: 11, fontWeight: 700, color: "var(--accent-primary)", letterSpacing: "0.08em" }}>
-            ⚙️ تنظیمات
+            👤 پروفایل
           </div>
-          <div style={{ fontSize: 11, color: "var(--text-muted)" }}>رنگ · فونت · برنامه</div>
+          <div style={{ fontSize: 11, color: "var(--text-muted)" }}>حساب · تنظیمات · برنامه</div>
         </div>
         <button
           onClick={handleSave}
