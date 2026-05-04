@@ -15,8 +15,12 @@ import { getFeedbackHistory } from "@/lib/userSettings";
 import { getSupportRequests, resolveSupportRequest, getGamification } from "@/lib/gamification";
 import { getAnnouncements, saveAnnouncement, deleteAnnouncement, getCertificates, issueCertificate, deleteCertificate, getMessages, sendMessage, deleteMessage, getSchedule, saveScheduleEvent, deleteScheduleEvent, type Announcement, type Certificate, type Message, type ScheduleEvent } from "@/lib/lms";
 import { getCourses, saveCourse, deleteCourse, getEnrollments, saveEnrollment, deleteEnrollment, getAssignments, saveAssignment, deleteAssignment, getAttendance, saveAttendance, getBadges, saveBadges, getUserBadges, awardBadge, getNotifications, saveNotification, deleteNotification, type Course, type Enrollment, type Assignment, type AttendanceRecord, type Badge, type Notification } from "@/lib/lmsExtended";
+import { RolesTab, CategoriesTab, WebinarsTab, QuizzesTab, OrdersTab, SalesTab, MeetingsTab, BlogsTab } from "@/components/AdminTabsBatch1";
+import { ForumsTab, ProductsTab, BundlesTab, FormsTab, InstallmentsTab, RewardsTab, NewslettersTab, PagesTab } from "@/components/AdminTabsBatch2";
+import { ContactsTab, GiftsTab, CurrenciesTab, UpcomingTab, InstructorRequestsTab, PromotionsTab, PaymentChannelsTab, CashbackTab } from "@/components/AdminTabsBatch3";
+import { AiTemplatesTab, RegionsTab, FloatingBarsTab, CommentsTab, ReviewsTab, DocumentsTab, DeleteRequestsTab, NotifTemplatesTab, SystemSettingsTab } from "@/components/AdminTabsBatch4";
 
-type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification" | "discounts" | "users" | "access" | "activitylog" | "announcements" | "certificates" | "messages" | "students" | "schedule" | "courses" | "enrollment" | "assignments" | "attendance" | "badges" | "notifications" | "reports";
+type AdminTab = "dashboard" | "chapters" | "questions" | "analytics" | "videos" | "subscriptions" | "hard" | "support" | "tags" | "feedback" | "requests" | "gamification" | "discounts" | "users" | "access" | "activitylog" | "announcements" | "certificates" | "messages" | "students" | "schedule" | "courses" | "enrollment" | "assignments" | "attendance" | "badges" | "notifications" | "reports" | "roles" | "categories" | "webinars" | "lmsquizzes" | "orders" | "sales" | "meetings" | "blogs" | "forums" | "products" | "bundles" | "forms" | "installments" | "rewards" | "newsletters" | "pages" | "contacts" | "gifts" | "currencies" | "upcoming" | "instructorReqs" | "promotions" | "payChannels" | "cashback" | "aiTemplates" | "regions" | "floatingBars" | "comments" | "reviews" | "documents" | "deleteReqs" | "notifTemplates" | "systemSettings";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function StatCard({ icon, label, value, color }: { icon: string; label: string; value: string | number; color: string }) {
@@ -1708,8 +1712,10 @@ export default function AdminPage() {
     { id: "dashboard",     label: "داشبورد",     icon: "🏠" },
     { id: "reports",       label: "گزارش‌ها",    icon: "📈", group: "EDUCATION" },
     { id: "courses",       label: "دوره‌ها",     icon: "📦" },
+    { id: "webinars",      label: "وبینارها",    icon: "🎓" },
     { id: "chapters",      label: "فصل‌ها",      icon: "📚" },
     { id: "questions",     label: "سوالات",      icon: "❓" },
+    { id: "lmsquizzes",    label: "آزمون‌ها",    icon: "📝" },
     { id: "assignments",   label: "تکالیف",      icon: "📝" },
     { id: "enrollment",    label: "ثبت‌نام‌ها",  icon: "📋" },
     { id: "attendance",    label: "حضور/غیاب",  icon: "✅" },
@@ -1718,21 +1724,52 @@ export default function AdminPage() {
     { id: "analytics",     label: "تحلیل",       icon: "📊" },
     { id: "videos",        label: "ویدیوها",     icon: "🎬" },
     { id: "hard",          label: "سخت‌ها",     icon: "🔥" },
+    { id: "categories",    label: "دسته‌بندی",   icon: "📂" },
+    { id: "meetings",      label: "جلسات",      icon: "🎥" },
     { id: "students",      label: "دانش‌آموزان", icon: "🎓", group: "USERS" },
     { id: "users",         label: "کاربران",     icon: "👥" },
+    { id: "roles",         label: "نقش‌ها",      icon: "🔑" },
     { id: "access",        label: "دسترسی‌ها",   icon: "🔐" },
     { id: "badges",        label: "نشان‌ها",     icon: "🏅" },
     { id: "gamification",  label: "انگیزش",      icon: "🏆" },
+    { id: "rewards",       label: "پاداش‌ها",    icon: "🎁" },
     { id: "activitylog",   label: "لاگ فعالیت",  icon: "📋" },
+    { id: "instructorReqs", label: "درخواست مدرسی", icon: "🎓" },
+    { id: "documents",     label: "مدارک",      icon: "📑" },
+    { id: "deleteReqs",    label: "حذف حساب",   icon: "🗑️" },
     { id: "support",       label: "پشتیبانی",   icon: "✋", group: "CRM" },
     { id: "messages",      label: "پیام‌ها",     icon: "✉️" },
     { id: "announcements", label: "اطلاعیه‌ها",  icon: "📢" },
     { id: "notifications", label: "اعلان‌ها",    icon: "🔔" },
+    { id: "notifTemplates", label: "قالب اعلان",  icon: "📋" },
     { id: "feedback",      label: "ارزشیابی",   icon: "⭐" },
     { id: "requests",      label: "درخواست‌ها",  icon: "📨" },
+    { id: "contacts",      label: "تماس‌ها",    icon: "📞" },
+    { id: "newsletters",   label: "خبرنامه",    icon: "📧" },
+    { id: "comments",      label: "نظرات",      icon: "💬" },
+    { id: "reviews",       label: "بررسی‌ها",    icon: "⭐" },
     { id: "tags",          label: "تگ‌رنگ‌ها",   icon: "🏷️" },
     { id: "subscriptions", label: "اشتراک‌ها",   icon: "🌟", group: "FINANCIAL" },
     { id: "discounts",     label: "کد تخفیف",   icon: "🏷" },
+    { id: "orders",        label: "سفارش‌ها",   icon: "🛒" },
+    { id: "sales",         label: "فروش",       icon: "💰" },
+    { id: "installments",  label: "اقساط",      icon: "💳" },
+    { id: "cashback",      label: "کش‌بک",     icon: "💸" },
+    { id: "payChannels",   label: "درگاه پرداخت", icon: "🏦" },
+    { id: "currencies",    label: "ارزها",      icon: "💱" },
+    { id: "gifts",         label: "هدایا",      icon: "🎁" },
+    { id: "blogs",         label: "بلاگ",       icon: "📰", group: "CONTENT" },
+    { id: "forums",        label: "انجمن",      icon: "💬" },
+    { id: "products",      label: "محصولات",    icon: "🛍️" },
+    { id: "bundles",       label: "باندل‌ها",    icon: "📦" },
+    { id: "pages",         label: "صفحات CMS",  icon: "📄" },
+    { id: "forms",         label: "فرم‌ها",     icon: "📋" },
+    { id: "promotions",    label: "تبلیغات",    icon: "📣" },
+    { id: "floatingBars",  label: "نوار شناور", icon: "📌" },
+    { id: "upcoming",      label: "دوره‌های آینده", icon: "🔜" },
+    { id: "aiTemplates",   label: "قالب‌های AI", icon: "🤖", group: "SYSTEM" },
+    { id: "regions",       label: "مناطق",      icon: "🌍" },
+    { id: "systemSettings", label: "تنظیمات سیستم", icon: "⚙️" },
   ];
 
   return (
@@ -1863,6 +1900,39 @@ export default function AdminPage() {
           {tab === "badges"          && <BadgesTab />}
           {tab === "notifications"   && <NotificationsTab />}
           {tab === "reports"         && <ReportsTab progress={progress} />}
+          {tab === "roles"           && <RolesTab />}
+          {tab === "categories"      && <CategoriesTab />}
+          {tab === "webinars"        && <WebinarsTab />}
+          {tab === "lmsquizzes"      && <QuizzesTab />}
+          {tab === "orders"          && <OrdersTab />}
+          {tab === "sales"           && <SalesTab />}
+          {tab === "meetings"        && <MeetingsTab />}
+          {tab === "blogs"           && <BlogsTab />}
+          {tab === "forums"          && <ForumsTab />}
+          {tab === "products"        && <ProductsTab />}
+          {tab === "bundles"         && <BundlesTab />}
+          {tab === "forms"           && <FormsTab />}
+          {tab === "installments"    && <InstallmentsTab />}
+          {tab === "rewards"         && <RewardsTab />}
+          {tab === "newsletters"     && <NewslettersTab />}
+          {tab === "pages"           && <PagesTab />}
+          {tab === "contacts"        && <ContactsTab />}
+          {tab === "gifts"           && <GiftsTab />}
+          {tab === "currencies"      && <CurrenciesTab />}
+          {tab === "upcoming"        && <UpcomingTab />}
+          {tab === "instructorReqs"  && <InstructorRequestsTab />}
+          {tab === "promotions"      && <PromotionsTab />}
+          {tab === "payChannels"     && <PaymentChannelsTab />}
+          {tab === "cashback"        && <CashbackTab />}
+          {tab === "aiTemplates"     && <AiTemplatesTab />}
+          {tab === "regions"         && <RegionsTab />}
+          {tab === "floatingBars"    && <FloatingBarsTab />}
+          {tab === "comments"        && <CommentsTab />}
+          {tab === "reviews"         && <ReviewsTab />}
+          {tab === "documents"       && <DocumentsTab />}
+          {tab === "deleteReqs"      && <DeleteRequestsTab />}
+          {tab === "notifTemplates"  && <NotifTemplatesTab />}
+          {tab === "systemSettings"  && <SystemSettingsTab />}
         </main>
       </div>
     </div>
