@@ -35,10 +35,6 @@ export const chapter12Content: ChapterContent = {
 
         "**DISTANZA DI SICUREZZA IN PARTICOLARI SITUAZIONI**\n\n• Se sono in azione **macchine sgombraneve o spanditrici di sale**, la **distanza di sicurezza** deve essere di **almeno 20 metri**.\n• Su strade extraurbane a una sola corsia, la **distanza di sicurezza** tra i veicoli merci superiori a 3,5 t (con divieto di sorpasso) deve essere pari ad **almeno 100 metri**.",
       ],
-      notes: [
-        "★ این متن کامل بازنویسی‌شده بر اساس منطق سوالات تستی (Vero / Falso) است.",
-        "★ تمام عبارات کلیدی با حروف پررنگ (Bold) مشخص شده‌اند.",
-      ],
     },
 
     // ─── متن اصلی ایتالیایی ───────────────────────────────────────────────────

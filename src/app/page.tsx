@@ -146,6 +146,28 @@ const contentRegistry: Record<number, ChapterContent> = {
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
+
+/** Parse **bold** markers → highlighted <span> elements */
+function renderHighlightedText(text: string): React.ReactNode[] {
+  const parts = text.split(/(\*\*[^*]+\*\*)/);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      const inner = part.slice(2, -2);
+      return (
+        <span key={i} style={{
+          background: "rgba(251,191,36,0.22)",
+          color: "#fde68a",
+          fontWeight: 700,
+          padding: "1px 5px",
+          borderRadius: 4,
+          borderBottom: "2px solid rgba(251,191,36,0.5)",
+        }}>{inner}</span>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+}
+
 function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
 }
@@ -453,7 +475,7 @@ function StudyPage({ chapterNum, onBack, onGoToQuiz }: {
                             textDecoration: isUnderlined ? "underline dotted rgba(167,139,250,0.6)" : "none",
                             textUnderlineOffset: "4px",
                           }}
-                        >{para}</p>
+                        >{renderHighlightedText(para)}</p>
                       );
                     })}
                   </div>
