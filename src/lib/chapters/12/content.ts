@@ -13,6 +13,34 @@ export const chapter12Content: ChapterContent = {
   summary: "فاصله توقف یک وسیله برابر مجموع دو بخش است: فضای واکنش (spazio di reazione) که به سرعت و وضعیت راننده بستگی دارد، و فضای ترمز (spazio di frenatura) که به توان دوم سرعت بستگی دارد. فاصله ایمنی بین وسایل باید حداقل برابر مسافت واکنش در ۱ ثانیه باشد تا از تصادف جلوگیری شود.",
   sections: [
 
+    // ─── متن کامل فصل ۱۲ (بازنویسی بر اساس کوییز) ─────────────────────────────
+    {
+      id: "12-0-testo-completo",
+      titleIt: "Testo Completo – Capitolo 12",
+      titleFa: "📝 متن کامل فصل ۱۲",
+      body: [
+        "**12.1 – SPAZIO (DISTANZA) DI ARRESTO DI UN VEICOLO**\n\nPer evitare incidenti, il conducente deve **conservare** il controllo del veicolo per garantire un **arresto tempestivo** **entro i limiti** del suo **campo di visibilità**.\nSecondo i quiz, lo **spazio (distanza) di arresto** totale è pari alla somma di due parti:\n• il **primo tratto**, che è lo spazio **percorso** nel **tempo di reazione**;\n• il **secondo tratto**, cioè lo **spazio di frenatura**, che è **percorso dall'inizio** della frenata.",
+
+        "**SPAZIO PERCORSO DURANTE IL TEMPO DI REAZIONE**\n\nLo **spazio percorso durante il tempo di reazione** dipende dalla velocità e dalla **prontezza di riflessi** del conducente. Il tempo medio è di **circa 1 secondo**. I quiz confermano che **in un secondo si percorrono circa:**\n• 14 metri a 50 km/h\n• 28 metri a 100 km/h\n• 36 metri a 130 km/h\n• 42 metri a 150 km/h",
+
+        "**SPAZIO DI FRENATURA**\n\nPer avere lo **spazio di frenatura minimo** servono le **migliori condizioni di aderenza**. Attenzione: il **bloccaggio delle ruote** è pericoloso perché **allunga lo spazio di frenatura**.\nLo spazio di frenatura dipende dal **quadrato della velocità** e dall'**aderenza**:\n• **si quadruplica se la velocità raddoppia**\n• **diventa nove volte maggiore se la velocità triplica**\n• **diventa sedici volte maggiore se la velocità quadruplica**\n\nL'aderenza è ottima su **strada ruvida e asciutta**, scende su **strada asfaltata bagnata** ed è **molto ridotto** su ghiaccio o neve. La **lunghezza** dello spazio di frenatura dipende anche dalla **pendenza della strada** (**salita o in discesa**).\nI quiz affermano che lo **spazio di frenatura aumenta** se l'aderenza è **bassa** (ad esempio se la **strada è innevata o bagnata**), e **aumenta** se la strada è **in discesa**, mentre **diminuisce** se è **in salita**.",
+
+        "**SPAZIO TOTALE DI ARRESTO**\n\nNei quiz è Vero che lo **spazio totale di arresto** dipende dalla **prontezza di riflessi del conducente**, dalla **velocità del veicolo** e dalle **condizioni di aderenza tra pneumatico e strada**. Quindi lo spazio totale di arresto:\n• **aumenta** se aumenta la velocità\n• **aumenta** se la strada è innevata o coperta di fango\n• **aumenta** se i pneumatici sono usurati\n• **diminuisce** se migliora la prontezza di riflessi.\n\nRicorda sempre che la **distanza di visibilità** deve essere **superiore** allo **spazio totale di arresto**.",
+
+        "**12.2 – DISTANZA DI SICUREZZA FRA I VEICOLI**\n\nMantenere la **distanza di sicurezza** serve per **riuscire a fermare in tempo** il veicolo in caso di pericolo, evitando il **tamponamento** con il **veicolo che ci precede**.\nLa **distanza minima di sicurezza** deve essere almeno uguale ai metri percorsi durante il **tempo di reazione**.\n\nSe il veicolo davanti trasporta un **carico sporgente poco stabile**, se si **marcia in colonna**, o se la **visibilità è scarsa**, la **distanza di sicurezza va aumentata** e deve essere **maggiore** dello spazio di reazione per evitare **tamponamenti a catena**. In ogni caso, il conducente deve sempre valutare bene la **distanza di sicurezza**.",
+
+        "**Da cosa DIPENDE (Vero nei quiz):**\n\nLa **distanza di sicurezza** è commisurata a:\n• **velocità** del veicolo\n• **condizioni del traffico**\n• efficienza dei **freni di servizio** e l'**aderenza dei pneumatici**\n• **entità del carico** trasportato\n• **prontezza di riflessi** e **condizioni psicofisiche (concentrazione, attenzione, condizioni di salute)**.\n\nLa **distrazione** è una causa comune di incidenti, provocata dall'**accensione del cellulare**, dall'**accensione di una sigaretta** o dalla **ricerca dei comandi della radio**.\n• **variazioni di pendenza** della strada e **condizioni atmosferiche**.",
+
+        "**Da cosa NON DIPENDE (Falso nei quiz):**\n\nNei test è Falso dire che la **distanza di sicurezza** è una distanza fissa. Inoltre, **non influiscono sulla distanza di sicurezza**: la marcia innestata, la cilindrata, la potenza del motore, il tipo di alimentazione, il servosterzo, la larghezza del veicolo o il numero di corsie della strada.",
+
+        "**DISTANZA DI SICUREZZA IN PARTICOLARI SITUAZIONI**\n\n• Se sono in azione **macchine sgombraneve o spanditrici di sale**, la **distanza di sicurezza** deve essere di **almeno 20 metri**.\n• Su strade extraurbane a una sola corsia, la **distanza di sicurezza** tra i veicoli merci superiori a 3,5 t (con divieto di sorpasso) deve essere pari ad **almeno 100 metri**.",
+      ],
+      notes: [
+        "★ این متن کامل بازنویسی‌شده بر اساس منطق سوالات تستی (Vero / Falso) است.",
+        "★ تمام عبارات کلیدی با حروف پررنگ (Bold) مشخص شده‌اند.",
+      ],
+    },
+
     // ─── متن اصلی ایتالیایی ───────────────────────────────────────────────────
     {
       id: "12-0-testo-italiano",
