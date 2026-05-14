@@ -102,8 +102,8 @@ import { validateCode, applyCode, getAppliedCode } from "@/lib/discountCodes";
 import { getCourseConfigs, getNavItemsForCourse, getCourseById, type CourseConfig } from "@/lib/courseConfig";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type Page = "home" | "chapters" | "quiz" | "results" | "stats" | "study" | "review" | "browse" | "settings" | "faq" | "charts" | "support" | "gamification" | "dictionary";
-type QuizMode = "chapter" | "wrong" | "flagged" | "mixed" | "standard" | "hard" | "tagged0" | "tagged1" | "tagged2" | "hardWrong";
+type Page = "home" | "chapters" | "quiz" | "results" | "stats" | "study" | "review" | "browse" | "settings" | "faq" | "charts" | "support" | "gamification" | "dictionary" | "examResult";
+type QuizMode = "chapter" | "wrong" | "flagged" | "mixed" | "standard" | "hard" | "tagged0" | "tagged1" | "tagged2" | "hardWrong" | "exam";
 
 interface QuizState {
   questions: Question[];
@@ -181,6 +181,12 @@ function buildQuiz(chapterNum: number, mode: QuizMode = "chapter", extraIds: num
   }
   if (mode === "standard") {
     const pool = shuffle(questions.filter(q => chapters.find(c => c.number === q.chapter)?.available));
+    return pool.slice(0, 30);
+  }
+  // ── Exam mode: 30 questions, balanced from all chapters (like real Patente B exam)
+  if (mode === "exam") {
+    const available = questions.filter(q => chapters.find(c => c.number === q.chapter)?.available);
+    const pool = shuffle(available);
     return pool.slice(0, 30);
   }
   // Query preset modes — extraIds carries the question ids
@@ -860,7 +866,7 @@ function presetCount(mode: string, progress: UserProgress): number {
 }
 
 // ─── Chapters Page ────────────────────────────────────────────────────────────
-function ChaptersPage({ progress, onSelectChapter, onStudyChapter, onMixedQuiz, onStandardQuiz, onBrowse, onPresetQuiz }: {
+function ChaptersPage({ progress, onSelectChapter, onStudyChapter, onMixedQuiz, onStandardQuiz, onBrowse, onPresetQuiz, onExamQuiz }: {
   progress: UserProgress;
   onSelectChapter: (ch: number) => void;
   onStudyChapter: (ch: number) => void;
@@ -868,6 +874,7 @@ function ChaptersPage({ progress, onSelectChapter, onStudyChapter, onMixedQuiz, 
   onStandardQuiz?: () => void;
   onBrowse?: () => void;
   onPresetQuiz?: (mode: string) => void;
+  onExamQuiz?: () => void;
 }) {
   const [search, setSearch] = useState("");
   const filtered = chapters.filter(ch =>
@@ -932,6 +939,19 @@ function ChaptersPage({ progress, onSelectChapter, onStudyChapter, onMixedQuiz, 
               display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap",
             }}>
             <Zap size={13} /> ترکیبی
+          </button>
+        )}
+        {onExamQuiz && (
+          <button id="btn-exam-quiz" onClick={onExamQuiz}
+            style={{
+              flexShrink: 0, padding: "10px 13px", borderRadius: 12, fontSize: 12,
+              fontWeight: 700,
+              border: "1px solid rgba(251,191,36,0.4)",
+              background: "linear-gradient(135deg, rgba(251,191,36,0.15), rgba(147,51,234,0.1))",
+              color: "#fbbf24", cursor: "pointer",
+              display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap",
+            }}>
+            🎓 آزمون جامع
           </button>
         )}
       </div>
@@ -1071,7 +1091,7 @@ function QuizPage({ chapterNum, onFinish, onBack, mode = "chapter", extraIds = [
   const progressPct = ((quiz.current + (quiz.answered ? 1 : 0)) / quiz.questions.length) * 100;
   const flagged = q ? isFlagged(progress, q.id) : false;
 
-  const isStandardMode = mode === "standard";
+  const isStandardMode = mode === "standard" || mode === "exam";
   const questionTimeLimit = isStandardMode ? 20 : 30;
 
   // Per-question countdown timer — auto-submits wrong on expiry
@@ -1171,7 +1191,9 @@ function QuizPage({ chapterNum, onFinish, onBack, mode = "chapter", extraIds = [
           ← خروج
         </button>
         <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: 12, color: "var(--text-muted)", fontWeight: 600 }}>فصل {chapterNum}</div>
+          <div style={{ fontSize: 12, color: "var(--text-muted)", fontWeight: 600 }}>
+            {mode === "exam" ? "🎓 آزمون جامع" : `فصل ${chapterNum}`}
+          </div>
           <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text-secondary)" }}>
             {quiz.current + 1} از {quiz.questions.length}
           </div>
@@ -1444,6 +1466,203 @@ function ResultsPage({ score, total, chapterNum, onRestart, onHome, onStudy }: {
             ← بازگشت به خانه
           </button>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Exam Result & Certificate Page ──────────────────────────────────────────
+function ExamResultPage({ score, total, onHome, onRetry }: {
+  score: number; total: number; onHome: () => void; onRetry: () => void;
+}) {
+  const pct = Math.round((score / total) * 100);
+  const passed = pct >= 70;
+  const session = getSession();
+  const userName = session?.displayName ?? "دانش‌آموز";
+  const now = new Date();
+  const dateStr = now.toLocaleDateString("fa-IR");
+  const examId = `PB-${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}${String(now.getDate()).padStart(2,"0")}-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
+  const [showConfetti, setShowConfetti] = useState(true);
+
+  useEffect(() => {
+    if (passed) {
+      const t = setTimeout(() => setShowConfetti(false), 5000);
+      return () => clearTimeout(t);
+    }
+  }, [passed]);
+
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 16px", position: "relative", overflow: "hidden" }}>
+      {/* ── Confetti particles ── */}
+      {passed && showConfetti && (
+        <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
+          {Array.from({ length: 40 }).map((_, i) => (
+            <div key={i} style={{
+              position: "absolute",
+              left: `${Math.random() * 100}%`,
+              top: `-${Math.random() * 20}%`,
+              width: `${6 + Math.random() * 8}px`,
+              height: `${6 + Math.random() * 8}px`,
+              borderRadius: Math.random() > 0.5 ? "50%" : "2px",
+              background: ["#fbbf24","#22d3a5","#818cf8","#f97316","#ef4444","#a78bfa","#60a5fa"][i % 7],
+              animation: `confettiFall ${2 + Math.random() * 3}s ease-in ${Math.random() * 2}s forwards`,
+              opacity: 0.9,
+            }} />
+          ))}
+        </div>
+      )}
+
+      {passed ? (
+        /* ── CERTIFICATE ── */
+        <div className="animate-scale-in" style={{
+          width: "100%", maxWidth: 480,
+          background: "linear-gradient(145deg, rgba(251,191,36,0.12), rgba(147,51,234,0.08), rgba(34,211,165,0.06))",
+          border: "2px solid rgba(251,191,36,0.4)",
+          borderRadius: 24, padding: "36px 28px", textAlign: "center",
+          position: "relative", overflow: "hidden",
+          boxShadow: "0 0 60px rgba(251,191,36,0.15), 0 20px 60px rgba(0,0,0,0.3)",
+        }}>
+          {/* Gold corner accents */}
+          <div style={{ position: "absolute", top: 12, left: 12, width: 40, height: 40, borderTop: "3px solid rgba(251,191,36,0.5)", borderLeft: "3px solid rgba(251,191,36,0.5)", borderRadius: "8px 0 0 0" }} />
+          <div style={{ position: "absolute", top: 12, right: 12, width: 40, height: 40, borderTop: "3px solid rgba(251,191,36,0.5)", borderRight: "3px solid rgba(251,191,36,0.5)", borderRadius: "0 8px 0 0" }} />
+          <div style={{ position: "absolute", bottom: 12, left: 12, width: 40, height: 40, borderBottom: "3px solid rgba(251,191,36,0.5)", borderLeft: "3px solid rgba(251,191,36,0.5)", borderRadius: "0 0 0 8px" }} />
+          <div style={{ position: "absolute", bottom: 12, right: 12, width: 40, height: 40, borderBottom: "3px solid rgba(251,191,36,0.5)", borderRight: "3px solid rgba(251,191,36,0.5)", borderRadius: "0 0 8px 0" }} />
+
+          {/* Stamp */}
+          <div style={{
+            fontSize: 56, marginBottom: 8, filter: "drop-shadow(0 0 12px rgba(251,191,36,0.4))",
+          }}>🏆</div>
+
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", color: "#fbbf24", marginBottom: 8, textTransform: "uppercase" }}>
+            Patente Italiana — Certificato
+          </div>
+
+          <h1 style={{ fontSize: 22, fontWeight: 900, color: "var(--text-primary)", marginBottom: 4, direction: "rtl" }}>
+            گواهینامه قبولی آزمون جامع
+          </h1>
+
+          <div style={{ width: 60, height: 2, background: "linear-gradient(90deg, transparent, #fbbf24, transparent)", margin: "12px auto" }} />
+
+          <div style={{ direction: "rtl", marginBottom: 20 }}>
+            <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8 }}>
+              این به تأیید می‌رسد که
+            </p>
+            <p style={{ fontSize: 20, fontWeight: 900, color: "#fbbf24", margin: "8px 0", direction: "rtl" }}>
+              {userName}
+            </p>
+            <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8 }}>
+              در آزمون جامع ۳۰ سؤالی آیین‌نامه ایتالیا (Patente B) با موفقیت شرکت نموده
+              و نمره زیر را کسب نموده است:
+            </p>
+          </div>
+
+          {/* Score display */}
+          <div style={{
+            display: "inline-flex", alignItems: "center", justifyContent: "center",
+            width: 110, height: 110, borderRadius: "50%",
+            background: "linear-gradient(135deg, rgba(34,211,165,0.2), rgba(16,185,129,0.08))",
+            border: "3px solid rgba(34,211,165,0.5)",
+            marginBottom: 16,
+            boxShadow: "0 0 30px rgba(34,211,165,0.2)",
+          }}>
+            <div>
+              <div style={{ fontSize: 32, fontWeight: 900, color: "#22d3a5" }}>{pct}%</div>
+              <div style={{ fontSize: 11, color: "var(--text-muted)" }}>{score}/{total}</div>
+            </div>
+          </div>
+
+          {/* Stats row */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 20 }}>
+            <div style={{ background: "rgba(34,211,165,0.08)", border: "1px solid rgba(34,211,165,0.2)", borderRadius: 12, padding: "10px 8px" }}>
+              <div style={{ fontSize: 18, fontWeight: 800, color: "#22d3a5" }}>{score}</div>
+              <div style={{ fontSize: 9, color: "var(--text-muted)" }}>صحیح ✓</div>
+            </div>
+            <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 12, padding: "10px 8px" }}>
+              <div style={{ fontSize: 18, fontWeight: 800, color: "#ef4444" }}>{total - score}</div>
+              <div style={{ fontSize: 9, color: "var(--text-muted)" }}>اشتباه ✗</div>
+            </div>
+            <div style={{ background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: 12, padding: "10px 8px" }}>
+              <div style={{ fontSize: 18, fontWeight: 800, color: "#818cf8" }}>۲۰s</div>
+              <div style={{ fontSize: 9, color: "var(--text-muted)" }}>هر سؤال</div>
+            </div>
+          </div>
+
+          {/* Pass badge */}
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            background: "linear-gradient(135deg, rgba(34,211,165,0.15), rgba(16,185,129,0.08))",
+            border: "1px solid rgba(34,211,165,0.3)", borderRadius: 20, padding: "8px 18px",
+            marginBottom: 20,
+          }}>
+            <span style={{ fontSize: 16 }}>✅</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: "#22d3a5" }}>قبول — آماده آزمون واقعی</span>
+          </div>
+
+          {/* Footer info */}
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 16, marginTop: 8 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", direction: "rtl" }}>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: 9, color: "var(--text-muted)", marginBottom: 2 }}>تاریخ صدور</div>
+                <div style={{ fontSize: 11, color: "var(--text-secondary)" }}>{dateStr}</div>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <ItalianFlag />
+              </div>
+              <div style={{ textAlign: "left" }}>
+                <div style={{ fontSize: 9, color: "var(--text-muted)", marginBottom: 2 }}>شماره گواهی</div>
+                <div style={{ fontSize: 11, color: "var(--text-secondary)", fontFamily: "monospace" }}>{examId}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* ── FAILED ── */
+        <div className="animate-scale-in" style={{
+          width: "100%", maxWidth: 420, textAlign: "center",
+        }}>
+          <div style={{ fontSize: 64, marginBottom: 16 }}>📚</div>
+          <h1 style={{ fontSize: 24, fontWeight: 800, marginBottom: 8, direction: "rtl", color: "var(--text-primary)" }}>
+            ادامه بده! 💪
+          </h1>
+          <p style={{ color: "var(--text-secondary)", fontSize: 14, marginBottom: 24, direction: "rtl" }}>
+            برای قبولی در آزمون جامع باید حداقل ۷۰٪ (۲۱ از ۳۰) پاسخ صحیح بدهی.
+          </p>
+
+          {/* Score ring */}
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
+            <div style={{
+              width: 120, height: 120, borderRadius: "50%",
+              background: "rgba(239,68,68,0.1)", border: "4px solid rgba(239,68,68,0.3)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <div>
+                <div style={{ fontSize: 32, fontWeight: 900, color: "var(--error)" }}>{pct}%</div>
+                <div style={{ fontSize: 12, color: "var(--text-muted)" }}>{score}/{total}</div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{
+            padding: "14px 20px", borderRadius: 14, marginBottom: 24,
+            background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.25)",
+            direction: "rtl",
+          }}>
+            <p style={{ fontSize: 13, color: "var(--text-secondary)", margin: 0 }}>
+              {21 - score} پاسخ صحیح دیگر برای قبولی لازم داری
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Actions */}
+      <div style={{ width: "100%", maxWidth: 420, marginTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
+        <button id="btn-exam-retry" onClick={onRetry} className="btn-primary" style={{ width: "100%" }}>
+          <RotateCcw size={16} style={{ display: "inline", marginRight: 8 }} />
+          {passed ? "آزمون مجدد" : "تلاش دوباره"}
+        </button>
+        <button id="btn-exam-home" onClick={onHome} className="btn-secondary" style={{ width: "100%" }}>
+          ← بازگشت به خانه
+        </button>
       </div>
     </div>
   );
@@ -1918,7 +2137,12 @@ export default function App() {
       setRatingChapter(activeChapter);
       setShowRating(true);
     }
-    setPage("results");
+    // Navigate to exam certificate page for exam mode, otherwise normal results
+    if (quizMode === "exam") {
+      setPage("examResult");
+    } else {
+      setPage("results");
+    }
   };
   const handleReset = () => {
     if (confirm("مطمئنی؟ همه پیشرفت‌هات پاک می‌شه!")) {
@@ -1980,6 +2204,7 @@ export default function App() {
           onBrowse={() => setPage("browse")}
           onStandardQuiz={() => { setQuizMode("standard"); setQuizKey(k => k + 1); setPage("quiz"); }}
           onMixedQuiz={() => { setQuizMode("mixed"); setQuizKey(k => k + 1); setPage("quiz"); }}
+          onExamQuiz={() => { setQuizMode("exam"); setQuizKey(k => k + 1); setPage("quiz"); }}
           onPresetQuiz={(mode) => {
             // Compute extra IDs for preset modes
             const hardIds = getHardQuestionIds();
@@ -2029,13 +2254,18 @@ export default function App() {
               : []
           }
           onFinish={handleQuizFinish}
-          onBack={() => setPage(["chapter","standard","mixed"].includes(quizMode) ? "chapters" : "review")} />
+          onBack={() => setPage(["chapter","standard","mixed","exam"].includes(quizMode) ? "chapters" : "review")} />
       )}
       {page === "results" && lastResult && (
         <ResultsPage score={lastResult.score} total={lastResult.total} chapterNum={activeChapter}
           onRestart={() => { setQuizKey((k) => k + 1); setPage("quiz"); }}
           onHome={() => setPage("home")}
           onStudy={() => handleStudyChapter(activeChapter)} />
+      )}
+      {page === "examResult" && lastResult && (
+        <ExamResultPage score={lastResult.score} total={lastResult.total}
+          onHome={() => setPage("home")}
+          onRetry={() => { setQuizMode("exam"); setQuizKey(k => k + 1); setPage("quiz"); }} />
       )}
       {page === "stats" && (
         <StatsPage progress={progress} onReset={handleReset} onReview={() => setPage("review")} />
