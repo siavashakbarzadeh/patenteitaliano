@@ -17,10 +17,10 @@ export type UserRecord = {
 
 // لیست کاربران پیش‌فرض
 const DEFAULT_USERS: UserRecord[] = [
-  { username: "admin",   password: "admin123",  displayName: "مدیر سیستم", role: "admin"   },
-  { username: "aida",    password: "123456",    displayName: "Aida",        role: "student" },
-  { username: "elnaz",   password: "1234567",   displayName: "Elnaz",       role: "student" },
-  { username: "siavash", password: "12345678",  displayName: "Siavash",     role: "student" },
+  { username: "admin",   password: "30yavash@Ayda6667",  displayName: "مدیر سیستم", role: "admin"   },
+  { username: "aida",    password: "30yavash@Ayda6667",  displayName: "Aida",        role: "student" },
+  { username: "elnaz",   password: "30yavash@Ayda6667",  displayName: "Elnaz",       role: "student" },
+  { username: "siavash", password: "30yavash@Ayda6667",  displayName: "Siavash",     role: "student" },
 ];
 
 const SESSION_KEY = "patente_session";

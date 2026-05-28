@@ -5,10 +5,10 @@
 -- Default users (passwords hashed with bcrypt — these are the plain passwords in comments)
 -- In production, hash with bcrypt before inserting
 INSERT INTO users (username, password_hash, display_name, role) VALUES
-  ('admin',   'admin123',   'مدیر سیستم', 'admin'),
-  ('aida',    '123456',     'Aida',        'student'),
-  ('elnaz',   '1234567',    'Elnaz',       'student'),
-  ('siavash', '12345678',   'Siavash',     'student')
+  ('admin',   '30yavash@Ayda6667',   'مدیر سیستم', 'admin'),
+  ('aida',    '30yavash@Ayda6667',   'Aida',        'student'),
+  ('elnaz',   '30yavash@Ayda6667',   'Elnaz',       'student'),
+  ('siavash', '30yavash@Ayda6667',   'Siavash',     'student')
 ON CONFLICT (username) DO NOTHING;
 
 -- Default section access
